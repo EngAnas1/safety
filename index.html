@@ -8,7 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@500;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="img/scene.svg">
+<link rel="preload" as="image" href="img/hero-m.webp" media="(max-width:760px)">
+<link rel="preload" as="image" href="img/hero.webp" media="(min-width:761px)">
 <script src="content.js"></script>
 <style>
 /* =====================================================================
@@ -59,15 +60,12 @@ body.ur .logo{font-weight:700;font-size:.95rem}
 .lang:hover{border-color:var(--lime)}
 body.ur .lang{padding:0 14px}
 
-/* ---------- Home hero: illustrated scene + character ---------- */
-.hero{position:relative;overflow:hidden;background:#0B1430 url(img/scene.svg) center bottom/cover no-repeat;min-height:min(92vh,760px);display:flex;align-items:flex-end}
-.hero::after{content:"";position:absolute;inset:auto 0 0 0;height:18%;background:linear-gradient(transparent,var(--night));pointer-events:none}
-.hero .in{position:relative;z-index:1;width:100%;max-width:1120px;margin:0 auto;padding:110px 18px 0;display:grid;grid-template-columns:1.1fr .9fr;align-items:end;gap:20px}
-.hero .copy{padding-bottom:16vh;align-self:center}
-.hero .char{position:relative;justify-self:center;width:min(100%,440px)}
-.hero .char::before{content:"";position:absolute;inset:8% 4% 0;border-radius:50% 50% 0 0;background:radial-gradient(circle at 50% 60%,rgba(215,255,60,.35),transparent 65%)}
-.hero .char img{position:relative;width:100%;animation:bob 5s ease-in-out infinite}
-@keyframes bob{50%{transform:translateY(-8px)}}
+/* ---------- Home hero: 3D illustration, headline in the open sky ---------- */
+.hero{position:relative;overflow:hidden;background:#0B1430 url(img/hero.webp) left center/cover no-repeat;min-height:min(92vh,800px);display:flex;align-items:center}
+.hero::after{content:"";position:absolute;inset:auto 0 0 0;height:20%;background:linear-gradient(transparent,var(--night));pointer-events:none}
+.hero .in{position:relative;z-index:1;width:100%;max-width:1240px;margin:0 auto;padding:100px 24px 60px;display:flex;justify-content:flex-end;direction:ltr}
+.hero .copy{width:min(46%,560px)}
+.hero .mimg{display:none}
 .hero h1{font-size:clamp(2.4rem,5.6vw,5rem);line-height:1.05;text-wrap:balance}
 body.ur .hero h1{line-height:1.7;font-size:clamp(1.9rem,4vw,3.4rem)}
 .hero h1 .w{display:inline-block;animation:rise .7s cubic-bezier(.2,.9,.3,1.2) both}
@@ -82,14 +80,13 @@ body.ur .btn{font-weight:700;padding:6px 22px}
 .chip b{color:var(--lime)}
 @keyframes rise{from{opacity:0;transform:translateY(40%)}to{opacity:1;transform:none}}
 @media (max-width:760px){
-  .hero{min-height:0;background:var(--night)}
-  .hero .in{grid-template-columns:1fr;padding:0;gap:0}
-  .hero .char{order:-1;width:100%;display:flex;justify-content:center;padding-top:74px;background:#0B1430 url(img/scene.svg) 62% bottom/cover;-webkit-mask-image:linear-gradient(#000 80%,transparent);mask-image:linear-gradient(#000 80%,transparent)}
-  .hero .char img{width:min(70%,290px)}
-  .hero .char::before{inset:30% 15% 0}
-  .hero .copy{padding:6px 18px 28px}
+  .hero{min-height:0;background:var(--night);display:block}
+  .hero .in{display:block;padding:0}
+  .hero .mimg{display:block;width:100%;aspect-ratio:720/1050;max-height:62vh;object-fit:cover;object-position:30% 20%;-webkit-mask-image:linear-gradient(#000 70%,transparent);mask-image:linear-gradient(#000 70%,transparent)}
+  .hero .copy{width:auto;padding:0 18px 28px;margin-top:-40px;position:relative}
   .hero h1{font-size:clamp(2.4rem,11vw,3.4rem)}
   body.ur .hero h1{font-size:clamp(1.9rem,8vw,2.6rem)}
+}
 }
 
 /* ---------- Section heads ---------- */
@@ -112,7 +109,7 @@ body.ur .tip p{line-height:2.2}
   background:radial-gradient(120% 90% at 100% 0%,rgba(37,69,99,.95),var(--dusk) 60%);border:1px solid var(--line);transition:transform .15s,border-color .15s}
 .mcard:hover{transform:translateY(-4px);border-color:rgba(215,255,60,.6)}
 .mcard .no{font-family:"Alexandria",sans-serif;font-weight:900;font-size:4.2rem;line-height:.8;color:transparent;-webkit-text-stroke:1.5px rgba(157,177,214,.35)}
-.mcard .big{position:absolute;inset-inline-end:10px;top:10px;width:96px;height:96px;filter:drop-shadow(0 10px 18px rgba(0,0,0,.4));transition:transform .2s}
+.mcard .big{position:absolute;inset-inline-end:8px;top:4px;width:110px;height:110px;filter:drop-shadow(0 10px 18px rgba(0,0,0,.4));transition:transform .2s}
 .mcard:hover .big{transform:rotate(-6deg) scale(1.06)}
 .mcard h3{font-family:var(--display);font-weight:800;font-size:1.35rem;line-height:1.25;margin-top:auto}
 body.ur .mcard h3{font-weight:700;line-height:1.9;font-size:1.15rem}
@@ -122,8 +119,8 @@ body.ur .mcard h3{font-weight:700;line-height:1.9;font-size:1.15rem}
 .mcard.done{border-color:var(--lime);box-shadow:0 0 0 1px var(--lime),0 18px 40px -20px rgba(215,255,60,.5)}
 .mcard.done .st b{color:var(--lime)}
 .mcard.lead{grid-column:span 2;background:linear-gradient(120deg,rgba(5,206,179,.25),transparent 55%),radial-gradient(120% 90% at 100% 0%,var(--royal),var(--dusk) 65%)}
-@media (max-width:520px){.mcard.lead{grid-column:auto}.mcard.lead .big{width:96px;height:96px}}
-.mcard.lead .big{width:130px;height:130px}
+@media (max-width:520px){.mcard.lead{grid-column:auto}.mcard.lead .big{width:100px;height:100px}.mcard{min-height:200px}.mcard h3{padding-top:70px}}
+.mcard.lead .big{width:150px;height:150px}
 
 /* ---------- Badges ---------- */
 .badges{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
@@ -141,8 +138,8 @@ body.ur .mcard h3{font-weight:700;line-height:1.9;font-size:1.15rem}
 /* ---------- Creator ---------- */
 .creator{position:relative;display:grid;grid-template-columns:minmax(0,.9fr) 1.1fr;gap:0;align-items:stretch;border-radius:28px;overflow:hidden;background:linear-gradient(120deg,var(--dusk),var(--night));border:1px solid var(--line);margin-top:10px}
 @media (max-width:700px){.creator{grid-template-columns:1fr}}
-.creator .cart{background:#0B1430 url(img/scene.svg) center bottom/cover;display:flex;align-items:flex-end;justify-content:center;min-height:320px;padding-top:30px}
-.creator .cart img{width:min(80%,340px)}
+.creator .cart{min-height:360px}
+.creator .cart img{width:100%;height:100%;object-fit:cover;object-position:50% 25%}
 .creator .txt{padding:34px 30px;display:flex;flex-direction:column;justify-content:center}
 .creator small{color:var(--teal);font-weight:700}
 .creator h3{font-size:clamp(2rem,5vw,3.4rem);line-height:1.1;margin:6px 0 14px}
@@ -242,7 +239,7 @@ body.ur .nextm b{font-weight:700}
 
 .by{display:flex;align-items:center;gap:14px;justify-content:center;padding:34px 0 46px}
 .by .av{width:60px;height:60px;border-radius:50%;border:2px solid var(--lime);overflow:hidden;background:var(--sky);flex-shrink:0}
-.by .av img{width:140%;max-width:none;margin:2px 0 0 -20%}
+.by .av img{width:100%;height:100%;object-fit:cover}
 .by small{display:block;color:var(--muted);font-size:.8rem}
 .by b{font-family:var(--display);font-weight:800;font-size:1.15rem}
 body.ur .by b{font-weight:700}
@@ -251,8 +248,8 @@ body.ur .by b{font-weight:700}
 #picker{position:fixed;inset:0;z-index:40;background:var(--night);overflow:auto}
 #picker .pin{max-width:520px;margin:0 auto;min-height:100%;display:flex;flex-direction:column}
 #picker .art{position:relative}
-#picker .art{background:#0B1430 url(img/scene.svg) center bottom/cover;display:flex;justify-content:center;padding-top:40px;-webkit-mask-image:linear-gradient(#000 70%,transparent);mask-image:linear-gradient(#000 70%,transparent)}
-#picker .art img{width:min(64%,280px)}
+#picker .art{-webkit-mask-image:linear-gradient(#000 65%,transparent);mask-image:linear-gradient(#000 65%,transparent)}
+#picker .art img{width:100%;aspect-ratio:1/1;object-fit:cover;object-position:50% 20%}
 #picker .pc{padding:0 18px 30px;margin-top:-30px;position:relative}
 #picker .t-ar{font-family:"Alexandria",sans-serif;font-weight:900;font-size:2rem;line-height:1.15}
 #picker .t-en{font-family:"Alexandria",sans-serif;font-weight:700;color:var(--lime);margin-top:6px;text-align:right}
@@ -272,7 +269,7 @@ body.ur .by b{font-weight:700}
 
 <div id="picker" hidden>
   <div class="pin">
-    <div class="art"><img src="img/anas.svg" alt=""></div>
+    <div class="art"><img src="img/me.webp" alt=""></div>
     <div class="pc">
       <div class="t-ar" id="pAr"></div>
       <div class="t-en" id="pEn" dir="ltr"></div>
@@ -307,7 +304,7 @@ const store = {
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const link = id => `?t=${id}&lang=${lang}`;
 const fmt = (s, o) => s.replace(/\{(\w+)\}/g, (_, k) => o[k]);
-const art = t => `img/t-${t.id}.svg`;
+const art = t => `img/t-${t.id}.webp`;
 
 /* Each topic's checklist: the ten rules, or the key points */
 const itemsOf = t => t.rules ? t.rules.length : t.ar.points.length;
@@ -349,7 +346,8 @@ function renderHome(u){
   return `
   <section class="hero">
     <div class="in">
-      <div class="copy">
+      <img class="mimg" src="img/hero-m.webp" alt="${esc(CONFIG.ownerName[lang])}">
+      <div class="copy" dir="${u.dir}">
         <h1 class="display">${words}</h1>
         <p>${esc(u.heroSub)}</p>
         <div class="cta">
@@ -357,7 +355,6 @@ function renderHome(u){
           <span class="chip"><span class="emoji">🏅</span><b>${done}/${TOPICS.length}</b></span>
         </div>
       </div>
-      <div class="char"><img src="img/anas.svg" alt="${esc(CONFIG.ownerName[lang])}"></div>
     </div>
   </section>
   <div class="stripe thin"></div>
@@ -392,7 +389,7 @@ function renderHome(u){
 
     <section class="sec">
       <div class="creator">
-        <div class="cart"><img src="img/anas.svg" alt="${esc(CONFIG.ownerName[lang])}" loading="lazy"></div>
+        <div class="cart"><img src="img/me.webp" alt="${esc(CONFIG.ownerName[lang])}" loading="lazy"></div>
         <div class="txt">
           <small>${u.by}</small>
           <h3 class="display">${esc(CONFIG.ownerName[lang])}</h3>
@@ -447,7 +444,7 @@ function renderTopic(u){
       <div class="msg" id="umsg"></div>
     </div>
     <a class="nextm" href="${link(next.id)}"><img src="${art(next)}" alt=""><div><small>${u.next}</small><b>${esc(next[lang].title)}</b></div></a>
-    <div class="by"><span class="av"><img src="img/anas.svg" alt=""></span><div><small>${u.by}</small><b>${esc(CONFIG.ownerName[lang])}</b></div></div>
+    <div class="by"><span class="av"><img src="img/avatar.webp" alt=""></span><div><small>${u.by}</small><b>${esc(CONFIG.ownerName[lang])}</b></div></div>
   </div>`;
 }
 

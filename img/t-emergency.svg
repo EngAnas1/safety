@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240"><defs><radialGradient id="g" cx=".5" cy=".55" r=".5"><stop offset="0" stop-color="#FF4D57" stop-opacity=".45"/><stop offset="1" stop-color="#FF4D57" stop-opacity="0"/></radialGradient></defs><circle cx="120" cy="128" r="112" fill="url(#g)"/>
-<g stroke="#FFC20E" stroke-width="7" stroke-linecap="round"><path d="M120 22 V40"/><path d="M58 46 L70 60"/><path d="M182 46 L170 60"/><path d="M34 98 H52"/><path d="M188 98 H206"/></g>
-<path d="M78 136 V104 Q78 62 120 62 Q162 62 162 104 V136 Z" fill="#FF4D57"/>
-<path d="M96 132 V106 Q96 82 116 78" stroke="#FFFFFF" stroke-width="9" stroke-linecap="round" fill="none" opacity=".75"/>
-<rect x="62" y="134" width="116" height="24" rx="8" fill="#C9D2DC"/>
-<rect x="40" y="170" width="160" height="50" rx="10" fill="#0A8F4E"/>
-<g fill="#FFFFFF"><circle cx="76" cy="182" r="6"/><path d="M70 190 L80 190 L86 204 L94 210 L90 214 L80 207 L76 198 L72 214 L66 214 L68 196 L62 202 L58 198 Z"/></g>
-<path d="M108 195 H170 M160 185 L172 195 L160 205" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>

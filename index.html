@@ -8,10 +8,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zain:wght@400;700;800;900&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="img/hero-m.webp" media="(max-width:760px)">
-<link rel="preload" as="image" href="img/hero.webp" media="(min-width:761px)">
-<script src="content.js"></script>
-<script src="quiz.js"></script>
+<link rel="preload" as="image" href="img/hero-m.webp">
+<script src="content.js?v=202611012055"></script>
+<script src="quiz.js?v=202611012055"></script>
 <style>
 /* =====================================================================
    الألوان — مأخوذة من المقطع والرسمة. غيّرها هنا فقط
@@ -62,7 +61,7 @@ body.ur .logo{font-weight:700;font-size:.95rem}
 body.ur .lang{padding:0 14px}
 
 /* ---------- Home hero: 3D illustration, headline in the open sky ---------- */
-.hero{position:relative;overflow:hidden;background:#0B1430 url(img/hero.webp) left center/cover no-repeat;min-height:min(92vh,800px);display:flex;align-items:center}
+.hero{position:relative;overflow:hidden;background:var(--night);min-height:min(92vh,800px);display:flex;align-items:center}
 .hero::after{content:"";position:absolute;inset:auto 0 0 0;height:20%;background:linear-gradient(transparent,var(--night));pointer-events:none}
 .hero .in{position:relative;z-index:1;width:100%;max-width:1240px;margin:0 auto;padding:100px 24px 60px;display:flex;justify-content:flex-end;direction:ltr}
 .hero .copy{width:min(46%,560px)}
@@ -84,7 +83,7 @@ body.ur .btn{font-weight:700;padding:6px 22px}
 .chip{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:rgba(11,20,48,.55);border-radius:999px;padding:6px 14px;font-size:.88rem;font-weight:600;backdrop-filter:blur(6px)}
 .chip b{color:var(--lime)}
 @keyframes rise{from{opacity:0;transform:translateY(40%)}to{opacity:1;transform:none}}
-@media (max-width:760px){
+@media all{
   .hero{min-height:0;background:var(--night);display:block}
   .hero .in{display:block;padding:0}
   .hero .mimg{display:block;width:100%;aspect-ratio:720/1050;max-height:62vh;object-fit:cover;object-position:30% 20%;-webkit-mask-image:linear-gradient(#000 70%,transparent);mask-image:linear-gradient(#000 70%,transparent)}
@@ -308,6 +307,12 @@ body.ur .quiz.result h3{font-weight:700;line-height:2}
 @media (min-width:761px){#picker .pin{justify-content:center}}
 
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.burst{display:none}}
+/* Same layout on every screen: the phone design, centered on wide screens */
+html{background:#050A1C}
+body{position:relative;max-width:480px;margin:0 auto;box-shadow:0 0 0 1px var(--line),0 0 80px rgba(0,0,0,.6)}
+.creator{grid-template-columns:1fr}
+.qicon{width:72px;height:72px;flex-shrink:0;filter:drop-shadow(0 8px 14px rgba(0,0,0,.4))}
+.trophy{font-size:96px;animation:flip 1.1s cubic-bezier(.2,.9,.3,1.1) both;filter:drop-shadow(0 0 30px rgba(215,255,60,.55))}
 </style>
 </head>
 <body>
@@ -354,7 +359,6 @@ const art = t => `img/t-${t.id}.webp`;
 /* Quiz progress: best score per topic; a perfect score earns the badge */
 const QN = t => Math.min(QUIZ_SIZE, (QUIZ[t.id] || []).length);
 const bestScore = t => +(store.get("best:" + t.id) || 0);
-const hasBadge = t => store.get("badge:" + t.id) === "1";
 const refLabel = r => typeof r === "string" ? r : r[lang];
 
 function ytId(url){
@@ -410,8 +414,6 @@ function renderTopic(u){
 
     <section class="quiz" id="quiz" aria-live="polite"></section>
 
-    <h2 class="h2">${u.tenRules || u.keyPoints}</h2>
-    ${content}
     <div class="stop"><span class="oct emoji">✋</span><span>${u.stop}</span></div>
     ${refs ? `<div class="refs"><small>${u.refs}</small>${refs}</div>` : ""}
 
@@ -443,14 +445,14 @@ let Q = null;   // {order, i, score, picked}
 function shuffle(a){ a = a.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random()*(i+1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 
 function quizIntro(){
-  const u = UI[lang], box = document.getElementById("quiz"), b = hasBadge(topic);
-  box.className = "quiz" + (b ? " won" : "");
+  const u = UI[lang], box = document.getElementById("quiz");
+  box.className = "quiz";
   box.innerHTML = `
     <div class="qhead">
-      <div class="hex ${b ? "on" : ""}" id="qbadge"><img src="${art(topic)}" alt=""></div>
-      <div><h2>${u.quizTitle}</h2><p>${b ? u.unlocked : u.quizSub}</p></div>
+      <img class="qicon" src="${art(topic)}" alt="">
+      <div><h2>${u.quizTitle}</h2><p>${u.quizSub}</p></div>
     </div>
-    <button class="btn qgo" id="qstart">${b ? "🔁 " + u.retry : "🎯 " + u.startQuiz}</button>`;
+    <button class="btn qgo" id="qstart">🎯 ${u.startQuiz}</button>`;
   document.getElementById("qstart").onclick = quizStart;
 }
 
@@ -520,14 +522,12 @@ function quizAnswer(j){
 function quizResult(){
   const u = UI[lang], box = document.getElementById("quiz"), total = QN(topic), sc = Q.score, perfect = sc === total;
   if(sc > bestScore(topic)) store.set("best:" + topic.id, String(sc));
-  const firstWin = perfect && !hasBadge(topic);
-  if(perfect) store.set("badge:" + topic.id, "1");
   updateMeter();
   const R = 52, C = 2 * Math.PI * R;
   box.className = "quiz result" + (perfect ? " won" : "");
   box.innerHTML = `
     ${perfect
-      ? `<div class="medal"><div class="hex on" id="qbadge"><img src="${art(topic)}" alt=""></div></div>`
+      ? `<div class="trophy emoji">🏆</div>`
       : `<svg class="ring" viewBox="0 0 120 120"><circle cx="60" cy="60" r="${R}" class="bg"/><circle cx="60" cy="60" r="${R}" class="fg" style="stroke-dasharray:${C};stroke-dashoffset:${C}" id="ringFg"/><text x="60" y="68" text-anchor="middle">${sc}/${total}</text></svg>`}
     <h3>${perfect ? u.perfect : u.almost}</h3>
     <p class="sc">${u.yourScore}: <b>${sc}/${total}</b></p>
@@ -537,7 +537,7 @@ function quizResult(){
   if(!perfect) requestAnimationFrame(() => setTimeout(() => { const f = document.getElementById("ringFg"); if(f) f.style.strokeDashoffset = C * (1 - sc/total); }, 60));
   if(perfect){
     if(navigator.vibrate) navigator.vibrate([50, 40, 50, 40, 120]);
-    if(!reduced()) confetti(firstWin ? 220 : 120);
+    if(!reduced()) confetti(200);
   }
 }
 

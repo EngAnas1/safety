@@ -8,8 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@500;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="img/hero-m.webp" media="(max-width:760px)">
-<link rel="preload" as="image" href="img/hero.webp" media="(min-width:761px)">
+<link rel="preload" as="image" href="img/scene.svg">
 <script src="content.js"></script>
 <style>
 /* =====================================================================
@@ -56,35 +55,39 @@ body.ur .display{font-weight:700;letter-spacing:0}
 .logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:1.05rem}
 body.ur .logo{font-weight:700;font-size:.95rem}
 .logo .m{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--lime);font-size:19px;box-shadow:0 0 18px rgba(215,255,60,.35)}
-.lang{display:flex;gap:4px;background:rgba(11,20,48,.55);border:1px solid var(--line);border-radius:999px;padding:3px;backdrop-filter:blur(8px)}
-.lang button{padding:3px 12px;border-radius:999px;font-size:.82rem;font-weight:600;color:var(--muted)}
-.lang button.on{background:var(--lime);color:var(--night)}
-.lang .ur{font-family:"Noto Nastaliq Urdu",serif;padding-block:0}
+.lang{display:flex;align-items:center;gap:8px;background:rgba(11,20,48,.55);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:.88rem;font-weight:600;backdrop-filter:blur(8px)}
+.lang:hover{border-color:var(--lime)}
+body.ur .lang{padding:0 14px}
 
-/* ---------- Home hero: Anas points at the headline ---------- */
-.hero{position:relative;background:var(--night)}
-.hero .art{position:relative;max-height:94vh;aspect-ratio:2000/1116;margin:0 auto;overflow:hidden}
-.hero .art picture,.hero .art img{width:100%;height:100%;object-fit:cover}
-.hero .art::after{content:"";position:absolute;inset:auto 0 0 0;height:22%;background:linear-gradient(transparent,var(--night))}
-.hero .copy{position:absolute;left:14%;top:14%;width:34.5%;height:62%;display:flex;flex-direction:column;justify-content:center;padding:3% 4%;text-align:start}
-.hero h1{font-size:clamp(2rem,4.3vw,4.4rem);line-height:1.05;color:var(--text);text-wrap:balance}
-body.ur .hero h1{line-height:1.7;font-size:clamp(1.6rem,3vw,3rem)}
+/* ---------- Home hero: illustrated scene + character ---------- */
+.hero{position:relative;overflow:hidden;background:#0B1430 url(img/scene.svg) center bottom/cover no-repeat;min-height:min(92vh,760px);display:flex;align-items:flex-end}
+.hero::after{content:"";position:absolute;inset:auto 0 0 0;height:18%;background:linear-gradient(transparent,var(--night));pointer-events:none}
+.hero .in{position:relative;z-index:1;width:100%;max-width:1120px;margin:0 auto;padding:110px 18px 0;display:grid;grid-template-columns:1.1fr .9fr;align-items:end;gap:20px}
+.hero .copy{padding-bottom:16vh;align-self:center}
+.hero .char{position:relative;justify-self:center;width:min(100%,440px)}
+.hero .char::before{content:"";position:absolute;inset:8% 4% 0;border-radius:50% 50% 0 0;background:radial-gradient(circle at 50% 60%,rgba(215,255,60,.35),transparent 65%)}
+.hero .char img{position:relative;width:100%;animation:bob 5s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-8px)}}
+.hero h1{font-size:clamp(2.4rem,5.6vw,5rem);line-height:1.05;text-wrap:balance}
+body.ur .hero h1{line-height:1.7;font-size:clamp(1.9rem,4vw,3.4rem)}
 .hero h1 .w{display:inline-block;animation:rise .7s cubic-bezier(.2,.9,.3,1.2) both}
-.hero p{margin-top:16px;color:var(--muted);font-size:clamp(.95rem,1.3vw,1.15rem);max-width:34ch}
+.hero p{margin-top:16px;color:#C9D6EE;font-size:clamp(1rem,1.4vw,1.2rem);max-width:34ch}
 .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;align-items:center}
 .btn{display:inline-flex;align-items:center;gap:10px;background:var(--lime);color:var(--night);font-family:var(--display);font-weight:800;padding:13px 22px;border-radius:14px;box-shadow:0 10px 30px -10px rgba(215,255,60,.55);transition:transform .12s}
 body.ur .btn{font-weight:700;padding:6px 22px}
+.btn img{width:26px;height:26px}
 .btn:hover{transform:translateY(-2px)}
 .btn:active{transform:scale(.97)}
-.chip{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:rgba(11,20,48,.5);border-radius:999px;padding:6px 14px;font-size:.88rem;font-weight:600}
+.chip{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:rgba(11,20,48,.55);border-radius:999px;padding:6px 14px;font-size:.88rem;font-weight:600;backdrop-filter:blur(6px)}
 .chip b{color:var(--lime)}
 @keyframes rise{from{opacity:0;transform:translateY(40%)}to{opacity:1;transform:none}}
-
 @media (max-width:760px){
-  .hero .art{aspect-ratio:auto;max-height:none}
-  .hero .art img{aspect-ratio:800/812;height:auto}
-  .hero .copy{position:relative;left:auto;top:auto;width:auto;height:auto;margin-top:-90px;padding:0 18px 8px;z-index:2}
-  .hero .art::after{height:45%}
+  .hero{min-height:0;background:var(--night)}
+  .hero .in{grid-template-columns:1fr;padding:0;gap:0}
+  .hero .char{order:-1;width:100%;display:flex;justify-content:center;padding-top:74px;background:#0B1430 url(img/scene.svg) 62% bottom/cover;-webkit-mask-image:linear-gradient(#000 80%,transparent);mask-image:linear-gradient(#000 80%,transparent)}
+  .hero .char img{width:min(70%,290px)}
+  .hero .char::before{inset:30% 15% 0}
+  .hero .copy{padding:6px 18px 28px}
   .hero h1{font-size:clamp(2.4rem,11vw,3.4rem)}
   body.ur .hero h1{font-size:clamp(1.9rem,8vw,2.6rem)}
 }
@@ -109,7 +112,8 @@ body.ur .tip p{line-height:2.2}
   background:radial-gradient(120% 90% at 100% 0%,rgba(37,69,99,.95),var(--dusk) 60%);border:1px solid var(--line);transition:transform .15s,border-color .15s}
 .mcard:hover{transform:translateY(-4px);border-color:rgba(215,255,60,.6)}
 .mcard .no{font-family:"Alexandria",sans-serif;font-weight:900;font-size:4.2rem;line-height:.8;color:transparent;-webkit-text-stroke:1.5px rgba(157,177,214,.35)}
-.mcard .big{position:absolute;inset-inline-end:16px;top:16px;font-size:58px;filter:drop-shadow(0 10px 18px rgba(0,0,0,.45))}
+.mcard .big{position:absolute;inset-inline-end:10px;top:10px;width:96px;height:96px;filter:drop-shadow(0 10px 18px rgba(0,0,0,.4));transition:transform .2s}
+.mcard:hover .big{transform:rotate(-6deg) scale(1.06)}
 .mcard h3{font-family:var(--display);font-weight:800;font-size:1.35rem;line-height:1.25;margin-top:auto}
 body.ur .mcard h3{font-weight:700;line-height:1.9;font-size:1.15rem}
 .mcard .bar{height:6px;border-radius:6px;background:rgba(157,177,214,.18);overflow:hidden}
@@ -118,14 +122,15 @@ body.ur .mcard h3{font-weight:700;line-height:1.9;font-size:1.15rem}
 .mcard.done{border-color:var(--lime);box-shadow:0 0 0 1px var(--lime),0 18px 40px -20px rgba(215,255,60,.5)}
 .mcard.done .st b{color:var(--lime)}
 .mcard.lead{grid-column:span 2;background:linear-gradient(120deg,rgba(5,206,179,.25),transparent 55%),radial-gradient(120% 90% at 100% 0%,var(--royal),var(--dusk) 65%)}
-@media (max-width:520px){.mcard.lead{grid-column:auto}}
-.mcard.lead .big{font-size:84px}
+@media (max-width:520px){.mcard.lead{grid-column:auto}.mcard.lead .big{width:96px;height:96px}}
+.mcard.lead .big{width:130px;height:130px}
 
 /* ---------- Badges ---------- */
 .badges{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
 .hex{width:74px;height:84px;display:grid;place-items:center;font-size:32px;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);background:rgba(157,177,214,.14);position:relative}
 .hex.on{background:var(--lime);box-shadow:none}
-.hex:not(.on) .emoji{filter:grayscale(1) opacity(.35)}
+.hex img{width:62%;height:62%}
+.hex:not(.on) img{filter:grayscale(1) opacity(.35)}
 .hex:not(.on)::after{content:"🔒";position:absolute;font-size:16px;bottom:14px;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
 .prog{margin-inline-start:auto;text-align:end}
 .prog b{display:block;font-family:"Alexandria",sans-serif;font-weight:900;font-size:2.2rem;line-height:1;color:var(--lime)}
@@ -136,7 +141,8 @@ body.ur .mcard h3{font-weight:700;line-height:1.9;font-size:1.15rem}
 /* ---------- Creator ---------- */
 .creator{position:relative;display:grid;grid-template-columns:minmax(0,.9fr) 1.1fr;gap:0;align-items:stretch;border-radius:28px;overflow:hidden;background:linear-gradient(120deg,var(--dusk),var(--night));border:1px solid var(--line);margin-top:10px}
 @media (max-width:700px){.creator{grid-template-columns:1fr}}
-.creator img{width:100%;height:100%;object-fit:cover;min-height:320px}
+.creator .cart{background:#0B1430 url(img/scene.svg) center bottom/cover;display:flex;align-items:flex-end;justify-content:center;min-height:320px;padding-top:30px}
+.creator .cart img{width:min(80%,340px)}
 .creator .txt{padding:34px 30px;display:flex;flex-direction:column;justify-content:center}
 .creator small{color:var(--teal);font-weight:700}
 .creator h3{font-size:clamp(2rem,5vw,3.4rem);line-height:1.1;margin:6px 0 14px}
@@ -149,7 +155,8 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:.85rem;text-align:center
 /* ---------- Topic page ---------- */
 .thero{position:relative;padding:34px 0 28px;overflow:hidden;background:radial-gradient(90% 120% at 85% 0%,var(--sky),var(--night) 70%)}
 .thero::before{content:"";position:absolute;inset:auto 0 0 0;height:40%;background:linear-gradient(transparent,rgba(255,154,77,.10))}
-.thero .ghost{position:absolute;inset-inline-end:-30px;top:10px;font-size:220px;opacity:.16;transform:rotate(-8deg);pointer-events:none}
+.thero .ghost{position:absolute;inset-inline-end:max(2vw,calc((100vw - 1120px)/2));top:24px;width:min(34vw,300px);filter:drop-shadow(0 20px 30px rgba(0,0,0,.4));pointer-events:none}
+@media (max-width:760px){.thero .ghost{position:relative;inset:auto;display:block;width:150px;margin:0 auto 6px}}
 .thero .wrap{position:relative}
 .kick{display:inline-flex;gap:8px;align-items:center;font-weight:700;font-size:.9rem;color:var(--lime)}
 .kick span{color:var(--muted);font-weight:500}
@@ -228,13 +235,14 @@ body.ur .stop{font-weight:700;line-height:2}
 
 .nextm{display:flex;align-items:center;gap:16px;margin-top:16px;padding:18px 20px;border-radius:22px;background:linear-gradient(120deg,var(--royal),var(--dusk));border:1px solid var(--line);transition:transform .15s}
 .nextm:hover{transform:translateY(-3px)}
-.nextm .emoji{font-size:44px}
+.nextm img{width:64px;height:64px}
 .nextm small{color:var(--lime);font-weight:700;display:block}
 .nextm b{font-family:var(--display);font-weight:800;font-size:1.3rem}
 body.ur .nextm b{font-weight:700}
 
 .by{display:flex;align-items:center;gap:14px;justify-content:center;padding:34px 0 46px}
-.by img{width:56px;height:56px;border-radius:50%;border:2px solid var(--lime);object-fit:cover}
+.by .av{width:60px;height:60px;border-radius:50%;border:2px solid var(--lime);overflow:hidden;background:var(--sky);flex-shrink:0}
+.by .av img{width:140%;max-width:none;margin:2px 0 0 -20%}
 .by small{display:block;color:var(--muted);font-size:.8rem}
 .by b{font-family:var(--display);font-weight:800;font-size:1.15rem}
 body.ur .by b{font-weight:700}
@@ -243,10 +251,11 @@ body.ur .by b{font-weight:700}
 #picker{position:fixed;inset:0;z-index:40;background:var(--night);overflow:auto}
 #picker .pin{max-width:520px;margin:0 auto;min-height:100%;display:flex;flex-direction:column}
 #picker .art{position:relative}
-#picker .art img{width:100%;aspect-ratio:800/812;object-fit:cover;-webkit-mask-image:linear-gradient(#000 60%,transparent);mask-image:linear-gradient(#000 60%,transparent)}
-#picker .pc{padding:0 18px 30px;margin-top:-70px;position:relative}
+#picker .art{background:#0B1430 url(img/scene.svg) center bottom/cover;display:flex;justify-content:center;padding-top:40px;-webkit-mask-image:linear-gradient(#000 70%,transparent);mask-image:linear-gradient(#000 70%,transparent)}
+#picker .art img{width:min(64%,280px)}
+#picker .pc{padding:0 18px 30px;margin-top:-30px;position:relative}
 #picker .t-ar{font-family:"Alexandria",sans-serif;font-weight:900;font-size:2rem;line-height:1.15}
-#picker .t-en{font-family:"Alexandria",sans-serif;font-weight:700;color:var(--lime);margin-top:6px}
+#picker .t-en{font-family:"Alexandria",sans-serif;font-weight:700;color:var(--lime);margin-top:6px;text-align:right}
 #picker .t-ur{font-family:"Noto Nastaliq Urdu",serif;color:var(--muted);line-height:2.3}
 #picker .choose{display:grid;gap:10px;margin-top:18px}
 #picker .choose button{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-radius:16px;background:var(--dusk);border:1.5px solid var(--line);font-family:"Alexandria",sans-serif;font-size:1.3rem;font-weight:800;transition:border-color .12s,transform .12s}
@@ -263,10 +272,10 @@ body.ur .by b{font-weight:700}
 
 <div id="picker" hidden>
   <div class="pin">
-    <div class="art"><img src="img/hero-m.webp" alt=""></div>
+    <div class="art"><img src="img/anas.svg" alt=""></div>
     <div class="pc">
       <div class="t-ar" id="pAr"></div>
-      <div class="t-en" id="pEn"></div>
+      <div class="t-en" id="pEn" dir="ltr"></div>
       <div class="t-ur" id="pUr"></div>
       <div class="choose">
         <button data-lang="ar"><span>العربية</span><small>اختر لغتك</small></button>
@@ -280,11 +289,7 @@ body.ur .by b{font-weight:700}
 <header class="top" id="top">
   <div class="wrap">
     <a class="logo" id="homeLink" href="./"><span class="m emoji">⛑️</span><span id="siteName"></span></a>
-    <div class="lang">
-      <button data-lang="ar">عربي</button>
-      <button data-lang="en">EN</button>
-      <button data-lang="ur" class="ur">اردو</button>
-    </div>
+    <button class="lang" id="langBtn"><span class="emoji">🌐</span><span id="langLbl"></span></button>
   </div>
 </header>
 
@@ -302,6 +307,7 @@ const store = {
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const link = id => `?t=${id}&lang=${lang}`;
 const fmt = (s, o) => s.replace(/\{(\w+)\}/g, (_, k) => o[k]);
+const art = t => `img/t-${t.id}.svg`;
 
 /* Each topic's checklist: the ten rules, or the key points */
 const itemsOf = t => t.rules ? t.rules.length : t.ar.points.length;
@@ -342,19 +348,16 @@ function renderHome(u){
   const words = u.heroTitle.split(" ").map((w, i) => `<span class="w" style="animation-delay:${.15 + i*.12}s">${esc(w)}</span>`).join(" ");
   return `
   <section class="hero">
-    <div class="art">
-      <picture>
-        <source media="(max-width:760px)" srcset="img/hero-m.webp">
-        <img src="img/hero.webp" srcset="img/hero-1200.webp 1200w, img/hero.webp 2000w" sizes="100vw" alt="${esc(CONFIG.ownerName[lang])}">
-      </picture>
-    </div>
-    <div class="copy">
-      <h1 class="display">${words}</h1>
-      <p>${esc(u.heroSub)}</p>
-      <div class="cta">
-        <a class="btn" href="${link(lead.id)}"><span class="emoji">${lead.emoji}</span>${u.start}</a>
-        <span class="chip"><span class="emoji">🏅</span><b>${done}/${TOPICS.length}</b></span>
+    <div class="in">
+      <div class="copy">
+        <h1 class="display">${words}</h1>
+        <p>${esc(u.heroSub)}</p>
+        <div class="cta">
+          <a class="btn" href="${link(lead.id)}"><img src="${art(lead)}" alt="">${u.start}</a>
+          <span class="chip"><span class="emoji">🏅</span><b>${done}/${TOPICS.length}</b></span>
+        </div>
       </div>
+      <div class="char"><img src="img/anas.svg" alt="${esc(CONFIG.ownerName[lang])}"></div>
     </div>
   </section>
   <div class="stripe thin"></div>
@@ -370,7 +373,7 @@ function renderHome(u){
         const n = countChecked(t), total = itemsOf(t), b = hasBadge(t);
         return `<a class="mcard ${t === lead ? "lead" : ""} ${b ? "done" : ""}" href="${link(t.id)}">
           <span class="no">${String(i+1).padStart(2,"0")}</span>
-          <span class="big emoji">${t.emoji}</span>
+          <img class="big" src="${art(t)}" alt="">
           <h3>${esc(t[lang].title)}</h3>
           <div class="bar"><i style="width:${Math.round(n/total*100)}%"></i></div>
           <div class="st"><span>${fmt(u.progress, {n, t: total})}</span>${b ? `<b>✔ 🏅</b>` : ""}</div>
@@ -381,7 +384,7 @@ function renderHome(u){
     <section class="sec">
       <h2>${u.badges}</h2>
       <div class="badges">
-        ${TOPICS.map(t => `<div class="hex ${hasBadge(t) ? "on" : ""}" title="${esc(t[lang].title)}"><span class="emoji">${t.emoji}</span></div>`).join("")}
+        ${TOPICS.map(t => `<div class="hex ${hasBadge(t) ? "on" : ""}" title="${esc(t[lang].title)}"><img src="${art(t)}" alt=""></div>`).join("")}
         <div class="prog"><b>${done}/${TOPICS.length}</b><span>${fmt(u.progress, {n: done, t: TOPICS.length})}</span></div>
       </div>
       ${done === TOPICS.length ? `<div class="hero-msg">${u.allDone}</div>` : ""}
@@ -389,7 +392,7 @@ function renderHome(u){
 
     <section class="sec">
       <div class="creator">
-        <img src="img/portrait.webp" alt="${esc(CONFIG.ownerName[lang])}" loading="lazy">
+        <div class="cart"><img src="img/anas.svg" alt="${esc(CONFIG.ownerName[lang])}" loading="lazy"></div>
         <div class="txt">
           <small>${u.by}</small>
           <h3 class="display">${esc(CONFIG.ownerName[lang])}</h3>
@@ -424,7 +427,7 @@ function renderTopic(u){
       </div>`;
   return `
   <section class="thero">
-    <span class="ghost emoji" aria-hidden="true">${topic.emoji}</span>
+    <img class="ghost" src="${art(topic)}" alt="">
     <div class="wrap">
       <div class="kick">${u.mission} ${idx+1} <span>/ ${TOPICS.length}</span></div>
       <h1 class="display">${esc(c.title)}</h1>
@@ -439,12 +442,12 @@ function renderTopic(u){
     ${cards}
     <div class="stop"><span class="oct emoji">✋</span><span>${u.stop}</span></div>
     <div class="unlock ${hasBadge(topic) ? "done" : ""}" id="unlock">
-      <div class="hex ${hasBadge(topic) ? "on" : ""}" id="badge"><span class="emoji">${topic.emoji}</span></div>
+      <div class="hex ${hasBadge(topic) ? "on" : ""}" id="badge"><img src="${art(topic)}" alt=""></div>
       <button class="btn" id="claim" ${hasBadge(topic) ? "hidden" : ""}>🏅 ${u.claim}</button>
       <div class="msg" id="umsg"></div>
     </div>
-    <a class="nextm" href="${link(next.id)}"><span class="emoji">${next.emoji}</span><div><small>${u.next}</small><b>${esc(next[lang].title)}</b></div></a>
-    <div class="by"><img src="img/avatar.webp" alt=""><div><small>${u.by}</small><b>${esc(CONFIG.ownerName[lang])}</b></div></div>
+    <a class="nextm" href="${link(next.id)}"><img src="${art(next)}" alt=""><div><small>${u.next}</small><b>${esc(next[lang].title)}</b></div></a>
+    <div class="by"><span class="av"><img src="img/anas.svg" alt=""></span><div><small>${u.by}</small><b>${esc(CONFIG.ownerName[lang])}</b></div></div>
   </div>`;
 }
 
@@ -500,7 +503,7 @@ function render(){
   document.getElementById("top").classList.toggle("solid", !!topic);
   document.getElementById("siteName").textContent = u.site;
   document.getElementById("homeLink").href = "./?lang=" + lang;
-  document.querySelectorAll(".lang button").forEach(b => b.classList.toggle("on", b.dataset.lang === lang));
+  document.getElementById("langLbl").textContent = u.lang;
   document.getElementById("app").innerHTML = topic ? renderTopic(u) : renderHome(u);
   if(topic){
     document.querySelectorAll(".ck").forEach(b => { b.onclick = toggle; b.onkeydown = e => { if(e.key === "Enter" || e.key === " "){ e.preventDefault(); toggle({currentTarget: b}); } }; });
@@ -527,7 +530,8 @@ function showPicker(){
   document.getElementById("picker").hidden = false;
 }
 
-document.querySelectorAll("[data-lang]").forEach(b => b.onclick = () => setLang(b.dataset.lang));
+document.querySelectorAll("#picker [data-lang]").forEach(b => b.onclick = () => setLang(b.dataset.lang));
+document.getElementById("langBtn").onclick = showPicker;
 
 /* Start: ?lang= in the link wins, then the language chosen last time, else ask */
 const start = params.get("lang") || store.get("lang");

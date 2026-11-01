@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0B1430">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>Safety Awareness</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -344,7 +347,9 @@ body{position:relative;max-width:480px;margin:0 auto;box-shadow:0 0 0 1px var(--
 
 <script>
 const params = new URLSearchParams(location.search);
-const topic = TOPICS.find(t => t.id === params.get("t")) || TOPICS[0];
+/* The site has one topic: Life Saving Rules. Old links (?t=risk, ?t=ppe…) land here too. */
+const topic = TOPICS[0];
+if(params.has("t")){ params.delete("t"); history.replaceState(null, "", location.pathname + (params.toString() ? "?" + params : "")); }
 let lang = null;
 
 const store = {

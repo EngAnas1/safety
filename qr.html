@@ -98,7 +98,7 @@ baseInput.value = location.href.replace(/[?#].*$/, "").replace(/qr\.html$/, "");
 function topicURL(t){
   let b = baseInput.value.trim();
   if(b && !b.endsWith("/") && !/\.html$/.test(b)) b += "/";
-  return b + "?t=" + t.id;
+  return b;
 }
 
 function draw(){

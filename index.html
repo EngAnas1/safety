@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#020E33">
+<title>Safety Awareness</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+<script src="content.js"></script>
+<style>
+/* =====================================================================
+   ألوان الهوية — غيّر القيم هنا فقط لمطابقة الشعار الرسمي
+   ===================================================================== */
+:root{
+  --bg-deep:#020E33;    /* الشريط العلوي والتذييل */
+  --bg:#041547;         /* خلفية الصفحة */
+  --surface:#0A2366;    /* البطاقات */
+  --royal:#0A2E89;      /* شريط التنقل */
+  --azure:#1A7FE8;      /* الأزرق الفاتح */
+  --teal:#05CEB3;       /* لون التمييز */
+  --teal-deep:#039DB0;
+  --red:#E5333B;
+  --text:#E6EEFF;       /* نص فاتح مائل للأزرق */
+  --muted:#9BB0E0;
+  --rule:rgba(155,176,224,.22);
+  --grad:linear-gradient(90deg,var(--teal-deep),var(--azure));
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg);-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--text);font-family:"IBM Plex Sans Arabic","IBM Plex Sans",system-ui,sans-serif;font-size:17px;line-height:1.7;min-height:100vh}
+body.en{font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:16.5px;line-height:1.6}
+body.ur{font-family:"Noto Nastaliq Urdu","IBM Plex Sans Arabic",serif;font-size:15.5px;line-height:2.35}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+[hidden]{display:none!important}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+.emoji{font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;line-height:1}
+
+/* ---------- Masthead ---------- */
+.mast{background:var(--bg-deep)}
+.mast .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:60px}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.brand .mark{width:38px;height:38px;flex-shrink:0;display:grid;place-items:center;background:var(--teal);color:var(--bg-deep);font-size:20px}
+.brand b{font-size:1.15rem;font-weight:700;white-space:nowrap}
+body.ur .brand b{font-size:1.05rem}
+.brand .loc{color:var(--muted);font-size:.82rem;border-inline-start:1px solid var(--rule);padding-inline-start:12px;white-space:nowrap}
+@media (max-width:560px){.brand .loc{display:none}}
+.langs-top{display:flex;gap:2px;flex-shrink:0}
+.langs-top button{padding:4px 9px;font-size:.85rem;color:var(--muted);border-bottom:3px solid transparent}
+.langs-top button.on{color:var(--text);border-color:var(--teal);font-weight:600}
+.langs-top .ur{font-family:"Noto Nastaliq Urdu",serif;font-size:.8rem;padding-block:0}
+.langs-top .en{font-family:"IBM Plex Sans",sans-serif}
+
+.nav{background:var(--royal);border-bottom:1px solid var(--rule)}
+.nav ul{list-style:none;display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
+.nav ul::-webkit-scrollbar{display:none}
+.nav a{display:block;padding:11px 14px;font-size:.92rem;font-weight:500;white-space:nowrap;border-bottom:4px solid transparent}
+.nav a:hover{border-color:var(--muted)}
+.nav a.on{border-color:var(--teal);font-weight:700}
+body.ur .nav a{padding:6px 14px;font-size:.88rem}
+.gradline{height:3px;background:var(--grad)}
+
+/* ---------- Thumbnails: video poster, or a generated panel with the video's diagonal slash ---------- */
+.thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:linear-gradient(135deg,var(--royal),var(--bg-deep))}
+.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.thumb .slash{position:absolute;top:0;bottom:0;inset-inline-end:-18%;width:46%;background:linear-gradient(160deg,var(--teal),var(--teal-deep));transform:skewX(-14deg);opacity:.9}
+[dir=rtl] .thumb .slash{transform:skewX(14deg)}
+.thumb .big{position:absolute;inset-inline-start:9%;top:50%;transform:translateY(-50%);font-size:clamp(44px,9vw,72px);filter:drop-shadow(0 8px 18px rgba(0,0,0,.4))}
+.thumb .play{position:absolute;inset-inline-start:0;bottom:0;display:flex;align-items:center;gap:8px;background:var(--bg-deep);color:var(--text);padding:6px 12px 6px 10px;font-size:.85rem;font-weight:600}
+.thumb .play i{width:0;height:0;border-style:solid;border-width:6px 0 6px 10px;border-color:transparent transparent transparent var(--teal)}
+
+/* ---------- Section labels ---------- */
+.label{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.05rem;margin:28px 0 14px;padding-top:12px;border-top:1px solid var(--rule)}
+.label::before{content:"";width:12px;height:12px;background:var(--teal)}
+body.ur .label{font-size:1rem}
+
+/* ---------- Home: lead story ---------- */
+.lead{display:grid;grid-template-columns:1.5fr 1fr;gap:22px;align-items:start}
+@media (max-width:760px){.lead{grid-template-columns:1fr;gap:14px}}
+.lead h2{font-size:clamp(1.6rem,4.6vw,2.4rem);line-height:1.2;font-weight:700}
+body.en .lead h2{letter-spacing:-.015em}
+body.ur .lead h2{line-height:1.85;font-size:clamp(1.4rem,4vw,2rem)}
+.lead p{color:var(--muted);margin-top:10px;font-size:1.02rem}
+.lead a:hover h2{text-decoration:underline;text-decoration-color:var(--teal);text-underline-offset:6px}
+.meta{display:flex;align-items:center;gap:10px;margin-top:14px;font-size:.85rem;color:var(--muted)}
+.meta .sec{color:var(--teal);font-weight:600;border-inline-start:1px solid var(--rule);padding-inline-start:10px}
+
+/* ---------- Home: grid + numbered rules column ---------- */
+.home-main{display:grid;grid-template-columns:2fr 1fr;gap:28px}
+@media (max-width:860px){.home-main{grid-template-columns:1fr;gap:0}}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+
+.card{display:flex;flex-direction:column;background:var(--surface);border-top:4px solid transparent;transition:border-color .15s}
+.card:hover{border-color:var(--teal)}
+.card .body{padding:12px 14px 16px}
+.card h3{font-size:1.12rem;font-weight:700;line-height:1.35}
+body.ur .card h3{font-size:1rem;line-height:2}
+.card p{color:var(--muted);font-size:.92rem;margin-top:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+.most ol{list-style:none;counter-reset:n}
+.most li{counter-increment:n;border-bottom:1px solid var(--rule)}
+.most a{display:flex;gap:14px;align-items:baseline;padding:10px 0;font-weight:600}
+.most a:hover span{text-decoration:underline;text-decoration-color:var(--teal)}
+.most a::before{content:counter(n);font-family:"IBM Plex Sans",sans-serif;font-weight:300;font-size:2rem;line-height:1;color:var(--teal);min-width:1.4em}
+body.ur .most a{font-weight:400}
+
+/* ---------- Article ---------- */
+.article{max-width:720px;margin:0 auto;padding:0 16px}
+.crumb{display:flex;gap:10px;align-items:center;margin-top:22px;font-size:.88rem;font-weight:600}
+.crumb a{color:var(--teal)}
+.crumb span{color:var(--muted);font-weight:400}
+.article h1{font-size:clamp(1.9rem,6.4vw,2.8rem);line-height:1.18;font-weight:700;margin-top:10px}
+body.en .article h1{letter-spacing:-.02em}
+body.ur .article h1{line-height:1.85;font-size:clamp(1.6rem,5.4vw,2.3rem)}
+.standfirst{font-size:1.15rem;font-weight:600;margin-top:12px;line-height:1.55}
+body.ur .standfirst{line-height:2.2;font-size:1.05rem}
+.byline{display:flex;gap:12px;align-items:center;padding:14px 0;margin-top:16px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.byline .av{width:44px;height:44px;flex-shrink:0;display:grid;place-items:center;background:var(--royal);border:2px solid var(--teal);font-size:20px}
+.byline b{display:block;font-weight:700;line-height:1.3}
+.byline small{color:var(--muted);font-size:.83rem;line-height:1.3;display:block}
+body.ur .byline b,body.ur .byline small{line-height:2}
+
+.media{margin:22px -16px 6px}
+@media (min-width:752px){.media{margin-inline:0}}
+.media .player{position:relative;aspect-ratio:16/9;background:var(--bg-deep)}
+.media video,.media iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--bg-deep)}
+.media .empty{position:absolute;inset:0;overflow:hidden}
+.media .empty .note{position:absolute;inset-inline-start:0;bottom:0;background:var(--bg-deep);padding:6px 12px;font-size:.85rem;color:var(--muted)}
+.caption{font-size:.85rem;color:var(--muted);padding:8px 16px 0;border-inline-start:3px solid var(--teal);margin-inline:16px}
+@media (min-width:752px){.caption{margin-inline:0}}
+
+.body h2{font-size:1.35rem;font-weight:700;margin:30px 0 12px;line-height:1.35}
+body.ur .body h2{font-size:1.15rem}
+
+/* rules as numbered article sections */
+.rule{padding:22px 0;border-bottom:1px solid var(--rule);scroll-margin-top:16px}
+.rule header{display:flex;gap:14px;align-items:center;margin-bottom:12px}
+.rule .n{font-family:"IBM Plex Sans",sans-serif;font-weight:300;font-size:3rem;line-height:.9;color:var(--teal);min-width:1.2em;text-align:center}
+.rule .ic{font-size:26px}
+.rule h3{font-size:1.3rem;font-weight:700;line-height:1.3}
+body.ur .rule h3{font-size:1.1rem;line-height:2}
+.items{list-style:none;display:grid;gap:6px;padding-inline-start:calc(1.2em * 3 + 14px)}
+@media (max-width:480px){.items{padding-inline-start:0}}
+.items li{display:flex;gap:10px;align-items:flex-start}
+.items li::before{flex-shrink:0;width:22px;height:22px;margin-top:.3em;display:grid;place-items:center;font-size:.75rem;font-weight:700}
+body.ur .items li::before{margin-top:.55em}
+.items li.yes::before{content:"✓";background:var(--teal);color:var(--bg-deep)}
+.items li.no::before{content:"✕";background:var(--red);color:var(--text)}
+.items li.info::before{content:"";width:8px;height:8px;margin:.7em 7px 0;background:var(--muted)}
+body.ur .items li.info::before{margin-top:1.1em}
+.items li.no{color:#FFC9CC}
+
+/* key points for other topics */
+.points{list-style:none}
+.points li{display:flex;gap:16px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--rule)}
+.points .emoji{font-size:26px;width:36px;text-align:center;padding-top:2px}
+.dd{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+@media (max-width:560px){.dd{grid-template-columns:1fr}}
+.dd > div{background:var(--surface);padding:14px 16px;border-top:4px solid}
+.dd .do{border-color:var(--teal)} .dd .dont{border-color:var(--red)}
+.dd h3{font-size:1.05rem;font-weight:700;margin-bottom:8px}
+.dd ul{list-style:none;display:grid;gap:6px}
+.dd li{display:flex;gap:8px}
+.dd .do li::before{content:"✅"} .dd .dont li::before{content:"❌"}
+
+/* stop authority + pledge */
+.stop{display:flex;gap:16px;align-items:center;margin:28px 0 0;padding:16px;background:var(--surface);border-inline-start:6px solid var(--red);font-weight:700;font-size:1.08rem}
+.oct{width:50px;height:50px;flex-shrink:0;display:grid;place-items:center;background:var(--red);clip-path:polygon(30% 0,70% 0,100% 30%,100% 70%,70% 100%,30% 100%,0 70%,0 30%);font-size:23px}
+.pledge{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;margin:24px 0 8px}
+.pledge button{width:100%;background:var(--teal);color:var(--bg-deep);padding:16px;font-weight:700;font-size:1.1rem}
+body.ur .pledge button{padding:6px 16px}
+.pledge button:hover{background:#2BE0C6}
+.stamp{display:none;gap:10px;align-items:center;border:3px solid var(--teal);color:var(--teal);padding:6px 18px;font-size:1.3rem;font-weight:700;transform:rotate(-4deg)}
+.pledge.done button{display:none}
+.pledge.done .stamp{display:inline-flex;animation:stamp .45s cubic-bezier(.2,1.6,.4,1) both}
+.pledge .note{display:none;color:var(--muted)}
+.pledge.done .note{display:block}
+@keyframes stamp{from{transform:rotate(-4deg) scale(2.3);opacity:0}to{transform:rotate(-4deg) scale(1);opacity:1}}
+.burst{position:absolute;top:30%;left:50%;pointer-events:none}
+.burst i{position:absolute;font-style:normal;font-size:24px;animation:fly .9s ease-out forwards}
+@keyframes fly{to{transform:translate(var(--x),var(--y)) rotate(var(--r));opacity:0}}
+@media (prefers-reduced-motion:reduce){.pledge.done .stamp{animation:none}.burst{display:none}}
+
+.related{max-width:1040px;margin:0 auto;padding:0 16px}
+.related .cards{grid-template-columns:repeat(3,1fr)}
+@media (max-width:760px) and (min-width:561px){.related .cards{grid-template-columns:1fr 1fr}}
+
+/* ---------- Footer ---------- */
+footer{background:var(--bg-deep);margin-top:40px;border-top:3px solid var(--teal)}
+footer .wrap{padding-top:22px;padding-bottom:40px;display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center;justify-content:space-between}
+footer small{display:block;color:var(--muted);font-size:.8rem}
+footer b{font-size:1.2rem;font-weight:700}
+footer .role{color:var(--muted);font-size:.88rem}
+body.ur footer b{font-size:1.05rem}
+
+/* ---------- Language picker ---------- */
+#picker{position:fixed;inset:0;z-index:30;background:var(--bg-deep);overflow:auto;display:flex;flex-direction:column}
+#picker .mast{border-bottom:3px solid var(--teal)}
+#picker .inner{flex:1;display:flex;flex-direction:column;justify-content:center;max-width:480px;width:100%;margin:0 auto;padding:28px 16px}
+#picker .thumb{margin-bottom:18px}
+#picker .t-ar{font-size:1.75rem;font-weight:700;line-height:1.25}
+#picker .t-en{font-family:"IBM Plex Sans",sans-serif;color:var(--teal);font-weight:600;margin-top:4px}
+#picker .t-ur{font-family:"Noto Nastaliq Urdu",serif;color:var(--muted);line-height:2.3}
+#picker .choose{margin-top:22px;border-top:1px solid var(--rule)}
+#picker .choose button{width:100%;display:flex;justify-content:space-between;align-items:center;padding:16px 4px;border-bottom:1px solid var(--rule);font-size:1.35rem;font-weight:700;text-align:start}
+#picker .choose button:hover{background:var(--surface);padding-inline:12px}
+#picker .choose button small{font-size:.85rem;font-weight:400;color:var(--muted)}
+#picker .choose .en{font-family:"IBM Plex Sans",sans-serif}
+#picker .choose .ur{font-family:"Noto Nastaliq Urdu",serif;padding-block:6px}
+#picker .choose button::after{content:"";width:10px;height:10px;background:var(--teal);flex-shrink:0;margin-inline-start:12px}
+/* phones: news-list cards (kept last so it wins) */
+@media (max-width:560px){
+  .cards,.related .cards{grid-template-columns:1fr;gap:0}
+  .card{display:grid;grid-template-columns:40% 1fr;gap:12px;background:transparent;border-top:0;border-bottom:1px solid var(--rule);padding:12px 0}
+  .card .thumb .big{font-size:34px}
+  .card .thumb .play{font-size:.72rem;padding:3px 8px}
+  .card .body{padding:0}
+  .card h3{font-size:1rem}
+  .card p{font-size:.85rem}
+}
+</style>
+</head>
+<body>
+
+<div id="picker" hidden>
+  <div class="mast"><div class="wrap"><div class="brand"><span class="mark emoji">⛑️</span><b id="pBrand"></b></div></div></div>
+  <div class="inner">
+    <div id="pThumb"></div>
+    <div class="t-ar" id="pAr"></div>
+    <div class="t-en" id="pEn"></div>
+    <div class="t-ur" id="pUr"></div>
+    <div class="choose">
+      <button data-lang="ar"><span>العربية</span><small>اختر لغتك</small></button>
+      <button data-lang="en" class="en"><span>English</span><small>Choose language</small></button>
+      <button data-lang="ur" class="ur"><span>اردو</span><small>زبان منتخب کریں</small></button>
+    </div>
+  </div>
+</div>
+
+<header>
+  <div class="mast"><div class="wrap">
+    <a class="brand" id="homeLink" href="./"><span class="mark emoji">⛑️</span><b id="siteName"></b><span class="loc" id="siteTag"></span></a>
+    <div class="langs-top">
+      <button data-lang="ar">عربي</button>
+      <button data-lang="en" class="en">EN</button>
+      <button data-lang="ur" class="ur">اردو</button>
+    </div>
+  </div></div>
+  <nav class="nav"><div class="wrap"><ul id="nav"></ul></div></nav>
+  <div class="gradline"></div>
+</header>
+
+<main id="app"></main>
+<footer><div class="wrap" id="foot"></div></footer>
+
+<script>
+const params = new URLSearchParams(location.search);
+const topic = TOPICS.find(t => t.id === params.get("t"));
+let lang = null;
+
+const store = {
+  get(k){ try{ return localStorage.getItem(k) }catch(e){ return null } },
+  set(k,v){ try{ localStorage.setItem(k,v) }catch(e){} }
+};
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const link = (id, hash="") => `?t=${id}&lang=${lang}${hash}`;
+const hasVideo = id => !!(CONFIG.videos[id]?.[lang] || "").trim();
+
+function thumb(t, u, withPlay = true){
+  const poster = CONFIG.posters?.[t.id]?.[lang];
+  const play = withPlay && hasVideo(t.id) ? `<span class="play"><i></i>${u.watch}</span>` : "";
+  if(poster) return `<div class="thumb"><img src="${esc(poster)}" alt="" loading="lazy">${play}</div>`;
+  return `<div class="thumb"><span class="slash"></span><span class="big emoji">${t.emoji}</span>${play}</div>`;
+}
+
+function ytId(url){
+  const m = url.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/);
+  return m ? m[1] : null;
+}
+function player(t, u){
+  const src = (CONFIG.videos[t.id]?.[lang] || "").trim();
+  const poster = CONFIG.posters?.[t.id]?.[lang] || "";
+  if(!src) return `<div class="empty">${thumb(t, u, false)}<span class="note">🎬 ${u.noVideo}</span></div>`;
+  const y = ytId(src);
+  if(y) return `<iframe src="https://www.youtube-nocookie.com/embed/${y}?rel=0&playsinline=1" title="video" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+  return `<video src="${esc(src)}" ${poster ? `poster="${esc(poster)}"` : ""} controls playsinline preload="metadata"></video>`;
+}
+
+function card(t, u){
+  return `<a class="card" href="${link(t.id)}">${thumb(t, u)}<div class="body">
+    <h3>${esc(t[lang].title)}</h3><p>${esc(t[lang].intro)}</p></div></a>`;
+}
+
+/* ---------- Home ---------- */
+function renderHome(u){
+  const lead = TOPICS.find(t => t.rules) || TOPICS[0];
+  const rest = TOPICS.filter(t => t !== lead);
+  document.title = u.site;
+  return `<div class="wrap">
+    <div class="label">${u.lead}</div>
+    <a class="lead" href="${link(lead.id)}">
+      ${thumb(lead, u)}
+      <div><h2>${esc(lead[lang].title)}</h2><p>${esc(lead[lang].intro)}</p>
+        <div class="meta"><span>${esc(CONFIG.ownerName[lang])}</span><span class="sec">${u.section}</span></div></div>
+    </a>
+    <div class="home-main">
+      <section><div class="label">${u.topics}</div><div class="cards">${rest.map(t => card(t, u)).join("")}</div></section>
+      ${lead.rules ? `<aside class="most"><div class="label">${u.tenRules}</div><ol>${lead.rules.map((r,i) =>
+        `<li><a href="${link(lead.id, "#r"+(i+1))}"><span>${esc(r[lang].t)}</span></a></li>`).join("")}</ol></aside>` : ""}
+    </div>
+  </div>`;
+}
+
+/* ---------- Article ---------- */
+function rulesBody(u){
+  return topic.rules.map((r,i) => `
+    <section class="rule" id="r${i+1}">
+      <header><span class="n">${i+1}</span><span class="ic emoji">${r.emoji}</span><h3>${esc(r[lang].t)}</h3></header>
+      <ul class="items">${r[lang].items.map(([ok,t]) =>
+        `<li class="${ok===true?"yes":ok===false?"no":"info"}">${esc(t)}</li>`).join("")}</ul>
+    </section>`).join("");
+}
+function pointsBody(u){
+  const c = topic[lang];
+  return `<h2>${u.keyPoints}</h2>
+    <ul class="points">${c.points.map(([e,t]) => `<li><span class="emoji">${e}</span><span>${esc(t)}</span></li>`).join("")}</ul>
+    <div class="dd">
+      <div class="do"><h3>${u.doTitle}</h3><ul>${c.do.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
+      <div class="dont"><h3>${u.dontTitle}</h3><ul>${c.dont.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
+    </div>`;
+}
+function renderTopic(u){
+  const c = topic[lang], pledged = store.get("pledge:"+topic.id);
+  document.title = c.title;
+  const others = TOPICS.filter(t => t !== topic).slice(0, 3);
+  return `<article class="article">
+    <div class="crumb"><a href="./?lang=${lang}">${u.section}</a><span>${esc(CONFIG.siteTag?.[lang] || "")}</span></div>
+    <h1>${esc(c.title)}</h1>
+    <p class="standfirst">${esc(c.intro)}</p>
+    <div class="byline"><span class="av emoji">⛑️</span><div><b>${esc(CONFIG.ownerName[lang])}</b><small>${esc(CONFIG.ownerRole?.[lang])}</small></div></div>
+    <figure class="media"><div class="player">${player(topic, u)}</div>${hasVideo(topic.id) ? `<figcaption class="caption">${u.watch}: ${esc(c.title)}</figcaption>` : ""}</figure>
+    <div class="body">${topic.rules ? rulesBody(u) : pointsBody(u)}</div>
+    <div class="stop"><span class="oct emoji">✋</span><span>${u.stop}</span></div>
+    <div class="pledge ${pledged ? "done" : ""}" id="pledge">
+      <button id="pledgeBtn">🤝 ${u.pledge}</button>
+      <div class="stamp">✔ ${u.pledged}</div>
+      <div class="note">${u.pledgedNote}</div>
+    </div>
+  </article>
+  <section class="related"><div class="label">${u.related}</div><div class="cards">${others.map(t => card(t, u)).join("")}</div></section>`;
+}
+
+/* ---------- Shell ---------- */
+function render(){
+  const u = UI[lang];
+  document.documentElement.lang = lang;
+  document.documentElement.dir = u.dir;
+  document.body.className = lang;
+  document.getElementById("siteName").textContent = u.site;
+  document.getElementById("siteTag").textContent = CONFIG.siteTag?.[lang] || "";
+  document.getElementById("homeLink").href = "./?lang=" + lang;
+  document.querySelectorAll(".langs-top button").forEach(b => b.classList.toggle("on", b.dataset.lang === lang));
+  document.getElementById("nav").innerHTML =
+    `<li><a href="./?lang=${lang}" class="${topic ? "" : "on"}">${u.home}</a></li>` +
+    TOPICS.map(t => `<li><a href="${link(t.id)}" class="${t === topic ? "on" : ""}">${esc(t[lang].title)}</a></li>`).join("");
+  document.getElementById("app").innerHTML = topic ? renderTopic(u) : renderHome(u);
+  document.getElementById("foot").innerHTML = `<div><small>${u.by}</small><b>${esc(CONFIG.ownerName[lang])}</b></div><div class="role">${esc(CONFIG.ownerRole?.[lang])}</div>`;
+  const btn = document.getElementById("pledgeBtn");
+  if(btn) btn.onclick = pledge;
+  document.querySelector(".nav a.on")?.scrollIntoView({block:"nearest", inline:"center"});
+  if(location.hash) document.querySelector(location.hash)?.scrollIntoView();
+}
+
+function pledge(){
+  store.set("pledge:"+topic.id, "1");
+  const box = document.getElementById("pledge");
+  box.classList.add("done");
+  if(navigator.vibrate) navigator.vibrate(60);
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const burst = document.createElement("div");
+  burst.className = "burst";
+  const emojis = ["⛑️","🦺","✅","👷","🛡️","💪","⭐"];
+  for(let i=0;i<14;i++){
+    const e = document.createElement("i"), a = Math.PI*2*i/14, d = 90+Math.random()*60;
+    e.textContent = emojis[i % emojis.length];
+    e.style.setProperty("--x", Math.cos(a)*d+"px");
+    e.style.setProperty("--y", Math.sin(a)*d+"px");
+    e.style.setProperty("--r", (Math.random()*80-40)+"deg");
+    burst.appendChild(e);
+  }
+  box.appendChild(burst);
+  setTimeout(()=>burst.remove(), 1000);
+}
+
+function setLang(l){
+  lang = l;
+  store.set("lang", l);
+  document.getElementById("picker").hidden = true;
+  const url = new URL(location.href); url.searchParams.set("lang", l);
+  history.replaceState(null, "", url);
+  render();
+  if(!location.hash) scrollTo(0,0);
+}
+
+function showPicker(){
+  const t = topic || TOPICS.find(x => x.rules) || TOPICS[0];
+  const title = topic ? t : {ar:{title:UI.ar.site}, en:{title:UI.en.site}, ur:{title:UI.ur.site}};
+  document.getElementById("pBrand").textContent = UI.ar.site;
+  lang = lang || "ar";
+  document.getElementById("pThumb").innerHTML = thumb(t, UI.ar, false);
+  document.getElementById("pAr").textContent = title.ar.title;
+  document.getElementById("pEn").textContent = title.en.title;
+  document.getElementById("pUr").textContent = title.ur.title;
+  document.getElementById("picker").hidden = false;
+}
+
+document.querySelectorAll("[data-lang]").forEach(b => b.onclick = () => setLang(b.dataset.lang));
+
+/* Start: ?lang= in the link wins, then the language chosen last time, else ask */
+const start = params.get("lang") || store.get("lang");
+if(UI[start]) setLang(start); else { lang = "ar"; render(); showPicker(); }
+</script>
+</body>
+</html>

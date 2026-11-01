@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Safety QR Codes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+<script src="content.js"></script>
+<script src="qrcode.js"></script>
+<style>
+:root{--bg-deep:#020E33;--bg:#041547;--surface:#0A2366;--royal:#0A2E89;--azure:#1A7FE8;--teal:#05CEB3;--teal-deep:#039DB0;
+  --text:#E6EEFF;--muted:#9BB0E0;--rule:rgba(155,176,224,.22);--qrbg:#DDF8F3;--grad:linear-gradient(90deg,var(--teal-deep),var(--azure))}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:"IBM Plex Sans Arabic",system-ui,sans-serif;line-height:1.55}
+.tools{max-width:960px;margin:0 auto;padding:24px 16px;display:grid;gap:14px}
+.tools h1{font-size:1.6rem;font-weight:700;display:flex;align-items:center;gap:10px}
+.tools h1::before{content:"";width:14px;height:14px;background:var(--teal)}
+.tools p{color:var(--muted)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.row label{font-weight:600}
+.row input{flex:1;min-width:240px;font:inherit;padding:10px 12px;border:1px solid var(--rule);background:var(--surface);color:var(--text);direction:ltr}
+.row select,.row button{font:inherit;font-weight:600;padding:10px 16px;border:1px solid var(--rule);background:var(--surface);color:var(--text);cursor:pointer}
+.row button.primary{background:var(--teal);color:var(--bg-deep);border-color:var(--teal)}
+.warn{background:rgba(242,194,48,.12);border-inline-start:5px solid #F2C230;padding:10px 14px;font-size:.95rem}
+
+.sheet{max-width:960px;margin:0 auto 40px;padding:0 16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+.card{background:var(--bg-deep);display:flex;flex-direction:column;break-inside:avoid;border-top:5px solid var(--teal);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.head{display:flex;align-items:center;gap:14px;padding:16px 16px 14px;background:linear-gradient(135deg,var(--royal),var(--bg-deep))}
+.head .em{font-size:38px;line-height:1;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
+.titles{display:grid;line-height:1.25}
+.titles .tag{font-size:.7rem;color:var(--teal);font-weight:600;margin-bottom:2px}
+.titles .ar{font-weight:700;font-size:1.25rem}
+.titles .en{font-family:"IBM Plex Sans",sans-serif;font-weight:500;font-size:.82rem;color:var(--muted);direction:ltr;text-align:right}
+.titles .ur{font-family:"Noto Nastaliq Urdu",serif;font-size:.8rem;line-height:2.1;color:var(--muted)}
+.qr{margin:16px 26px 8px;padding:12px;background:var(--qrbg);display:grid;place-items:center}
+.qr svg{width:100%;max-width:200px;height:auto;display:block}
+.scan{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;padding:6px 12px 12px;font-weight:700}
+.scan .en{font-family:"IBM Plex Sans",sans-serif}
+.scan .ur{font-family:"Noto Nastaliq Urdu",serif;font-size:.85rem}
+.scan .dot{width:6px;height:6px;background:var(--teal)}
+.foot{border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 16px;font-size:.8rem;color:var(--muted)}
+.foot b{color:var(--text);font-weight:600}
+.foot button{font:inherit;font-size:.75rem;border:1px solid var(--rule);background:transparent;color:var(--teal);cursor:pointer;padding:1px 8px}
+
+body.big .sheet{grid-template-columns:1fr;max-width:580px}
+body.big .head .em{font-size:64px}
+body.big .titles .ar{font-size:2rem}
+body.big .titles .en,body.big .titles .ur{font-size:1.1rem}
+body.big .titles .tag{font-size:1rem}
+body.big .qr svg{max-width:380px}
+body.big .scan{font-size:1.35rem}
+body.big .foot{font-size:1rem;padding:12px 18px}
+
+@media print{
+  @page{size:A4;margin:8mm}
+  html,body{background:var(--bg);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .tools,.foot button{display:none}
+  .sheet{max-width:none;padding:0;grid-template-columns:repeat(2,1fr);gap:6mm}
+  body.big .sheet{grid-template-columns:1fr}
+  body.big .card{break-after:page;height:275mm;justify-content:space-between}
+}
+</style>
+</head>
+<body>
+<section class="tools">
+  <h1>🏷️ باركودات مواضيع السلامة</h1>
+  <p>كل موضوع له باركود يفتح صفحته مباشرة. اطبع البطاقات وألصق كل واحدة في مكانها، مثل باركود قواعد الحفاظ على الحياة على لوحة القواعد.</p>
+  <div class="row">
+    <label for="base">رابط الموقع:</label>
+    <input id="base" type="url" placeholder="https://your-site.netlify.app/">
+  </div>
+  <div id="warn" class="warn" hidden>⚠️ هذا الرابط محلي ولن يعمل عند المسح. ارفع الموقع أولًا ثم افتح هذه الصفحة من الرابط المنشور، أو اكتب الرابط النهائي في الخانة.</div>
+  <div class="row">
+    <select id="size">
+      <option value="small">6 بطاقات في الصفحة</option>
+      <option value="big">بطاقة كبيرة في كل صفحة</option>
+    </select>
+    <button class="primary" onclick="print()">🖨️ طباعة</button>
+  </div>
+</section>
+
+<section class="sheet" id="sheet"></section>
+
+<script>
+/* QR as crisp SVG with high error correction (still scans with dirt or scratches) */
+function qrSVG(text){
+  const q = qrcode(0, "H"); q.addData(text); q.make();
+  const n = q.getModuleCount(), m = 2; let d = "";
+  for(let r=0;r<n;r++) for(let c=0;c<n;c++) if(q.isDark(r,c)) d += `M${c+m} ${r+m}h1v1h-1z`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${n+m*2} ${n+m*2}" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="#DDF8F3"/><path d="${d}" fill="#041547"/></svg>`;
+}
+
+const baseInput = document.getElementById("base");
+baseInput.value = location.href.replace(/[?#].*$/, "").replace(/qr\.html$/, "");
+
+function topicURL(t){
+  let b = baseInput.value.trim();
+  if(b && !b.endsWith("/") && !/\.html$/.test(b)) b += "/";
+  return b + "?t=" + t.id;
+}
+
+function draw(){
+  const v = baseInput.value;
+  document.getElementById("warn").hidden = /^https?:\/\//.test(v) && !/localhost|127\.0\.0\.1/.test(v);
+  document.getElementById("sheet").innerHTML = TOPICS.map(t => `
+    <article class="card">
+      <div class="head">
+        <span class="em">${t.emoji}</span>
+        <div class="titles">${CONFIG.siteTag?.ar ? `<span class="tag">${CONFIG.siteTag.ar}</span>` : ""}<span class="ar">${t.ar.title}</span><span class="en">${t.en.title}</span><span class="ur">${t.ur.title}</span></div>
+      </div>
+      <div class="qr" id="qr-${t.id}">${qrSVG(topicURL(t))}</div>
+      <div class="scan"><span>📱 امسح</span><span class="dot"></span><span class="en">Scan</span><span class="dot"></span><span class="ur">اسکین کریں</span></div>
+      <div class="foot"><span>إعداد: <b>${CONFIG.ownerName.ar}</b></span><button onclick="downloadPNG('${t.id}')">تنزيل PNG</button></div>
+    </article>`).join("");
+}
+
+function downloadPNG(id){
+  const svg = document.querySelector("#qr-" + id + " svg");
+  const img = new Image(), size = 1200;
+  img.onload = () => {
+    const cv = document.createElement("canvas"); cv.width = cv.height = size;
+    const ctx = cv.getContext("2d"); ctx.imageSmoothingEnabled = false; ctx.drawImage(img, 0, 0, size, size);
+    const a = document.createElement("a"); a.download = "qr-" + id + ".png"; a.href = cv.toDataURL("image/png"); a.click();
+  };
+  img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg.outerHTML);
+}
+
+baseInput.addEventListener("input", draw);
+document.getElementById("size").addEventListener("change", e => document.body.classList.toggle("big", e.target.value === "big"));
+draw();
+</script>
+</body>
+</html>

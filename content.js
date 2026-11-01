@@ -12,32 +12,36 @@ const CONFIG = {
 
   // روابط المقاطع لكل موضوع ولكل لغة: ملف داخل مجلد videos أو رابط يوتيوب
   videos: {
-    lsr: { ar: "videos/lsr-ar.mp4", en: "videos/lsr-en.mp4", ur: "videos/lsr-ur.mp4" }
+    lsr:  { ar: "videos/lsr-ar.mp4",  en: "videos/lsr-en.mp4",  ur: "videos/lsr-ur.mp4" },
+    risk: { ar: "videos/risk-ar.mp4", en: "videos/risk-ar.mp4", ur: "videos/risk-ar.mp4" }
   },
+  // لغة المقطع لكل موضوع — إذا اختلفت عن لغة الصفحة تظهر ملاحظة صغيرة تحت المقطع
+  videoLang: { risk: "ar" },
   // صورة الغلاف قبل التشغيل (اختياري)
   posters: {
-    lsr: { ar: "videos/lsr-ar.jpg", en: "videos/lsr-en.jpg", ur: "videos/lsr-ur.jpg" }
+    lsr: { ar: "videos/lsr-ar.jpg", en: "videos/lsr-en.jpg", ur: "videos/lsr-ur.jpg" },
+    risk: { ar: "videos/risk-ar.jpg", en: "videos/risk-ar.jpg", ur: "videos/risk-ar.jpg" }
   }
 };
 
 /* نصوص الواجهة */
 const UI = {
   ar: {
-    dir: "rtl", quizTitle: "اختبر نفسك", quizSub: "5 أسئلة عن القواعد العشر. هل تقدر تجيب 5 من 5؟", startQuiz: "ابدأ الاختبار", qOf: "سؤال {n} من {t}", correct: "إجابة صحيحة!", wrong: "إجابة خاطئة", nextQ: "التالي", seeResult: "النتيجة", yourScore: "نتيجتك", retry: "أعد المحاولة", perfect: "5 من 5! ممتاز، أنت تعرف قواعدك", almost: "قريب! حاول توصل 5 من 5", best: "أفضل نتيجة", refs: "المرجعية", heroTitle: "ارجع لأهلك سالم", heroSub: "كل يوم، وفي كل مهمة. ستة مواضيع قصيرة بلغتك تحميك وتحمي فريقك.", start: "ابدأ بالقواعد العشر", tip: "نصيحة اليوم", badges: "شاراتك", progress: "أكملت {n} من {t}", allDone: "أنت بطل سلامة 🏆", mission: "المهمة", tapHint: "اضغط على كل بند بعد ما تفهمه", locked: "علّم كل البنود لتفتح الشارة", claim: "استلم الشارة", unlocked: "حصلت على الشارة!", next: "المهمة التالية", missions: "مهماتك", watch: "شاهد", lead: "الموضوع الرئيسي", tenRules: "القواعد العشر", related: "مواضيع أخرى", read: "اقرأ", minutes: "دقائق", section: "السلامة", site: "توعية السلامة", by: "إعداد وتصميم", rule: "القاعدة", pick: "اختر لغتك",
+    dir: "rtl", videoNote: "المقطع باللغة العربية", quizTitle: "اختبر نفسك", quizSub: "5 أسئلة عن {title}. هل تقدر تجيب 5 من 5؟", startQuiz: "ابدأ الاختبار", qOf: "سؤال {n} من {t}", correct: "إجابة صحيحة!", wrong: "إجابة خاطئة", nextQ: "التالي", seeResult: "النتيجة", yourScore: "نتيجتك", retry: "أعد المحاولة", perfect: "5 من 5! ممتاز، أتقنت {title}", almost: "قريب! حاول توصل 5 من 5", best: "أفضل نتيجة", refs: "المرجعية", heroTitle: "ارجع لأهلك سالم", heroSub: "كل يوم، وفي كل مهمة. ستة مواضيع قصيرة بلغتك تحميك وتحمي فريقك.", start: "ابدأ بالقواعد العشر", tip: "نصيحة اليوم", badges: "شاراتك", progress: "أكملت {n} من {t}", allDone: "أنت بطل سلامة 🏆", mission: "المهمة", tapHint: "اضغط على كل بند بعد ما تفهمه", locked: "علّم كل البنود لتفتح الشارة", claim: "استلم الشارة", unlocked: "حصلت على الشارة!", next: "المهمة التالية", missions: "مهماتك", watch: "شاهد", lead: "الموضوع الرئيسي", tenRules: "القواعد العشر", related: "مواضيع أخرى", read: "اقرأ", minutes: "دقائق", section: "السلامة", site: "توعية السلامة", by: "إعداد وتصميم", rule: "القاعدة", pick: "اختر لغتك",
     topics: "مواضيع السلامة", keyPoints: "أهم النقاط", doTitle: "افعل", dontTitle: "لا تفعل",
     noVideo: "المقطع يُضاف قريبًا", pledge: "فهمت وألتزم", pledged: "ملتزم",
     pledgedNote: "شكرًا لك. سلامتك تهمنا.", home: "كل المواضيع", lang: "اللغة",
     done: "تمت مشاهدته", stop: "لكلٍّ منّا صلاحية إيقاف أي عمل غير آمن."
   },
   en: {
-    dir: "ltr", quizTitle: "Test yourself", quizSub: "5 questions on the ten rules. Can you score 5 out of 5?", startQuiz: "Start the quiz", qOf: "Question {n} of {t}", correct: "Correct!", wrong: "Not quite", nextQ: "Next", seeResult: "See result", yourScore: "Your score", retry: "Try again", perfect: "5 out of 5! You know your rules", almost: "Close! Try for 5 out of 5", best: "Best score", refs: "Based on", heroTitle: "Go home safe.", heroSub: "Every day, every job. Six short topics in your language that protect you and your crew.", start: "Start with the 10 rules", tip: "Tip of the day", badges: "Your badges", progress: "{n} of {t} complete", allDone: "You're a safety hero 🏆", mission: "Mission", tapHint: "Tap each item once you understand it", locked: "Check every item to unlock the badge", claim: "Claim your badge", unlocked: "Badge unlocked!", next: "Next mission", missions: "Your missions", watch: "Watch", lead: "Top story", tenRules: "The ten rules", related: "More topics", read: "Read", minutes: "min", section: "Safety", site: "Safety Awareness", by: "Prepared & designed by", rule: "Rule", pick: "Choose your language",
+    dir: "ltr", videoNote: "This video is in Arabic", quizTitle: "Test yourself", quizSub: "5 questions on {title}. Can you score 5 out of 5?", startQuiz: "Start the quiz", qOf: "Question {n} of {t}", correct: "Correct!", wrong: "Not quite", nextQ: "Next", seeResult: "See result", yourScore: "Your score", retry: "Try again", perfect: "5 out of 5! You've mastered {title}", almost: "Close! Try for 5 out of 5", best: "Best score", refs: "Based on", heroTitle: "Go home safe.", heroSub: "Every day, every job. Six short topics in your language that protect you and your crew.", start: "Start with the 10 rules", tip: "Tip of the day", badges: "Your badges", progress: "{n} of {t} complete", allDone: "You're a safety hero 🏆", mission: "Mission", tapHint: "Tap each item once you understand it", locked: "Check every item to unlock the badge", claim: "Claim your badge", unlocked: "Badge unlocked!", next: "Next mission", missions: "Your missions", watch: "Watch", lead: "Top story", tenRules: "The ten rules", related: "More topics", read: "Read", minutes: "min", section: "Safety", site: "Safety Awareness", by: "Prepared & designed by", rule: "Rule", pick: "Choose your language",
     topics: "Safety topics", keyPoints: "Key points", doTitle: "Do", dontTitle: "Don't",
     noVideo: "Video coming soon", pledge: "I understand and commit", pledged: "Committed",
     pledgedNote: "Thank you. Your safety matters.", home: "All topics", lang: "Language",
     done: "Watched", stop: "Each of us has the authority to stop any unsafe work."
   },
   ur: {
-    dir: "rtl", quizTitle: "خود کو آزمائیں", quizSub: "دس قوانین پر 5 سوال۔ کیا آپ 5 میں سے 5 لے سکتے ہیں؟", startQuiz: "ٹیسٹ شروع کریں", qOf: "سوال {n} از {t}", correct: "درست جواب!", wrong: "غلط جواب", nextQ: "اگلا", seeResult: "نتیجہ", yourScore: "آپ کا اسکور", retry: "دوبارہ کوشش کریں", perfect: "5 میں سے 5! شاباش، آپ اپنے قوانین جانتے ہیں", almost: "قریب! 5 میں سے 5 کی کوشش کریں", best: "بہترین اسکور", refs: "حوالہ", heroTitle: "محفوظ گھر واپس جائیں", heroSub: "ہر دن، ہر کام میں۔ آپ کی زبان میں چھ مختصر موضوعات جو آپ اور آپ کی ٹیم کی حفاظت کرتے ہیں۔", start: "دس قوانین سے شروع کریں", tip: "آج کی ٹِپ", badges: "آپ کے بیج", progress: "{t} میں سے {n} مکمل", allDone: "آپ حفاظت کے ہیرو ہیں 🏆", mission: "مشن", tapHint: "ہر نکتہ سمجھنے کے بعد اس پر ٹیپ کریں", locked: "بیج کھولنے کے لیے تمام نکات پر نشان لگائیں", claim: "اپنا بیج لیں", unlocked: "بیج مل گیا!", next: "اگلا مشن", missions: "آپ کے مشن", watch: "دیکھیں", lead: "اہم موضوع", tenRules: "دس قوانین", related: "مزید موضوعات", read: "پڑھیں", minutes: "منٹ", section: "حفاظت", site: "حفاظتی آگاہی", by: "تیاری و ڈیزائن", rule: "اصول", pick: "اپنی زبان منتخب کریں",
+    dir: "rtl", videoNote: "یہ ویڈیو عربی میں ہے", quizTitle: "خود کو آزمائیں", quizSub: "{title} پر 5 سوال۔ کیا آپ 5 میں سے 5 لے سکتے ہیں؟", startQuiz: "ٹیسٹ شروع کریں", qOf: "سوال {n} از {t}", correct: "درست جواب!", wrong: "غلط جواب", nextQ: "اگلا", seeResult: "نتیجہ", yourScore: "آپ کا اسکور", retry: "دوبارہ کوشش کریں", perfect: "5 میں سے 5! شاباش، آپ نے {title} سیکھ لیا", almost: "قریب! 5 میں سے 5 کی کوشش کریں", best: "بہترین اسکور", refs: "حوالہ", heroTitle: "محفوظ گھر واپس جائیں", heroSub: "ہر دن، ہر کام میں۔ آپ کی زبان میں چھ مختصر موضوعات جو آپ اور آپ کی ٹیم کی حفاظت کرتے ہیں۔", start: "دس قوانین سے شروع کریں", tip: "آج کی ٹِپ", badges: "آپ کے بیج", progress: "{t} میں سے {n} مکمل", allDone: "آپ حفاظت کے ہیرو ہیں 🏆", mission: "مشن", tapHint: "ہر نکتہ سمجھنے کے بعد اس پر ٹیپ کریں", locked: "بیج کھولنے کے لیے تمام نکات پر نشان لگائیں", claim: "اپنا بیج لیں", unlocked: "بیج مل گیا!", next: "اگلا مشن", missions: "آپ کے مشن", watch: "دیکھیں", lead: "اہم موضوع", tenRules: "دس قوانین", related: "مزید موضوعات", read: "پڑھیں", minutes: "منٹ", section: "حفاظت", site: "حفاظتی آگاہی", by: "تیاری و ڈیزائن", rule: "اصول", pick: "اپنی زبان منتخب کریں",
     topics: "حفاظتی موضوعات", keyPoints: "اہم نکات", doTitle: "کریں", dontTitle: "نہ کریں",
     noVideo: "ویڈیو جلد شامل کی جائے گی", pledge: "میں سمجھ گیا اور عمل کروں گا", pledged: "عہد کر لیا",
     pledgedNote: "شکریہ۔ آپ کی حفاظت اہم ہے۔", home: "تمام موضوعات", lang: "زبان",
@@ -95,5 +99,12 @@ const TOPICS = [
         en: { t: "Driving Vehicles & Equipment", items: [[true,"Valid driving license"],[true,"Rested and alert"]] },
         ur: { t: "گاڑیاں اور آلات چلانا", items: [[true,"درست ڈرائیونگ لائسنس"],[true,"آرام کیا ہوا اور چوکس"]] } }
     ]
+  },
+
+  {
+    id: "risk", emoji: "📋",
+    ar: { title: "تقييم المخاطر", intro: "دقائق قليلة في الموقع تكشف الخطر قبل أن يقع. هذا تقييم إضافي فوق التقييم الأساسي المعتمد للمهمة." },
+    en: { title: "Risk Assessment", intro: "A few minutes on site reveal the hazard before it strikes. This is an extra check on top of the job's approved base assessment." },
+    ur: { title: "رسک اسیسمنٹ", intro: "سائٹ پر چند منٹ خطرہ ہونے سے پہلے دکھا دیتے ہیں۔ یہ کام کی منظور شدہ بنیادی اسیسمنٹ کے اوپر ایک اضافی جانچ ہے۔" }
   }
 ];

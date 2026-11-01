@@ -12,8 +12,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zain:wght@400;700;800;900&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="img/hero-m.webp">
-<script src="content.js?v=202611012055"></script>
-<script src="quiz.js?v=202611012055"></script>
+<script src="content.js?v=202611012114"></script>
+<script src="quiz.js?v=202611012114"></script>
 <style>
 /* =====================================================================
    الألوان — مأخوذة من المقطع والرسمة. غيّرها هنا فقط
@@ -316,6 +316,12 @@ body{position:relative;max-width:480px;margin:0 auto;box-shadow:0 0 0 1px var(--
 .creator{grid-template-columns:1fr}
 .qicon{width:72px;height:72px;flex-shrink:0;filter:drop-shadow(0 8px 14px rgba(0,0,0,.4))}
 .trophy{font-size:96px;animation:flip 1.1s cubic-bezier(.2,.9,.3,1.1) both;filter:drop-shadow(0 0 30px rgba(215,255,60,.55))}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:5px;margin-bottom:16px;border-radius:16px;background:rgba(11,20,48,.7);border:1px solid var(--line)}
+.tabs a{display:flex;align-items:center;justify-content:center;gap:8px;padding:8px 10px;border-radius:12px;font-weight:800;font-size:.95rem;line-height:1.2;text-align:center;color:var(--muted);text-decoration:none}
+.tabs a img{width:30px;height:30px;flex-shrink:0}
+.tabs a.on{background:var(--lime);color:var(--night)}
+body.ur .tabs a{font-weight:700;font-size:.85rem;line-height:1.8}
+.vnote{margin:-2px 4px 0;color:var(--muted);font-size:.9rem}
 </style>
 </head>
 <body>
@@ -347,9 +353,10 @@ body{position:relative;max-width:480px;margin:0 auto;box-shadow:0 0 0 1px var(--
 
 <script>
 const params = new URLSearchParams(location.search);
-/* The site has one topic: Life Saving Rules. Old links (?t=risk, ?t=ppe…) land here too. */
-const topic = TOPICS[0];
-if(params.has("t")){ params.delete("t"); history.replaceState(null, "", location.pathname + (params.toString() ? "?" + params : "")); }
+/* ?t= picks the section (each section has its own QR code). No ?t= or an unknown one
+   (old links such as ?t=ppe) opens the first section, Life Saving Rules. */
+const topic = TOPICS.find(t => t.id === params.get("t")) || TOPICS[0];
+if(params.has("t") && !TOPICS.some(t => t.id === params.get("t"))){ params.delete("t"); history.replaceState(null, "", location.pathname + (params.toString() ? "?" + params : "")); }
 let lang = null;
 
 const store = {
@@ -357,7 +364,7 @@ const store = {
   set(k,v){ try{ v === null ? localStorage.removeItem(k) : localStorage.setItem(k,v) }catch(e){} }
 };
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const link = id => `?t=${id}&lang=${lang}`;
+const link = id => id === TOPICS[0].id ? `./?lang=${lang}` : `?t=${id}&lang=${lang}`;
 const fmt = (s, o) => s.replace(/\{(\w+)\}/g, (_, k) => o[k]);
 const art = t => `img/t-${t.id}.webp`;
 
@@ -383,18 +390,6 @@ function player(t, u){
 function renderTopic(u){
   const c = topic[lang];
   document.title = c.title;
-  const content = topic.rules
-    ? `<div class="cards rules">${topic.rules.map((r, i) => `
-        <article class="ck">
-          <header><span class="n">${i+1}</span><span class="ic emoji">${r.emoji}</span><h3>${esc(r[lang].t)}</h3></header>
-          <ul>${r[lang].items.map(([ok, x]) => `<li class="${ok===true?"yes":ok===false?"no":"info"}">${esc(x)}</li>`).join("")}</ul>
-        </article>`).join("")}</div>`
-    : `<div class="cards">${c.points.map(([e, x]) => `
-        <div class="ck pt"><span class="ic emoji">${e}</span><span>${esc(x)}</span></div>`).join("")}</div>
-      <div class="dd">
-        <div class="do"><h3>${u.doTitle}</h3><ul>${c.do.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>
-        <div class="dont"><h3>${u.dontTitle}</h3><ul>${c.dont.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>
-      </div>`;
   const refs = (REFS[topic.id] || []).map(r => `<span>${esc(refLabel(r))}</span>`).join("");
   const words = c.title.split(" ").map((w, i) => `<span class="w" style="animation-delay:${.15 + i*.12}s">${esc(w)}</span>`).join(" ");
   return `
@@ -402,6 +397,7 @@ function renderTopic(u){
     <div class="in">
       <img class="mimg" src="img/hero-m.webp" alt="${esc(CONFIG.ownerName[lang])}">
       <div class="copy" dir="${u.dir}">
+        ${TOPICS.length > 1 ? `<nav class="tabs">${TOPICS.map(t => `<a href="${link(t.id)}" class="${t === topic ? "on" : ""}"><img src="${art(t)}" alt="">${esc(t[lang].title)}</a>`).join("")}</nav>` : ""}
         ${CONFIG.siteTag?.[lang] ? `<span class="tag">${esc(CONFIG.siteTag[lang])}</span>` : ""}
         <h1 class="display">${words}</h1>
         <p>${esc(c.intro)}</p>
@@ -416,6 +412,7 @@ function renderTopic(u){
   <div class="stripe thin"></div>
   <div class="wrap">
     <div class="frame" id="watch"><div class="player">${player(topic, u)}</div><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i></div>
+    ${CONFIG.videoLang?.[topic.id] && CONFIG.videoLang[topic.id] !== lang ? `<p class="vnote">🔊 ${u.videoNote}</p>` : ""}
 
     <section class="quiz" id="quiz" aria-live="polite"></section>
 
@@ -455,7 +452,7 @@ function quizIntro(){
   box.innerHTML = `
     <div class="qhead">
       <img class="qicon" src="${art(topic)}" alt="">
-      <div><h2>${u.quizTitle}</h2><p>${u.quizSub}</p></div>
+      <div><h2>${u.quizTitle}</h2><p>${fmt(u.quizSub, {title: topic[lang].title})}</p></div>
     </div>
     <button class="btn qgo" id="qstart">🎯 ${u.startQuiz}</button>`;
   document.getElementById("qstart").onclick = quizStart;
@@ -534,7 +531,7 @@ function quizResult(){
     ${perfect
       ? `<div class="trophy emoji">🏆</div>`
       : `<svg class="ring" viewBox="0 0 120 120"><circle cx="60" cy="60" r="${R}" class="bg"/><circle cx="60" cy="60" r="${R}" class="fg" style="stroke-dasharray:${C};stroke-dashoffset:${C}" id="ringFg"/><text x="60" y="68" text-anchor="middle">${sc}/${total}</text></svg>`}
-    <h3>${perfect ? u.perfect : u.almost}</h3>
+    <h3>${perfect ? fmt(u.perfect, {title: topic[lang].title}) : u.almost}</h3>
     <p class="sc">${u.yourScore}: <b>${sc}/${total}</b></p>
     <button class="btn" id="qretry">🔁 ${u.retry}</button>`;
   document.getElementById("qretry").onclick = quizStart;

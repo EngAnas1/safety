@@ -7,8 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zain:wght@400;700;800;900&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
-<script src="content.js?v=202611012055"></script>
-<script src="qrcode.js?v=202611012055"></script>
+<script src="content.js?v=202611012114"></script>
+<script src="qrcode.js?v=202611012114"></script>
 <style>
 :root{--bg-deep:#020E33;--bg:#0B1430;--lime:#D7FF3C;--surface:#14254F;--royal:#0A2E89;--azure:#1A7FE8;--teal:#05CEB3;--teal-deep:#039DB0;
   --text:#E6EEFF;--muted:#9BB0E0;--rule:rgba(155,176,224,.22);--qrbg:#DDF8F3;--grad:linear-gradient(90deg,var(--teal-deep),var(--azure))}
@@ -28,7 +28,7 @@ body{background:var(--bg);color:var(--text);font-family:"Zain",system-ui,sans-se
 .sheet{max-width:960px;margin:0 auto 40px;padding:0 16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
 .card{border-radius:22px;overflow:hidden;background:#14254F;display:flex;flex-direction:column;break-inside:avoid;border-top:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .head{display:flex;align-items:center;gap:14px;padding:16px 16px 14px;background:radial-gradient(120% 120% at 100% 0%,#254563,#14254F 70%);border-bottom:8px solid transparent;border-image:linear-gradient(#D7FF3C 0 32%,#C9D2DC 32% 68%,#D7FF3C 68%) 1}
-.head .em{font-size:38px;line-height:1;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
+.head .em{width:64px;height:64px;flex-shrink:0;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35))}
 .titles{display:grid;line-height:1.25}
 .titles .tag{font-size:.7rem;color:var(--lime);font-weight:600;margin-bottom:2px}
 .titles .ar{font-family:"Zain",sans-serif;font-weight:900;font-size:1.3rem}
@@ -45,7 +45,7 @@ body{background:var(--bg);color:var(--text);font-family:"Zain",system-ui,sans-se
 .foot button{font:inherit;font-size:.75rem;border:1px solid var(--rule);background:transparent;color:var(--teal);cursor:pointer;padding:1px 8px}
 
 body.big .sheet{grid-template-columns:1fr;max-width:580px}
-body.big .head .em{font-size:64px}
+body.big .head .em{width:110px;height:110px}
 body.big .titles .ar{font-size:2rem}
 body.big .titles .en,body.big .titles .ur{font-size:1.1rem}
 body.big .titles .tag{font-size:1rem}
@@ -98,7 +98,7 @@ baseInput.value = location.href.replace(/[?#].*$/, "").replace(/qr\.html$/, "");
 function topicURL(t){
   let b = baseInput.value.trim();
   if(b && !b.endsWith("/") && !/\.html$/.test(b)) b += "/";
-  return b;
+  return t === TOPICS[0] ? b : b + "?t=" + t.id;
 }
 
 function draw(){
@@ -107,7 +107,7 @@ function draw(){
   document.getElementById("sheet").innerHTML = TOPICS.map(t => `
     <article class="card">
       <div class="head">
-        <span class="em">${t.emoji}</span>
+        <img class="em" src="img/t-${t.id}.webp" alt="">
         <div class="titles">${CONFIG.siteTag?.ar ? `<span class="tag">${CONFIG.siteTag.ar}</span>` : ""}<span class="ar">${t.ar.title}</span><span class="en">${t.en.title}</span><span class="ur">${t.ur.title}</span></div>
       </div>
       <div class="qr" id="qr-${t.id}">${qrSVG(topicURL(t))}</div>

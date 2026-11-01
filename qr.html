@@ -104,7 +104,10 @@ function topicURL(t){
 function draw(){
   const v = baseInput.value;
   document.getElementById("warn").hidden = /^https?:\/\//.test(v) && !/localhost|127\.0\.0\.1/.test(v);
-  document.getElementById("sheet").innerHTML = TOPICS.map(t => `
+  /* qr.html?t=risk prints that section's card on its own, full page */
+  const only = new URLSearchParams(location.search).get("t");
+  const list = TOPICS.filter(t => !only || t.id === only);
+  document.getElementById("sheet").innerHTML = list.map(t => `
     <article class="card">
       <div class="head">
         <img class="em" src="img/t-${t.id}.webp" alt="">
@@ -129,6 +132,7 @@ function downloadPNG(id){
 
 baseInput.addEventListener("input", draw);
 document.getElementById("size").addEventListener("change", e => document.body.classList.toggle("big", e.target.value === "big"));
+if(new URLSearchParams(location.search).get("t")){ document.body.classList.add("big"); document.getElementById("size").value = "big"; }
 draw();
 </script>
 </body>

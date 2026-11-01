@@ -67,6 +67,10 @@ body.ur .lang{padding:0 14px}
 .hero .in{position:relative;z-index:1;width:100%;max-width:1240px;margin:0 auto;padding:100px 24px 60px;display:flex;justify-content:flex-end;direction:ltr}
 .hero .copy{width:min(46%,560px)}
 .hero .mimg{display:none}
+.hero .tag{display:inline-block;margin-bottom:14px;background:linear-gradient(90deg,#039DB0,#1A7FE8);color:#fff;font-weight:800;font-size:.9rem;border-radius:10px;padding:3px 14px}
+body.ur .hero .tag{font-weight:700;padding:0 14px}
+.hero .meter{margin-top:22px;max-width:420px}
+.hero .chip{text-decoration:none}
 .hero h1{font-size:clamp(2.4rem,5.6vw,5rem);line-height:1.05;text-wrap:balance}
 body.ur .hero h1{line-height:1.7;font-size:clamp(1.9rem,4vw,3.4rem)}
 .hero h1 .w{display:inline-block;animation:rise .7s cubic-bezier(.2,.9,.3,1.2) both}
@@ -335,7 +339,7 @@ body.ur .quiz.result h3{font-weight:700;line-height:2}
 
 <script>
 const params = new URLSearchParams(location.search);
-const topic = TOPICS.find(t => t.id === params.get("t"));
+const topic = TOPICS.find(t => t.id === params.get("t")) || TOPICS[0];
 let lang = null;
 
 const store = {
@@ -348,7 +352,7 @@ const fmt = (s, o) => s.replace(/\{(\w+)\}/g, (_, k) => o[k]);
 const art = t => `img/t-${t.id}.webp`;
 
 /* Quiz progress: best score per topic; a perfect score earns the badge */
-const QN = t => (QUIZ[t.id] || []).length;
+const QN = t => Math.min(QUIZ_SIZE, (QUIZ[t.id] || []).length);
 const bestScore = t => +(store.get("best:" + t.id) || 0);
 const hasBadge = t => store.get("badge:" + t.id) === "1";
 const refLabel = r => typeof r === "string" ? r : r[lang];
@@ -366,67 +370,50 @@ function player(t, u){
   return `<video src="${esc(src)}" ${poster ? `poster="${esc(poster)}"` : ""} controls playsinline preload="metadata"></video>`;
 }
 
-/* Tip of the day: changes every day, so there's something new on each visit */
-function tipOfDay(){
-  const pool = [];
-  TOPICS.forEach(t => {
-    if(t.rules) t.rules.forEach(r => r[lang].items.forEach(([ok, x]) => { if(ok !== null) pool.push([r.emoji, x]); }));
-    else t[lang].points.forEach(p => pool.push(p));
-  });
-  const day = Math.floor(Date.now() / 864e5);
-  return pool[day % pool.length];
-}
-
-/* ---------- Home ---------- */
-function renderHome(u){
-  document.title = u.site;
-  const lead = TOPICS.find(t => t.rules) || TOPICS[0];
-  const done = TOPICS.filter(hasBadge).length;
-  const [tEmoji, tText] = tipOfDay();
-  const words = u.heroTitle.split(" ").map((w, i) => `<span class="w" style="animation-delay:${.15 + i*.12}s">${esc(w)}</span>`).join(" ");
+/* ---------- Topic ---------- */
+function renderTopic(u){
+  const c = topic[lang];
+  document.title = c.title;
+  const content = topic.rules
+    ? `<div class="cards rules">${topic.rules.map((r, i) => `
+        <article class="ck">
+          <header><span class="n">${i+1}</span><span class="ic emoji">${r.emoji}</span><h3>${esc(r[lang].t)}</h3></header>
+          <ul>${r[lang].items.map(([ok, x]) => `<li class="${ok===true?"yes":ok===false?"no":"info"}">${esc(x)}</li>`).join("")}</ul>
+        </article>`).join("")}</div>`
+    : `<div class="cards">${c.points.map(([e, x]) => `
+        <div class="ck pt"><span class="ic emoji">${e}</span><span>${esc(x)}</span></div>`).join("")}</div>
+      <div class="dd">
+        <div class="do"><h3>${u.doTitle}</h3><ul>${c.do.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>
+        <div class="dont"><h3>${u.dontTitle}</h3><ul>${c.dont.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>
+      </div>`;
+  const refs = (REFS[topic.id] || []).map(r => `<span>${esc(refLabel(r))}</span>`).join("");
+  const words = c.title.split(" ").map((w, i) => `<span class="w" style="animation-delay:${.15 + i*.12}s">${esc(w)}</span>`).join(" ");
   return `
   <section class="hero">
     <div class="in">
       <img class="mimg" src="img/hero-m.webp" alt="${esc(CONFIG.ownerName[lang])}">
       <div class="copy" dir="${u.dir}">
+        ${CONFIG.siteTag?.[lang] ? `<span class="tag">${esc(CONFIG.siteTag[lang])}</span>` : ""}
         <h1 class="display">${words}</h1>
-        <p>${esc(u.heroSub)}</p>
+        <p>${esc(c.intro)}</p>
         <div class="cta">
-          <a class="btn" href="${link(lead.id)}"><img src="${art(lead)}" alt="">${u.start}</a>
-          <span class="chip"><span class="emoji">🏅</span><b>${done}/${TOPICS.length}</b></span>
+          <a class="btn" href="#watch">▶ ${u.watch}</a>
+          <a class="chip" href="#quiz">🎯 ${u.quizTitle}</a>
         </div>
+        <div class="meter"><span class="ml">${u.best}</span><div class="bar"><i id="meterBar"></i></div><b id="meterTxt"></b></div>
       </div>
     </div>
   </section>
   <div class="stripe thin"></div>
-
   <div class="wrap">
-    <section class="sec">
-      <div class="tip"><span class="emoji">${tEmoji}</span><div><small>${u.tip}</small><p>${esc(tText)}</p></div></div>
-    </section>
+    <div class="frame" id="watch"><div class="player">${player(topic, u)}</div><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i></div>
 
-    <section class="sec">
-      <h2>${u.missions}</h2>
-      <div class="missions">${TOPICS.map((t, i) => {
-        const n = bestScore(t), total = QN(t), b = hasBadge(t);
-        return `<a class="mcard ${t === lead ? "lead" : ""} ${b ? "done" : ""}" href="${link(t.id)}">
-          <span class="no">${String(i+1).padStart(2,"0")}</span>
-          <img class="big" src="${art(t)}" alt="">
-          <h3>${esc(t[lang].title)}</h3>
-          <div class="bar"><i style="width:${Math.round(n/total*100)}%"></i></div>
-          <div class="st"><span>${u.best}: ${n}/${total}</span>${b ? `<b>✔ 🏅</b>` : ""}</div>
-        </a>`;}).join("")}
-      </div>
-    </section>
+    <section class="quiz" id="quiz" aria-live="polite"></section>
 
-    <section class="sec">
-      <h2>${u.badges}</h2>
-      <div class="badges">
-        ${TOPICS.map(t => `<div class="hex ${hasBadge(t) ? "on" : ""}" title="${esc(t[lang].title)}"><img src="${art(t)}" alt=""></div>`).join("")}
-        <div class="prog"><b>${done}/${TOPICS.length}</b><span>${fmt(u.progress, {n: done, t: TOPICS.length})}</span></div>
-      </div>
-      ${done === TOPICS.length ? `<div class="hero-msg">${u.allDone}</div>` : ""}
-    </section>
+    <h2 class="h2">${u.tenRules || u.keyPoints}</h2>
+    ${content}
+    <div class="stop"><span class="oct emoji">✋</span><span>${u.stop}</span></div>
+    ${refs ? `<div class="refs"><small>${u.refs}</small>${refs}</div>` : ""}
 
     <section class="sec">
       <div class="creator">
@@ -441,49 +428,6 @@ function renderHome(u){
     </section>
   </div>
   <footer>${esc(CONFIG.siteTag?.[lang] || "")}</footer>`;
-}
-
-/* ---------- Topic ---------- */
-function renderTopic(u){
-  const c = topic[lang];
-  document.title = c.title;
-  const idx = TOPICS.indexOf(topic), next = TOPICS[(idx + 1) % TOPICS.length];
-  const content = topic.rules
-    ? `<div class="cards rules">${topic.rules.map((r, i) => `
-        <article class="ck">
-          <header><span class="n">${i+1}</span><span class="ic emoji">${r.emoji}</span><h3>${esc(r[lang].t)}</h3></header>
-          <ul>${r[lang].items.map(([ok, x]) => `<li class="${ok===true?"yes":ok===false?"no":"info"}">${esc(x)}</li>`).join("")}</ul>
-        </article>`).join("")}</div>`
-    : `<div class="cards">${c.points.map(([e, x]) => `
-        <div class="ck pt"><span class="ic emoji">${e}</span><span>${esc(x)}</span></div>`).join("")}</div>
-      <div class="dd">
-        <div class="do"><h3>${u.doTitle}</h3><ul>${c.do.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>
-        <div class="dont"><h3>${u.dontTitle}</h3><ul>${c.dont.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>
-      </div>`;
-  const refs = (REFS[topic.id] || []).map(r => `<span>${esc(refLabel(r))}</span>`).join("");
-  return `
-  <section class="thero">
-    <img class="ghost" src="${art(topic)}" alt="">
-    <div class="wrap">
-      <div class="kick">${u.mission} ${idx+1} <span>/ ${TOPICS.length}</span></div>
-      <h1 class="display">${esc(c.title)}</h1>
-      <p>${esc(c.intro)}</p>
-      <div class="meter"><span class="ml">${u.best}</span><div class="bar"><i id="meterBar"></i></div><b id="meterTxt"></b></div>
-    </div>
-  </section>
-  <div class="stripe thin"></div>
-  <div class="wrap">
-    <div class="frame"><div class="player">${player(topic, u)}</div><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i></div>
-
-    <section class="quiz" id="quiz" aria-live="polite"></section>
-
-    <h2 class="h2">${u.keyPoints}</h2>
-    ${content}
-    <div class="stop"><span class="oct emoji">✋</span><span>${u.stop}</span></div>
-    ${refs ? `<div class="refs"><small>${u.refs}</small>${refs}</div>` : ""}
-    <a class="nextm" href="${link(next.id)}"><img src="${art(next)}" alt=""><div><small>${u.next}</small><b>${esc(next[lang].title)}</b></div></a>
-    <div class="by"><span class="av"><img src="img/avatar.webp" alt=""></span><div><small>${u.by}</small><b>${esc(CONFIG.ownerName[lang])}</b></div></div>
-  </div>`;
 }
 
 function updateMeter(){
@@ -510,8 +454,26 @@ function quizIntro(){
   document.getElementById("qstart").onclick = quizStart;
 }
 
+/* Draw QUIZ_SIZE questions the worker hasn't seen yet; when the bank runs out,
+   start a new cycle but never repeat the previous attempt's questions */
+function drawQuestions(){
+  const bank = QUIZ[topic.id].map((_, i) => i), key = "seen:" + topic.id, n = QN(topic);
+  let seen = []; try{ seen = JSON.parse(store.get(key) || "[]"); }catch(e){}
+  let last = []; try{ last = JSON.parse(store.get("last:" + topic.id) || "[]"); }catch(e){}
+  let fresh = shuffle(bank.filter(i => !seen.includes(i)));
+  let pick = fresh.slice(0, n);
+  if(pick.length < n){
+    const fill = shuffle(bank.filter(i => !pick.includes(i) && !last.includes(i)));
+    pick = pick.concat(fill.slice(0, n - pick.length));
+    seen = [];
+  }
+  store.set(key, JSON.stringify(seen.concat(pick)));
+  store.set("last:" + topic.id, JSON.stringify(pick));
+  return shuffle(pick);
+}
+
 function quizStart(){
-  Q = { order: shuffle(QUIZ[topic.id].map((_, i) => i)), i: 0, score: 0 };
+  Q = { order: drawQuestions(), i: 0, score: 0, res: [] };
   quizQuestion();
 }
 
@@ -615,12 +577,12 @@ function render(){
   document.documentElement.lang = lang;
   document.documentElement.dir = u.dir;
   document.body.className = lang;
-  document.getElementById("top").classList.toggle("solid", !!topic);
+  
   document.getElementById("siteName").textContent = u.site;
   document.getElementById("homeLink").href = "./?lang=" + lang;
   document.getElementById("langLbl").textContent = u.lang;
-  document.getElementById("app").innerHTML = topic ? renderTopic(u) : renderHome(u);
-  if(topic){ updateMeter(); quizIntro(); }
+  document.getElementById("app").innerHTML = renderTopic(u);
+  updateMeter(); quizIntro();
 }
 
 function setLang(l){
@@ -644,8 +606,9 @@ function showPicker(){
 document.querySelectorAll("#picker [data-lang]").forEach(b => b.onclick = () => setLang(b.dataset.lang));
 document.getElementById("langBtn").onclick = showPicker;
 
-/* Start: ?lang= in the link wins, then the language chosen last time, else ask */
-const start = params.get("lang") || store.get("lang");
+/* Start: a QR scan opens with no ?lang=, so the visitor always picks a language first.
+   After that, ?lang= in the URL keeps the choice on reload and in-page links. */
+const start = params.get("lang");
 if(UI[start]) setLang(start); else { lang = "ar"; render(); showPicker(); }
 </script>
 </body>

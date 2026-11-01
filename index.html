@@ -3,258 +3,292 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#020E33">
+<meta name="theme-color" content="#0B1430">
 <title>Safety Awareness</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@500;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="img/hero-m.webp" media="(max-width:760px)">
+<link rel="preload" as="image" href="img/hero.webp" media="(min-width:761px)">
 <script src="content.js"></script>
 <style>
 /* =====================================================================
-   ألوان الهوية — غيّر القيم هنا فقط لمطابقة الشعار الرسمي
+   الألوان — مأخوذة من المقطع والرسمة. غيّرها هنا فقط
    ===================================================================== */
 :root{
-  --bg-deep:#020E33;    /* الشريط العلوي والتذييل */
-  --bg:#041547;         /* خلفية الصفحة */
-  --surface:#0A2366;    /* البطاقات */
-  --royal:#0A2E89;      /* شريط التنقل */
-  --azure:#1A7FE8;      /* الأزرق الفاتح */
-  --teal:#05CEB3;       /* لون التمييز */
-  --teal-deep:#039DB0;
-  --red:#E5333B;
-  --text:#E6EEFF;       /* نص فاتح مائل للأزرق */
-  --muted:#9BB0E0;
-  --rule:rgba(155,176,224,.22);
-  --grad:linear-gradient(90deg,var(--teal-deep),var(--azure));
+  --night:#0B1430;     /* أعمق خلفية */
+  --dusk:#14254F;      /* البطاقات */
+  --sky:#254563;       /* سماء الغروب */
+  --royal:#0A2E89;
+  --teal:#05CEB3;
+  --lime:#D7FF3C;      /* لون السترة العاكسة — لون التمييز */
+  --glow:#FF9A4D;      /* وهج الأفق */
+  --red:#FF4D57;
+  --text:#EAF2FF;
+  --muted:#9DB1D6;
+  --line:rgba(157,177,214,.18);
+  --silver:#C9D2DC;
+  --display:"Alexandria","IBM Plex Sans Arabic",system-ui,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{background:var(--bg);-webkit-text-size-adjust:100%}
-body{background:var(--bg);color:var(--text);font-family:"IBM Plex Sans Arabic","IBM Plex Sans",system-ui,sans-serif;font-size:17px;line-height:1.7;min-height:100vh}
-body.en{font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:16.5px;line-height:1.6}
+html{background:var(--night);-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{background:var(--night);color:var(--text);font-family:"IBM Plex Sans Arabic",system-ui,sans-serif;font-size:17px;line-height:1.7;min-height:100vh;overflow-x:hidden}
 body.ur{font-family:"Noto Nastaliq Urdu","IBM Plex Sans Arabic",serif;font-size:15.5px;line-height:2.35}
+body.ur{--display:"Noto Nastaliq Urdu",serif}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
-:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+:focus-visible{outline:3px solid var(--lime);outline-offset:3px;border-radius:6px}
 [hidden]{display:none!important}
-.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
-.emoji{font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;line-height:1}
+img{display:block;max-width:100%}
+.wrap{max-width:1120px;margin:0 auto;padding:0 18px}
+.emoji{font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;line-height:1;font-weight:400}
+.display{font-family:var(--display);font-weight:900;letter-spacing:-.01em}
+body.ur .display{font-weight:700;letter-spacing:0}
 
-/* ---------- Masthead ---------- */
-.mast{background:var(--bg-deep)}
-.mast .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:60px}
-.brand{display:flex;align-items:center;gap:12px;min-width:0}
-.brand .mark{width:38px;height:38px;flex-shrink:0;display:grid;place-items:center;background:var(--teal);color:var(--bg-deep);font-size:20px}
-.brand b{font-size:1.15rem;font-weight:700;white-space:nowrap}
-body.ur .brand b{font-size:1.05rem}
-.brand .loc{color:var(--muted);font-size:.82rem;border-inline-start:1px solid var(--rule);padding-inline-start:12px;white-space:nowrap}
-@media (max-width:560px){.brand .loc{display:none}}
-.langs-top{display:flex;gap:2px;flex-shrink:0}
-.langs-top button{padding:4px 9px;font-size:.85rem;color:var(--muted);border-bottom:3px solid transparent}
-.langs-top button.on{color:var(--text);border-color:var(--teal);font-weight:600}
-.langs-top .ur{font-family:"Noto Nastaliq Urdu",serif;font-size:.8rem;padding-block:0}
-.langs-top .en{font-family:"IBM Plex Sans",sans-serif}
+/* ---------- Signature: hi-vis reflective stripe ---------- */
+.stripe{height:12px;background:linear-gradient(var(--lime) 0 32%,var(--silver) 32% 68%,var(--lime) 68%);box-shadow:0 0 24px rgba(215,255,60,.25)}
+.stripe.thin{height:7px}
 
-.nav{background:var(--royal);border-bottom:1px solid var(--rule)}
-.nav ul{list-style:none;display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
-.nav ul::-webkit-scrollbar{display:none}
-.nav a{display:block;padding:11px 14px;font-size:.92rem;font-weight:500;white-space:nowrap;border-bottom:4px solid transparent}
-.nav a:hover{border-color:var(--muted)}
-.nav a.on{border-color:var(--teal);font-weight:700}
-body.ur .nav a{padding:6px 14px;font-size:.88rem}
-.gradline{height:3px;background:var(--grad)}
+/* ---------- Top bar ---------- */
+.top{position:absolute;top:0;inset-inline:0;z-index:10}
+.top.solid{position:sticky;background:rgba(11,20,48,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:62px;gap:12px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:1.05rem}
+body.ur .logo{font-weight:700;font-size:.95rem}
+.logo .m{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--lime);font-size:19px;box-shadow:0 0 18px rgba(215,255,60,.35)}
+.lang{display:flex;gap:4px;background:rgba(11,20,48,.55);border:1px solid var(--line);border-radius:999px;padding:3px;backdrop-filter:blur(8px)}
+.lang button{padding:3px 12px;border-radius:999px;font-size:.82rem;font-weight:600;color:var(--muted)}
+.lang button.on{background:var(--lime);color:var(--night)}
+.lang .ur{font-family:"Noto Nastaliq Urdu",serif;padding-block:0}
 
-/* ---------- Thumbnails: video poster, or a generated panel with the video's diagonal slash ---------- */
-.thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:linear-gradient(135deg,var(--royal),var(--bg-deep))}
-.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.thumb .slash{position:absolute;top:0;bottom:0;inset-inline-end:-18%;width:46%;background:linear-gradient(160deg,var(--teal),var(--teal-deep));transform:skewX(-14deg);opacity:.9}
-[dir=rtl] .thumb .slash{transform:skewX(14deg)}
-.thumb .big{position:absolute;inset-inline-start:9%;top:50%;transform:translateY(-50%);font-size:clamp(44px,9vw,72px);filter:drop-shadow(0 8px 18px rgba(0,0,0,.4))}
-.thumb .play{position:absolute;inset-inline-start:0;bottom:0;display:flex;align-items:center;gap:8px;background:var(--bg-deep);color:var(--text);padding:6px 12px 6px 10px;font-size:.85rem;font-weight:600}
-.thumb .play i{width:0;height:0;border-style:solid;border-width:6px 0 6px 10px;border-color:transparent transparent transparent var(--teal)}
+/* ---------- Home hero: Anas points at the headline ---------- */
+.hero{position:relative;background:var(--night)}
+.hero .art{position:relative;max-height:94vh;aspect-ratio:2000/1116;margin:0 auto;overflow:hidden}
+.hero .art picture,.hero .art img{width:100%;height:100%;object-fit:cover}
+.hero .art::after{content:"";position:absolute;inset:auto 0 0 0;height:22%;background:linear-gradient(transparent,var(--night))}
+.hero .copy{position:absolute;left:14%;top:14%;width:34.5%;height:62%;display:flex;flex-direction:column;justify-content:center;padding:3% 4%;text-align:start}
+.hero h1{font-size:clamp(2rem,4.3vw,4.4rem);line-height:1.05;color:var(--text);text-wrap:balance}
+body.ur .hero h1{line-height:1.7;font-size:clamp(1.6rem,3vw,3rem)}
+.hero h1 .w{display:inline-block;animation:rise .7s cubic-bezier(.2,.9,.3,1.2) both}
+.hero p{margin-top:16px;color:var(--muted);font-size:clamp(.95rem,1.3vw,1.15rem);max-width:34ch}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--lime);color:var(--night);font-family:var(--display);font-weight:800;padding:13px 22px;border-radius:14px;box-shadow:0 10px 30px -10px rgba(215,255,60,.55);transition:transform .12s}
+body.ur .btn{font-weight:700;padding:6px 22px}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:scale(.97)}
+.chip{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:rgba(11,20,48,.5);border-radius:999px;padding:6px 14px;font-size:.88rem;font-weight:600}
+.chip b{color:var(--lime)}
+@keyframes rise{from{opacity:0;transform:translateY(40%)}to{opacity:1;transform:none}}
 
-/* ---------- Section labels ---------- */
-.label{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.05rem;margin:28px 0 14px;padding-top:12px;border-top:1px solid var(--rule)}
-.label::before{content:"";width:12px;height:12px;background:var(--teal)}
-body.ur .label{font-size:1rem}
+@media (max-width:760px){
+  .hero .art{aspect-ratio:auto;max-height:none}
+  .hero .art img{aspect-ratio:800/812;height:auto}
+  .hero .copy{position:relative;left:auto;top:auto;width:auto;height:auto;margin-top:-90px;padding:0 18px 8px;z-index:2}
+  .hero .art::after{height:45%}
+  .hero h1{font-size:clamp(2.4rem,11vw,3.4rem)}
+  body.ur .hero h1{font-size:clamp(1.9rem,8vw,2.6rem)}
+}
 
-/* ---------- Home: lead story ---------- */
-.lead{display:grid;grid-template-columns:1.5fr 1fr;gap:22px;align-items:start}
-@media (max-width:760px){.lead{grid-template-columns:1fr;gap:14px}}
-.lead h2{font-size:clamp(1.6rem,4.6vw,2.4rem);line-height:1.2;font-weight:700}
-body.en .lead h2{letter-spacing:-.015em}
-body.ur .lead h2{line-height:1.85;font-size:clamp(1.4rem,4vw,2rem)}
-.lead p{color:var(--muted);margin-top:10px;font-size:1.02rem}
-.lead a:hover h2{text-decoration:underline;text-decoration-color:var(--teal);text-underline-offset:6px}
-.meta{display:flex;align-items:center;gap:10px;margin-top:14px;font-size:.85rem;color:var(--muted)}
-.meta .sec{color:var(--teal);font-weight:600;border-inline-start:1px solid var(--rule);padding-inline-start:10px}
+/* ---------- Section heads ---------- */
+.sec{padding:42px 0 8px}
+.sec h2{font-family:var(--display);font-weight:800;font-size:clamp(1.5rem,3.6vw,2.2rem);line-height:1.2;margin-bottom:18px}
+body.ur .sec h2{font-weight:700;line-height:1.9}
 
-/* ---------- Home: grid + numbered rules column ---------- */
-.home-main{display:grid;grid-template-columns:2fr 1fr;gap:28px}
-@media (max-width:860px){.home-main{grid-template-columns:1fr;gap:0}}
-.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+/* ---------- Tip of the day ---------- */
+.tip{position:relative;display:flex;gap:18px;align-items:center;background:linear-gradient(100deg,rgba(255,154,77,.18),var(--dusk) 55%);border:1px solid var(--line);border-radius:22px;padding:20px 22px;overflow:hidden}
+.tip .emoji{font-size:44px;flex-shrink:0}
+.tip small{display:block;color:var(--glow);font-weight:700;font-size:.85rem}
+.tip p{font-size:1.1rem;font-weight:600;line-height:1.55}
+body.ur .tip p{line-height:2.2}
 
-.card{display:flex;flex-direction:column;background:var(--surface);border-top:4px solid transparent;transition:border-color .15s}
-.card:hover{border-color:var(--teal)}
-.card .body{padding:12px 14px 16px}
-.card h3{font-size:1.12rem;font-weight:700;line-height:1.35}
-body.ur .card h3{font-size:1rem;line-height:2}
-.card p{color:var(--muted);font-size:.92rem;margin-top:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+/* ---------- Mission cards ---------- */
+.missions{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:900px){.missions{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.missions{grid-template-columns:1fr}}
+.mcard{position:relative;display:flex;flex-direction:column;gap:12px;min-height:220px;padding:20px;border-radius:24px;overflow:hidden;
+  background:radial-gradient(120% 90% at 100% 0%,rgba(37,69,99,.95),var(--dusk) 60%);border:1px solid var(--line);transition:transform .15s,border-color .15s}
+.mcard:hover{transform:translateY(-4px);border-color:rgba(215,255,60,.6)}
+.mcard .no{font-family:"Alexandria",sans-serif;font-weight:900;font-size:4.2rem;line-height:.8;color:transparent;-webkit-text-stroke:1.5px rgba(157,177,214,.35)}
+.mcard .big{position:absolute;inset-inline-end:16px;top:16px;font-size:58px;filter:drop-shadow(0 10px 18px rgba(0,0,0,.45))}
+.mcard h3{font-family:var(--display);font-weight:800;font-size:1.35rem;line-height:1.25;margin-top:auto}
+body.ur .mcard h3{font-weight:700;line-height:1.9;font-size:1.15rem}
+.mcard .bar{height:6px;border-radius:6px;background:rgba(157,177,214,.18);overflow:hidden}
+.mcard .bar i{display:block;height:100%;background:var(--lime);border-radius:6px}
+.mcard .st{display:flex;justify-content:space-between;align-items:center;font-size:.82rem;color:var(--muted)}
+.mcard.done{border-color:var(--lime);box-shadow:0 0 0 1px var(--lime),0 18px 40px -20px rgba(215,255,60,.5)}
+.mcard.done .st b{color:var(--lime)}
+.mcard.lead{grid-column:span 2;background:linear-gradient(120deg,rgba(5,206,179,.25),transparent 55%),radial-gradient(120% 90% at 100% 0%,var(--royal),var(--dusk) 65%)}
+@media (max-width:520px){.mcard.lead{grid-column:auto}}
+.mcard.lead .big{font-size:84px}
 
-.most ol{list-style:none;counter-reset:n}
-.most li{counter-increment:n;border-bottom:1px solid var(--rule)}
-.most a{display:flex;gap:14px;align-items:baseline;padding:10px 0;font-weight:600}
-.most a:hover span{text-decoration:underline;text-decoration-color:var(--teal)}
-.most a::before{content:counter(n);font-family:"IBM Plex Sans",sans-serif;font-weight:300;font-size:2rem;line-height:1;color:var(--teal);min-width:1.4em}
-body.ur .most a{font-weight:400}
+/* ---------- Badges ---------- */
+.badges{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.hex{width:74px;height:84px;display:grid;place-items:center;font-size:32px;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);background:rgba(157,177,214,.14);position:relative}
+.hex.on{background:var(--lime);box-shadow:none}
+.hex:not(.on) .emoji{filter:grayscale(1) opacity(.35)}
+.hex:not(.on)::after{content:"🔒";position:absolute;font-size:16px;bottom:14px;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
+.prog{margin-inline-start:auto;text-align:end}
+.prog b{display:block;font-family:"Alexandria",sans-serif;font-weight:900;font-size:2.2rem;line-height:1;color:var(--lime)}
+.prog span{color:var(--muted);font-size:.9rem}
+@media (max-width:560px){.prog{margin-inline-start:0;width:100%;text-align:start}}
+.hero-msg{margin-top:12px;color:var(--lime);font-family:var(--display);font-weight:800}
 
-/* ---------- Article ---------- */
-.article{max-width:720px;margin:0 auto;padding:0 16px}
-.crumb{display:flex;gap:10px;align-items:center;margin-top:22px;font-size:.88rem;font-weight:600}
-.crumb a{color:var(--teal)}
-.crumb span{color:var(--muted);font-weight:400}
-.article h1{font-size:clamp(1.9rem,6.4vw,2.8rem);line-height:1.18;font-weight:700;margin-top:10px}
-body.en .article h1{letter-spacing:-.02em}
-body.ur .article h1{line-height:1.85;font-size:clamp(1.6rem,5.4vw,2.3rem)}
-.standfirst{font-size:1.15rem;font-weight:600;margin-top:12px;line-height:1.55}
-body.ur .standfirst{line-height:2.2;font-size:1.05rem}
-.byline{display:flex;gap:12px;align-items:center;padding:14px 0;margin-top:16px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
-.byline .av{width:44px;height:44px;flex-shrink:0;display:grid;place-items:center;background:var(--royal);border:2px solid var(--teal);font-size:20px}
-.byline b{display:block;font-weight:700;line-height:1.3}
-.byline small{color:var(--muted);font-size:.83rem;line-height:1.3;display:block}
-body.ur .byline b,body.ur .byline small{line-height:2}
+/* ---------- Creator ---------- */
+.creator{position:relative;display:grid;grid-template-columns:minmax(0,.9fr) 1.1fr;gap:0;align-items:stretch;border-radius:28px;overflow:hidden;background:linear-gradient(120deg,var(--dusk),var(--night));border:1px solid var(--line);margin-top:10px}
+@media (max-width:700px){.creator{grid-template-columns:1fr}}
+.creator img{width:100%;height:100%;object-fit:cover;min-height:320px}
+.creator .txt{padding:34px 30px;display:flex;flex-direction:column;justify-content:center}
+.creator small{color:var(--teal);font-weight:700}
+.creator h3{font-size:clamp(2rem,5vw,3.4rem);line-height:1.1;margin:6px 0 14px}
+body.ur .creator h3{line-height:1.8}
+.creator p{color:var(--muted);font-size:1.1rem;max-width:30ch}
+.creator .stripe{margin-top:22px;width:140px;border-radius:3px}
 
-.media{margin:22px -16px 6px}
-@media (min-width:752px){.media{margin-inline:0}}
-.media .player{position:relative;aspect-ratio:16/9;background:var(--bg-deep)}
-.media video,.media iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--bg-deep)}
-.media .empty{position:absolute;inset:0;overflow:hidden}
-.media .empty .note{position:absolute;inset-inline-start:0;bottom:0;background:var(--bg-deep);padding:6px 12px;font-size:.85rem;color:var(--muted)}
-.caption{font-size:.85rem;color:var(--muted);padding:8px 16px 0;border-inline-start:3px solid var(--teal);margin-inline:16px}
-@media (min-width:752px){.caption{margin-inline:0}}
+footer{padding:30px 0 44px;color:var(--muted);font-size:.85rem;text-align:center}
 
-.body h2{font-size:1.35rem;font-weight:700;margin:30px 0 12px;line-height:1.35}
-body.ur .body h2{font-size:1.15rem}
+/* ---------- Topic page ---------- */
+.thero{position:relative;padding:34px 0 28px;overflow:hidden;background:radial-gradient(90% 120% at 85% 0%,var(--sky),var(--night) 70%)}
+.thero::before{content:"";position:absolute;inset:auto 0 0 0;height:40%;background:linear-gradient(transparent,rgba(255,154,77,.10))}
+.thero .ghost{position:absolute;inset-inline-end:-30px;top:10px;font-size:220px;opacity:.16;transform:rotate(-8deg);pointer-events:none}
+.thero .wrap{position:relative}
+.kick{display:inline-flex;gap:8px;align-items:center;font-weight:700;font-size:.9rem;color:var(--lime)}
+.kick span{color:var(--muted);font-weight:500}
+.thero h1{font-size:clamp(2.3rem,8vw,4.6rem);line-height:1.05;margin:10px 0 12px;max-width:16ch}
+body.ur .thero h1{line-height:1.7;font-size:clamp(1.9rem,6vw,3.4rem)}
+.thero p{color:var(--muted);font-size:1.12rem;max-width:44ch}
+.meter{display:flex;align-items:center;gap:14px;margin-top:22px;max-width:520px}
+.meter .bar{flex:1;height:10px;border-radius:10px;background:rgba(157,177,214,.18);overflow:hidden}
+.meter .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--lime));border-radius:10px;transition:width .4s}
+.meter b{font-family:"Alexandria",sans-serif;font-weight:900;font-size:1.2rem;min-width:3.4em;text-align:end}
 
-/* rules as numbered article sections */
-.rule{padding:22px 0;border-bottom:1px solid var(--rule);scroll-margin-top:16px}
-.rule header{display:flex;gap:14px;align-items:center;margin-bottom:12px}
-.rule .n{font-family:"IBM Plex Sans",sans-serif;font-weight:300;font-size:3rem;line-height:.9;color:var(--teal);min-width:1.2em;text-align:center}
-.rule .ic{font-size:26px}
-.rule h3{font-size:1.3rem;font-weight:700;line-height:1.3}
-body.ur .rule h3{font-size:1.1rem;line-height:2}
-.items{list-style:none;display:grid;gap:6px;padding-inline-start:calc(1.2em * 3 + 14px)}
-@media (max-width:480px){.items{padding-inline-start:0}}
-.items li{display:flex;gap:10px;align-items:flex-start}
-.items li::before{flex-shrink:0;width:22px;height:22px;margin-top:.3em;display:grid;place-items:center;font-size:.75rem;font-weight:700}
-body.ur .items li::before{margin-top:.55em}
-.items li.yes::before{content:"✓";background:var(--teal);color:var(--bg-deep)}
-.items li.no::before{content:"✕";background:var(--red);color:var(--text)}
-.items li.info::before{content:"";width:8px;height:8px;margin:.7em 7px 0;background:var(--muted)}
-body.ur .items li.info::before{margin-top:1.1em}
-.items li.no{color:#FFC9CC}
+.frame{position:relative;margin:26px 0 8px;border-radius:18px;padding:10px;background:rgba(157,177,214,.06)}
+.frame .player{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#050A1C}
+.frame video,.frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#050A1C}
+.frame .empty{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:6px;color:var(--muted);text-align:center;background:radial-gradient(circle,var(--dusk),#050A1C)}
+.frame .empty .emoji{font-size:44px}
+.frame i.c{position:absolute;width:30px;height:30px;border:4px solid var(--lime)}
+.frame i.c1{top:0;left:0;border-right:0;border-bottom:0;border-top-left-radius:16px}
+.frame i.c2{top:0;right:0;border-left:0;border-bottom:0;border-top-right-radius:16px}
+.frame i.c3{bottom:0;left:0;border-right:0;border-top:0;border-bottom-left-radius:16px}
+.frame i.c4{bottom:0;right:0;border-left:0;border-top:0;border-bottom-right-radius:16px}
 
-/* key points for other topics */
-.points{list-style:none}
-.points li{display:flex;gap:16px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--rule)}
-.points .emoji{font-size:26px;width:36px;text-align:center;padding-top:2px}
-.dd{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+.hint{display:flex;align-items:center;gap:10px;color:var(--muted);margin:26px 0 12px;font-weight:600}
+.hint::before{content:"👆";font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
+
+.cards{display:grid;gap:12px}
+@media (min-width:860px){.cards.rules{grid-template-columns:1fr 1fr}}
+.ck{position:relative;display:block;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;width:100%;text-align:start;background:var(--dusk);border:1.5px solid var(--line);border-radius:20px;padding:18px 18px 18px;transition:border-color .15s,background .15s}
+.ck:hover{border-color:rgba(215,255,60,.45)}
+.ck .tick{position:absolute;inset-inline-end:16px;top:16px;width:30px;height:30px;border-radius:50%;border:2px solid var(--muted);display:grid;place-items:center;font-weight:900;color:transparent;transition:.2s}
+.ck.on{border-color:var(--lime);background:linear-gradient(160deg,rgba(215,255,60,.10),var(--dusk) 60%)}
+.ck.on .tick{background:var(--lime);border-color:var(--lime);color:var(--night);transform:scale(1.08)}
+.ck header{display:flex;align-items:center;gap:14px;padding-inline-end:40px}
+.ck .n{font-family:"Alexandria",sans-serif;font-weight:900;font-size:2.6rem;line-height:.9;color:transparent;-webkit-text-stroke:1.5px var(--teal);min-width:1.3em}
+.ck.on .n{-webkit-text-stroke-color:var(--lime)}
+.ck .ic{font-size:30px}
+.ck h3{font-family:var(--display);font-weight:800;font-size:1.2rem;line-height:1.3}
+body.ur .ck h3{font-weight:700;line-height:1.9;font-size:1.05rem}
+.ck ul{list-style:none;display:grid;gap:6px;margin-top:12px}
+.ck li{display:flex;gap:10px;align-items:flex-start;font-size:.97rem}
+.ck li::before{flex-shrink:0;width:20px;height:20px;margin-top:.35em;border-radius:6px;display:grid;place-items:center;font-size:.7rem;font-weight:900}
+body.ur .ck li::before{margin-top:.6em}
+.ck li.yes::before{content:"✓";background:var(--teal);color:var(--night)}
+.ck li.no::before{content:"✕";background:var(--red);color:#fff}
+.ck li.info::before{content:"";width:8px;height:8px;margin:.75em 6px 0;background:var(--muted);border-radius:2px}
+body.ur .ck li.info::before{margin-top:1.15em}
+.ck li.no{color:#FFC4C8}
+.ck.pt{display:flex;gap:14px;align-items:center;padding-inline-end:58px}
+.ck.pt .ic{font-size:30px}
+
+.dd{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
 @media (max-width:560px){.dd{grid-template-columns:1fr}}
-.dd > div{background:var(--surface);padding:14px 16px;border-top:4px solid}
+.dd > div{border-radius:20px;padding:16px 18px;background:var(--dusk);border-top:5px solid}
 .dd .do{border-color:var(--teal)} .dd .dont{border-color:var(--red)}
-.dd h3{font-size:1.05rem;font-weight:700;margin-bottom:8px}
+.dd h3{font-family:var(--display);font-weight:800;margin-bottom:8px}
 .dd ul{list-style:none;display:grid;gap:6px}
 .dd li{display:flex;gap:8px}
 .dd .do li::before{content:"✅"} .dd .dont li::before{content:"❌"}
 
-/* stop authority + pledge */
-.stop{display:flex;gap:16px;align-items:center;margin:28px 0 0;padding:16px;background:var(--surface);border-inline-start:6px solid var(--red);font-weight:700;font-size:1.08rem}
-.oct{width:50px;height:50px;flex-shrink:0;display:grid;place-items:center;background:var(--red);clip-path:polygon(30% 0,70% 0,100% 30%,100% 70%,70% 100%,30% 100%,0 70%,0 30%);font-size:23px}
-.pledge{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;margin:24px 0 8px}
-.pledge button{width:100%;background:var(--teal);color:var(--bg-deep);padding:16px;font-weight:700;font-size:1.1rem}
-body.ur .pledge button{padding:6px 16px}
-.pledge button:hover{background:#2BE0C6}
-.stamp{display:none;gap:10px;align-items:center;border:3px solid var(--teal);color:var(--teal);padding:6px 18px;font-size:1.3rem;font-weight:700;transform:rotate(-4deg)}
-.pledge.done button{display:none}
-.pledge.done .stamp{display:inline-flex;animation:stamp .45s cubic-bezier(.2,1.6,.4,1) both}
-.pledge .note{display:none;color:var(--muted)}
-.pledge.done .note{display:block}
-@keyframes stamp{from{transform:rotate(-4deg) scale(2.3);opacity:0}to{transform:rotate(-4deg) scale(1);opacity:1}}
-.burst{position:absolute;top:30%;left:50%;pointer-events:none}
-.burst i{position:absolute;font-style:normal;font-size:24px;animation:fly .9s ease-out forwards}
+.stop{display:flex;gap:16px;align-items:center;margin-top:24px;padding:18px 20px;border-radius:20px;background:linear-gradient(100deg,rgba(255,77,87,.22),var(--dusk) 70%);border:1px solid rgba(255,77,87,.45);font-family:var(--display);font-weight:800;font-size:1.15rem;line-height:1.4}
+body.ur .stop{font-weight:700;line-height:2}
+.oct{width:54px;height:54px;flex-shrink:0;display:grid;place-items:center;background:var(--red);clip-path:polygon(30% 0,70% 0,100% 30%,100% 70%,70% 100%,30% 100%,0 70%,0 30%);font-size:24px}
+
+/* badge unlock: the one celebratory moment */
+.unlock{position:relative;margin:30px 0 10px;padding:26px 20px;border-radius:26px;background:radial-gradient(80% 120% at 50% 0%,rgba(215,255,60,.12),var(--dusk) 70%);border:1px solid var(--line);text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px}
+.unlock .hex{width:110px;height:124px;font-size:50px;transition:transform .3s}
+.unlock .hex:not(.on)::after{font-size:22px;bottom:20px}
+.unlock .btn[disabled]{background:rgba(157,177,214,.2);color:var(--muted);box-shadow:none;cursor:not-allowed;transform:none}
+.unlock .msg{color:var(--muted);font-weight:600}
+.unlock.done .msg{color:var(--lime);font-family:var(--display);font-weight:800;font-size:1.2rem}
+.unlock.pop .hex{animation:pop .6s cubic-bezier(.2,1.6,.4,1)}
+@keyframes pop{0%{transform:scale(.4) rotate(-20deg)}100%{transform:scale(1) rotate(0)}}
+.burst{position:absolute;top:28%;left:50%;pointer-events:none}
+.burst i{position:absolute;font-style:normal;font-size:26px;animation:fly 1s ease-out forwards;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
 @keyframes fly{to{transform:translate(var(--x),var(--y)) rotate(var(--r));opacity:0}}
-@media (prefers-reduced-motion:reduce){.pledge.done .stamp{animation:none}.burst{display:none}}
 
-.related{max-width:1040px;margin:0 auto;padding:0 16px}
-.related .cards{grid-template-columns:repeat(3,1fr)}
-@media (max-width:760px) and (min-width:561px){.related .cards{grid-template-columns:1fr 1fr}}
+.nextm{display:flex;align-items:center;gap:16px;margin-top:16px;padding:18px 20px;border-radius:22px;background:linear-gradient(120deg,var(--royal),var(--dusk));border:1px solid var(--line);transition:transform .15s}
+.nextm:hover{transform:translateY(-3px)}
+.nextm .emoji{font-size:44px}
+.nextm small{color:var(--lime);font-weight:700;display:block}
+.nextm b{font-family:var(--display);font-weight:800;font-size:1.3rem}
+body.ur .nextm b{font-weight:700}
 
-/* ---------- Footer ---------- */
-footer{background:var(--bg-deep);margin-top:40px;border-top:3px solid var(--teal)}
-footer .wrap{padding-top:22px;padding-bottom:40px;display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center;justify-content:space-between}
-footer small{display:block;color:var(--muted);font-size:.8rem}
-footer b{font-size:1.2rem;font-weight:700}
-footer .role{color:var(--muted);font-size:.88rem}
-body.ur footer b{font-size:1.05rem}
+.by{display:flex;align-items:center;gap:14px;justify-content:center;padding:34px 0 46px}
+.by img{width:56px;height:56px;border-radius:50%;border:2px solid var(--lime);object-fit:cover}
+.by small{display:block;color:var(--muted);font-size:.8rem}
+.by b{font-family:var(--display);font-weight:800;font-size:1.15rem}
+body.ur .by b{font-weight:700}
 
 /* ---------- Language picker ---------- */
-#picker{position:fixed;inset:0;z-index:30;background:var(--bg-deep);overflow:auto;display:flex;flex-direction:column}
-#picker .mast{border-bottom:3px solid var(--teal)}
-#picker .inner{flex:1;display:flex;flex-direction:column;justify-content:center;max-width:480px;width:100%;margin:0 auto;padding:28px 16px}
-#picker .thumb{margin-bottom:18px}
-#picker .t-ar{font-size:1.75rem;font-weight:700;line-height:1.25}
-#picker .t-en{font-family:"IBM Plex Sans",sans-serif;color:var(--teal);font-weight:600;margin-top:4px}
+#picker{position:fixed;inset:0;z-index:40;background:var(--night);overflow:auto}
+#picker .pin{max-width:520px;margin:0 auto;min-height:100%;display:flex;flex-direction:column}
+#picker .art{position:relative}
+#picker .art img{width:100%;aspect-ratio:800/812;object-fit:cover;-webkit-mask-image:linear-gradient(#000 60%,transparent);mask-image:linear-gradient(#000 60%,transparent)}
+#picker .pc{padding:0 18px 30px;margin-top:-70px;position:relative}
+#picker .t-ar{font-family:"Alexandria",sans-serif;font-weight:900;font-size:2rem;line-height:1.15}
+#picker .t-en{font-family:"Alexandria",sans-serif;font-weight:700;color:var(--lime);margin-top:6px}
 #picker .t-ur{font-family:"Noto Nastaliq Urdu",serif;color:var(--muted);line-height:2.3}
-#picker .choose{margin-top:22px;border-top:1px solid var(--rule)}
-#picker .choose button{width:100%;display:flex;justify-content:space-between;align-items:center;padding:16px 4px;border-bottom:1px solid var(--rule);font-size:1.35rem;font-weight:700;text-align:start}
-#picker .choose button:hover{background:var(--surface);padding-inline:12px}
-#picker .choose button small{font-size:.85rem;font-weight:400;color:var(--muted)}
-#picker .choose .en{font-family:"IBM Plex Sans",sans-serif}
-#picker .choose .ur{font-family:"Noto Nastaliq Urdu",serif;padding-block:6px}
-#picker .choose button::after{content:"";width:10px;height:10px;background:var(--teal);flex-shrink:0;margin-inline-start:12px}
-/* phones: news-list cards (kept last so it wins) */
-@media (max-width:560px){
-  .cards,.related .cards{grid-template-columns:1fr;gap:0}
-  .card{display:grid;grid-template-columns:40% 1fr;gap:12px;background:transparent;border-top:0;border-bottom:1px solid var(--rule);padding:12px 0}
-  .card .thumb .big{font-size:34px}
-  .card .thumb .play{font-size:.72rem;padding:3px 8px}
-  .card .body{padding:0}
-  .card h3{font-size:1rem}
-  .card p{font-size:.85rem}
-}
+#picker .choose{display:grid;gap:10px;margin-top:18px}
+#picker .choose button{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-radius:16px;background:var(--dusk);border:1.5px solid var(--line);font-family:"Alexandria",sans-serif;font-size:1.3rem;font-weight:800;transition:border-color .12s,transform .12s}
+#picker .choose button:hover{border-color:var(--lime)}
+#picker .choose button:active{transform:scale(.98)}
+#picker .choose button small{font-family:"IBM Plex Sans Arabic",sans-serif;font-size:.85rem;font-weight:500;color:var(--muted)}
+#picker .choose .ur{font-family:"Noto Nastaliq Urdu",serif;font-weight:700;padding-block:8px}
+@media (min-width:761px){#picker .pin{justify-content:center}}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.burst{display:none}}
 </style>
 </head>
 <body>
 
 <div id="picker" hidden>
-  <div class="mast"><div class="wrap"><div class="brand"><span class="mark emoji">⛑️</span><b id="pBrand"></b></div></div></div>
-  <div class="inner">
-    <div id="pThumb"></div>
-    <div class="t-ar" id="pAr"></div>
-    <div class="t-en" id="pEn"></div>
-    <div class="t-ur" id="pUr"></div>
-    <div class="choose">
-      <button data-lang="ar"><span>العربية</span><small>اختر لغتك</small></button>
-      <button data-lang="en" class="en"><span>English</span><small>Choose language</small></button>
-      <button data-lang="ur" class="ur"><span>اردو</span><small>زبان منتخب کریں</small></button>
+  <div class="pin">
+    <div class="art"><img src="img/hero-m.webp" alt=""></div>
+    <div class="pc">
+      <div class="t-ar" id="pAr"></div>
+      <div class="t-en" id="pEn"></div>
+      <div class="t-ur" id="pUr"></div>
+      <div class="choose">
+        <button data-lang="ar"><span>العربية</span><small>اختر لغتك</small></button>
+        <button data-lang="en"><span>English</span><small>Choose language</small></button>
+        <button data-lang="ur" class="ur"><span>اردو</span><small>زبان منتخب کریں</small></button>
+      </div>
     </div>
   </div>
 </div>
 
-<header>
-  <div class="mast"><div class="wrap">
-    <a class="brand" id="homeLink" href="./"><span class="mark emoji">⛑️</span><b id="siteName"></b><span class="loc" id="siteTag"></span></a>
-    <div class="langs-top">
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="logo" id="homeLink" href="./"><span class="m emoji">⛑️</span><span id="siteName"></span></a>
+    <div class="lang">
       <button data-lang="ar">عربي</button>
-      <button data-lang="en" class="en">EN</button>
+      <button data-lang="en">EN</button>
       <button data-lang="ur" class="ur">اردو</button>
     </div>
-  </div></div>
-  <nav class="nav"><div class="wrap"><ul id="nav"></ul></div></nav>
-  <div class="gradline"></div>
+  </div>
 </header>
 
 <main id="app"></main>
-<footer><div class="wrap" id="foot"></div></footer>
 
 <script>
 const params = new URLSearchParams(location.search);
@@ -263,18 +297,17 @@ let lang = null;
 
 const store = {
   get(k){ try{ return localStorage.getItem(k) }catch(e){ return null } },
-  set(k,v){ try{ localStorage.setItem(k,v) }catch(e){} }
+  set(k,v){ try{ v === null ? localStorage.removeItem(k) : localStorage.setItem(k,v) }catch(e){} }
 };
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const link = (id, hash="") => `?t=${id}&lang=${lang}${hash}`;
-const hasVideo = id => !!(CONFIG.videos[id]?.[lang] || "").trim();
+const link = id => `?t=${id}&lang=${lang}`;
+const fmt = (s, o) => s.replace(/\{(\w+)\}/g, (_, k) => o[k]);
 
-function thumb(t, u, withPlay = true){
-  const poster = CONFIG.posters?.[t.id]?.[lang];
-  const play = withPlay && hasVideo(t.id) ? `<span class="play"><i></i>${u.watch}</span>` : "";
-  if(poster) return `<div class="thumb"><img src="${esc(poster)}" alt="" loading="lazy">${play}</div>`;
-  return `<div class="thumb"><span class="slash"></span><span class="big emoji">${t.emoji}</span>${play}</div>`;
-}
+/* Each topic's checklist: the ten rules, or the key points */
+const itemsOf = t => t.rules ? t.rules.length : t.ar.points.length;
+const checked = (t, i) => store.get(`chk:${t.id}:${i}`) === "1";
+const countChecked = t => Array.from({length: itemsOf(t)}, (_, i) => checked(t, i)).filter(Boolean).length;
+const hasBadge = t => store.get("pledge:" + t.id) === "1";
 
 function ytId(url){
   const m = url.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/);
@@ -283,74 +316,179 @@ function ytId(url){
 function player(t, u){
   const src = (CONFIG.videos[t.id]?.[lang] || "").trim();
   const poster = CONFIG.posters?.[t.id]?.[lang] || "";
-  if(!src) return `<div class="empty">${thumb(t, u, false)}<span class="note">🎬 ${u.noVideo}</span></div>`;
+  if(!src) return `<div class="empty"><span class="emoji">🎬</span><span>${u.noVideo}</span></div>`;
   const y = ytId(src);
   if(y) return `<iframe src="https://www.youtube-nocookie.com/embed/${y}?rel=0&playsinline=1" title="video" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
   return `<video src="${esc(src)}" ${poster ? `poster="${esc(poster)}"` : ""} controls playsinline preload="metadata"></video>`;
 }
 
-function card(t, u){
-  return `<a class="card" href="${link(t.id)}">${thumb(t, u)}<div class="body">
-    <h3>${esc(t[lang].title)}</h3><p>${esc(t[lang].intro)}</p></div></a>`;
+/* Tip of the day: changes every day, so there's something new on each visit */
+function tipOfDay(){
+  const pool = [];
+  TOPICS.forEach(t => {
+    if(t.rules) t.rules.forEach(r => r[lang].items.forEach(([ok, x]) => { if(ok !== null) pool.push([r.emoji, x]); }));
+    else t[lang].points.forEach(p => pool.push(p));
+  });
+  const day = Math.floor(Date.now() / 864e5);
+  return pool[day % pool.length];
 }
 
 /* ---------- Home ---------- */
 function renderHome(u){
-  const lead = TOPICS.find(t => t.rules) || TOPICS[0];
-  const rest = TOPICS.filter(t => t !== lead);
   document.title = u.site;
-  return `<div class="wrap">
-    <div class="label">${u.lead}</div>
-    <a class="lead" href="${link(lead.id)}">
-      ${thumb(lead, u)}
-      <div><h2>${esc(lead[lang].title)}</h2><p>${esc(lead[lang].intro)}</p>
-        <div class="meta"><span>${esc(CONFIG.ownerName[lang])}</span><span class="sec">${u.section}</span></div></div>
-    </a>
-    <div class="home-main">
-      <section><div class="label">${u.topics}</div><div class="cards">${rest.map(t => card(t, u)).join("")}</div></section>
-      ${lead.rules ? `<aside class="most"><div class="label">${u.tenRules}</div><ol>${lead.rules.map((r,i) =>
-        `<li><a href="${link(lead.id, "#r"+(i+1))}"><span>${esc(r[lang].t)}</span></a></li>`).join("")}</ol></aside>` : ""}
+  const lead = TOPICS.find(t => t.rules) || TOPICS[0];
+  const done = TOPICS.filter(hasBadge).length;
+  const [tEmoji, tText] = tipOfDay();
+  const words = u.heroTitle.split(" ").map((w, i) => `<span class="w" style="animation-delay:${.15 + i*.12}s">${esc(w)}</span>`).join(" ");
+  return `
+  <section class="hero">
+    <div class="art">
+      <picture>
+        <source media="(max-width:760px)" srcset="img/hero-m.webp">
+        <img src="img/hero.webp" srcset="img/hero-1200.webp 1200w, img/hero.webp 2000w" sizes="100vw" alt="${esc(CONFIG.ownerName[lang])}">
+      </picture>
     </div>
+    <div class="copy">
+      <h1 class="display">${words}</h1>
+      <p>${esc(u.heroSub)}</p>
+      <div class="cta">
+        <a class="btn" href="${link(lead.id)}"><span class="emoji">${lead.emoji}</span>${u.start}</a>
+        <span class="chip"><span class="emoji">🏅</span><b>${done}/${TOPICS.length}</b></span>
+      </div>
+    </div>
+  </section>
+  <div class="stripe thin"></div>
+
+  <div class="wrap">
+    <section class="sec">
+      <div class="tip"><span class="emoji">${tEmoji}</span><div><small>${u.tip}</small><p>${esc(tText)}</p></div></div>
+    </section>
+
+    <section class="sec">
+      <h2>${u.missions}</h2>
+      <div class="missions">${TOPICS.map((t, i) => {
+        const n = countChecked(t), total = itemsOf(t), b = hasBadge(t);
+        return `<a class="mcard ${t === lead ? "lead" : ""} ${b ? "done" : ""}" href="${link(t.id)}">
+          <span class="no">${String(i+1).padStart(2,"0")}</span>
+          <span class="big emoji">${t.emoji}</span>
+          <h3>${esc(t[lang].title)}</h3>
+          <div class="bar"><i style="width:${Math.round(n/total*100)}%"></i></div>
+          <div class="st"><span>${fmt(u.progress, {n, t: total})}</span>${b ? `<b>✔ 🏅</b>` : ""}</div>
+        </a>`;}).join("")}
+      </div>
+    </section>
+
+    <section class="sec">
+      <h2>${u.badges}</h2>
+      <div class="badges">
+        ${TOPICS.map(t => `<div class="hex ${hasBadge(t) ? "on" : ""}" title="${esc(t[lang].title)}"><span class="emoji">${t.emoji}</span></div>`).join("")}
+        <div class="prog"><b>${done}/${TOPICS.length}</b><span>${fmt(u.progress, {n: done, t: TOPICS.length})}</span></div>
+      </div>
+      ${done === TOPICS.length ? `<div class="hero-msg">${u.allDone}</div>` : ""}
+    </section>
+
+    <section class="sec">
+      <div class="creator">
+        <img src="img/portrait.webp" alt="${esc(CONFIG.ownerName[lang])}" loading="lazy">
+        <div class="txt">
+          <small>${u.by}</small>
+          <h3 class="display">${esc(CONFIG.ownerName[lang])}</h3>
+          <p>${esc(CONFIG.ownerLine?.[lang])}</p>
+          <div class="stripe"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <footer>${esc(CONFIG.siteTag?.[lang] || "")}</footer>`;
+}
+
+/* ---------- Topic ---------- */
+function renderTopic(u){
+  const c = topic[lang];
+  document.title = c.title;
+  const idx = TOPICS.indexOf(topic), next = TOPICS[(idx + 1) % TOPICS.length];
+  const cards = topic.rules
+    ? `<div class="cards rules">${topic.rules.map((r, i) => `
+        <div class="ck ${checked(topic, i) ? "on" : ""}" role="button" tabindex="0" data-i="${i}" aria-pressed="${checked(topic, i)}">
+          <span class="tick">✓</span>
+          <header><span class="n">${i+1}</span><span class="ic emoji">${r.emoji}</span><h3>${esc(r[lang].t)}</h3></header>
+          <ul>${r[lang].items.map(([ok, x]) => `<li class="${ok===true?"yes":ok===false?"no":"info"}">${esc(x)}</li>`).join("")}</ul>
+        </div>`).join("")}</div>`
+    : `<div class="cards">${c.points.map(([e, x], i) => `
+        <div class="ck pt ${checked(topic, i) ? "on" : ""}" role="button" tabindex="0" data-i="${i}" aria-pressed="${checked(topic, i)}">
+          <span class="tick">✓</span><span class="ic emoji">${e}</span><span>${esc(x)}</span>
+        </div>`).join("")}</div>
+      <div class="dd">
+        <div class="do"><h3>${u.doTitle}</h3><ul>${c.do.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>
+        <div class="dont"><h3>${u.dontTitle}</h3><ul>${c.dont.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>
+      </div>`;
+  return `
+  <section class="thero">
+    <span class="ghost emoji" aria-hidden="true">${topic.emoji}</span>
+    <div class="wrap">
+      <div class="kick">${u.mission} ${idx+1} <span>/ ${TOPICS.length}</span></div>
+      <h1 class="display">${esc(c.title)}</h1>
+      <p>${esc(c.intro)}</p>
+      <div class="meter"><div class="bar"><i id="meterBar"></i></div><b id="meterTxt"></b></div>
+    </div>
+  </section>
+  <div class="stripe thin"></div>
+  <div class="wrap">
+    <div class="frame"><div class="player">${player(topic, u)}</div><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i></div>
+    <div class="hint">${u.tapHint}</div>
+    ${cards}
+    <div class="stop"><span class="oct emoji">✋</span><span>${u.stop}</span></div>
+    <div class="unlock ${hasBadge(topic) ? "done" : ""}" id="unlock">
+      <div class="hex ${hasBadge(topic) ? "on" : ""}" id="badge"><span class="emoji">${topic.emoji}</span></div>
+      <button class="btn" id="claim" ${hasBadge(topic) ? "hidden" : ""}>🏅 ${u.claim}</button>
+      <div class="msg" id="umsg"></div>
+    </div>
+    <a class="nextm" href="${link(next.id)}"><span class="emoji">${next.emoji}</span><div><small>${u.next}</small><b>${esc(next[lang].title)}</b></div></a>
+    <div class="by"><img src="img/avatar.webp" alt=""><div><small>${u.by}</small><b>${esc(CONFIG.ownerName[lang])}</b></div></div>
   </div>`;
 }
 
-/* ---------- Article ---------- */
-function rulesBody(u){
-  return topic.rules.map((r,i) => `
-    <section class="rule" id="r${i+1}">
-      <header><span class="n">${i+1}</span><span class="ic emoji">${r.emoji}</span><h3>${esc(r[lang].t)}</h3></header>
-      <ul class="items">${r[lang].items.map(([ok,t]) =>
-        `<li class="${ok===true?"yes":ok===false?"no":"info"}">${esc(t)}</li>`).join("")}</ul>
-    </section>`).join("");
+function updateTopicState(){
+  const u = UI[lang], n = countChecked(topic), total = itemsOf(topic);
+  document.getElementById("meterBar").style.width = (n/total*100) + "%";
+  document.getElementById("meterTxt").textContent = `${n}/${total}`;
+  const claim = document.getElementById("claim"), msg = document.getElementById("umsg");
+  if(hasBadge(topic)){ msg.textContent = u.unlocked; return; }
+  claim.disabled = n < total;
+  msg.textContent = n < total ? u.locked : "";
 }
-function pointsBody(u){
-  const c = topic[lang];
-  return `<h2>${u.keyPoints}</h2>
-    <ul class="points">${c.points.map(([e,t]) => `<li><span class="emoji">${e}</span><span>${esc(t)}</span></li>`).join("")}</ul>
-    <div class="dd">
-      <div class="do"><h3>${u.doTitle}</h3><ul>${c.do.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
-      <div class="dont"><h3>${u.dontTitle}</h3><ul>${c.dont.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
-    </div>`;
+
+function toggle(e){
+  const b = e.currentTarget, i = b.dataset.i, on = !checked(topic, i);
+  store.set(`chk:${topic.id}:${i}`, on ? "1" : null);
+  b.classList.toggle("on", on);
+  b.setAttribute("aria-pressed", on);
+  if(on && navigator.vibrate) navigator.vibrate(15);
+  updateTopicState();
 }
-function renderTopic(u){
-  const c = topic[lang], pledged = store.get("pledge:"+topic.id);
-  document.title = c.title;
-  const others = TOPICS.filter(t => t !== topic).slice(0, 3);
-  return `<article class="article">
-    <div class="crumb"><a href="./?lang=${lang}">${u.section}</a><span>${esc(CONFIG.siteTag?.[lang] || "")}</span></div>
-    <h1>${esc(c.title)}</h1>
-    <p class="standfirst">${esc(c.intro)}</p>
-    <div class="byline"><span class="av emoji">⛑️</span><div><b>${esc(CONFIG.ownerName[lang])}</b><small>${esc(CONFIG.ownerRole?.[lang])}</small></div></div>
-    <figure class="media"><div class="player">${player(topic, u)}</div>${hasVideo(topic.id) ? `<figcaption class="caption">${u.watch}: ${esc(c.title)}</figcaption>` : ""}</figure>
-    <div class="body">${topic.rules ? rulesBody(u) : pointsBody(u)}</div>
-    <div class="stop"><span class="oct emoji">✋</span><span>${u.stop}</span></div>
-    <div class="pledge ${pledged ? "done" : ""}" id="pledge">
-      <button id="pledgeBtn">🤝 ${u.pledge}</button>
-      <div class="stamp">✔ ${u.pledged}</div>
-      <div class="note">${u.pledgedNote}</div>
-    </div>
-  </article>
-  <section class="related"><div class="label">${u.related}</div><div class="cards">${others.map(t => card(t, u)).join("")}</div></section>`;
+
+function claimBadge(){
+  store.set("pledge:" + topic.id, "1");
+  const box = document.getElementById("unlock");
+  box.classList.add("done", "pop");
+  document.getElementById("badge").classList.add("on");
+  document.getElementById("claim").hidden = true;
+  updateTopicState();
+  if(navigator.vibrate) navigator.vibrate([40, 40, 80]);
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const burst = document.createElement("div");
+  burst.className = "burst";
+  const emojis = ["⛑️","🦺","✅","👷","🛡️","💪","⭐","🏅"];
+  for(let i = 0; i < 16; i++){
+    const e = document.createElement("i"), a = Math.PI*2*i/16, d = 100 + Math.random()*70;
+    e.textContent = emojis[i % emojis.length];
+    e.style.setProperty("--x", Math.cos(a)*d + "px");
+    e.style.setProperty("--y", Math.sin(a)*d + "px");
+    e.style.setProperty("--r", (Math.random()*90-45) + "deg");
+    burst.appendChild(e);
+  }
+  box.appendChild(burst);
+  setTimeout(() => burst.remove(), 1100);
 }
 
 /* ---------- Shell ---------- */
@@ -359,40 +497,16 @@ function render(){
   document.documentElement.lang = lang;
   document.documentElement.dir = u.dir;
   document.body.className = lang;
+  document.getElementById("top").classList.toggle("solid", !!topic);
   document.getElementById("siteName").textContent = u.site;
-  document.getElementById("siteTag").textContent = CONFIG.siteTag?.[lang] || "";
   document.getElementById("homeLink").href = "./?lang=" + lang;
-  document.querySelectorAll(".langs-top button").forEach(b => b.classList.toggle("on", b.dataset.lang === lang));
-  document.getElementById("nav").innerHTML =
-    `<li><a href="./?lang=${lang}" class="${topic ? "" : "on"}">${u.home}</a></li>` +
-    TOPICS.map(t => `<li><a href="${link(t.id)}" class="${t === topic ? "on" : ""}">${esc(t[lang].title)}</a></li>`).join("");
+  document.querySelectorAll(".lang button").forEach(b => b.classList.toggle("on", b.dataset.lang === lang));
   document.getElementById("app").innerHTML = topic ? renderTopic(u) : renderHome(u);
-  document.getElementById("foot").innerHTML = `<div><small>${u.by}</small><b>${esc(CONFIG.ownerName[lang])}</b></div><div class="role">${esc(CONFIG.ownerRole?.[lang])}</div>`;
-  const btn = document.getElementById("pledgeBtn");
-  if(btn) btn.onclick = pledge;
-  document.querySelector(".nav a.on")?.scrollIntoView({block:"nearest", inline:"center"});
-  if(location.hash) document.querySelector(location.hash)?.scrollIntoView();
-}
-
-function pledge(){
-  store.set("pledge:"+topic.id, "1");
-  const box = document.getElementById("pledge");
-  box.classList.add("done");
-  if(navigator.vibrate) navigator.vibrate(60);
-  if(matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  const burst = document.createElement("div");
-  burst.className = "burst";
-  const emojis = ["⛑️","🦺","✅","👷","🛡️","💪","⭐"];
-  for(let i=0;i<14;i++){
-    const e = document.createElement("i"), a = Math.PI*2*i/14, d = 90+Math.random()*60;
-    e.textContent = emojis[i % emojis.length];
-    e.style.setProperty("--x", Math.cos(a)*d+"px");
-    e.style.setProperty("--y", Math.sin(a)*d+"px");
-    e.style.setProperty("--r", (Math.random()*80-40)+"deg");
-    burst.appendChild(e);
+  if(topic){
+    document.querySelectorAll(".ck").forEach(b => { b.onclick = toggle; b.onkeydown = e => { if(e.key === "Enter" || e.key === " "){ e.preventDefault(); toggle({currentTarget: b}); } }; });
+    document.getElementById("claim").onclick = claimBadge;
+    updateTopicState();
   }
-  box.appendChild(burst);
-  setTimeout(()=>burst.remove(), 1000);
 }
 
 function setLang(l){
@@ -402,18 +516,14 @@ function setLang(l){
   const url = new URL(location.href); url.searchParams.set("lang", l);
   history.replaceState(null, "", url);
   render();
-  if(!location.hash) scrollTo(0,0);
+  scrollTo(0, 0);
 }
 
 function showPicker(){
-  const t = topic || TOPICS.find(x => x.rules) || TOPICS[0];
-  const title = topic ? t : {ar:{title:UI.ar.site}, en:{title:UI.en.site}, ur:{title:UI.ur.site}};
-  document.getElementById("pBrand").textContent = UI.ar.site;
-  lang = lang || "ar";
-  document.getElementById("pThumb").innerHTML = thumb(t, UI.ar, false);
-  document.getElementById("pAr").textContent = title.ar.title;
-  document.getElementById("pEn").textContent = title.en.title;
-  document.getElementById("pUr").textContent = title.ur.title;
+  const t = topic || {ar:{title:UI.ar.heroTitle}, en:{title:UI.en.heroTitle}, ur:{title:UI.ur.heroTitle}};
+  document.getElementById("pAr").textContent = t.ar.title;
+  document.getElementById("pEn").textContent = t.en.title;
+  document.getElementById("pUr").textContent = t.ur.title;
   document.getElementById("picker").hidden = false;
 }
 

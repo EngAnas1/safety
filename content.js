@@ -5,7 +5,8 @@
 const CONFIG = {
   // اسمك كما يظهر في الموقع
   ownerName: { ar: "م. أنس الزهراني", en: "Eng. Anas Alzahrani", ur: "انجینئر انس الزہرانی" },
-  ownerRole: { ar: "قسم السلامة | شركة فاب المتميزة للمقاولات", en: "Safety Department | FAB Premium For Contracting Co.", ur: "شعبہ حفاظت | فاب پریمیم کنٹریکٹنگ کمپنی" },
+  // سطر تحت اسمك في قسم "إعداد وتصميم" — عدّله كما تحب
+  ownerLine: { ar: "رسالتي: كل عامل يرجع لبيته سالم.", en: "My mission: every worker goes home safe.", ur: "میرا مشن: ہر کارکن محفوظ گھر واپس جائے۔" },
   // الشريط العلوي (نفس الموجود في المقطع) — اتركه فارغًا "" لإخفائه
   siteTag: { ar: "السعودية للطاقة – الطائف", en: "Saudi Energy – Taif", ur: "سعودی انرجی – طائف" },
 
@@ -27,21 +28,21 @@ const CONFIG = {
 /* نصوص الواجهة */
 const UI = {
   ar: {
-    dir: "rtl", watch: "شاهد", lead: "الموضوع الرئيسي", tenRules: "القواعد العشر", related: "مواضيع أخرى", read: "اقرأ", minutes: "دقائق", section: "السلامة", site: "توعية السلامة", by: "إعداد وتصميم", rule: "القاعدة", pick: "اختر لغتك",
+    dir: "rtl", heroTitle: "ارجع لأهلك سالم", heroSub: "كل يوم، وفي كل مهمة. ستة مواضيع قصيرة بلغتك تحميك وتحمي فريقك.", start: "ابدأ بالقواعد العشر", tip: "نصيحة اليوم", badges: "شاراتك", progress: "أكملت {n} من {t}", allDone: "أنت بطل سلامة 🏆", mission: "المهمة", tapHint: "اضغط على كل بند بعد ما تفهمه", locked: "علّم كل البنود لتفتح الشارة", claim: "استلم الشارة", unlocked: "حصلت على الشارة!", next: "المهمة التالية", missions: "مهماتك", watch: "شاهد", lead: "الموضوع الرئيسي", tenRules: "القواعد العشر", related: "مواضيع أخرى", read: "اقرأ", minutes: "دقائق", section: "السلامة", site: "توعية السلامة", by: "إعداد وتصميم", rule: "القاعدة", pick: "اختر لغتك",
     topics: "مواضيع السلامة", keyPoints: "أهم النقاط", doTitle: "افعل", dontTitle: "لا تفعل",
     noVideo: "المقطع يُضاف قريبًا", pledge: "فهمت وألتزم", pledged: "ملتزم",
     pledgedNote: "شكرًا لك. سلامتك تهمنا.", home: "كل المواضيع", lang: "اللغة",
     done: "تمت مشاهدته", stop: "لكلٍّ منّا صلاحية إيقاف أي عمل غير آمن."
   },
   en: {
-    dir: "ltr", watch: "Watch", lead: "Top story", tenRules: "The ten rules", related: "More topics", read: "Read", minutes: "min", section: "Safety", site: "Safety Awareness", by: "Prepared & designed by", rule: "Rule", pick: "Choose your language",
+    dir: "ltr", heroTitle: "Go home safe.", heroSub: "Every day, every job. Six short topics in your language that protect you and your crew.", start: "Start with the 10 rules", tip: "Tip of the day", badges: "Your badges", progress: "{n} of {t} complete", allDone: "You're a safety hero 🏆", mission: "Mission", tapHint: "Tap each item once you understand it", locked: "Check every item to unlock the badge", claim: "Claim your badge", unlocked: "Badge unlocked!", next: "Next mission", missions: "Your missions", watch: "Watch", lead: "Top story", tenRules: "The ten rules", related: "More topics", read: "Read", minutes: "min", section: "Safety", site: "Safety Awareness", by: "Prepared & designed by", rule: "Rule", pick: "Choose your language",
     topics: "Safety topics", keyPoints: "Key points", doTitle: "Do", dontTitle: "Don't",
     noVideo: "Video coming soon", pledge: "I understand and commit", pledged: "Committed",
     pledgedNote: "Thank you. Your safety matters.", home: "All topics", lang: "Language",
     done: "Watched", stop: "Each of us has the authority to stop any unsafe work."
   },
   ur: {
-    dir: "rtl", watch: "دیکھیں", lead: "اہم موضوع", tenRules: "دس قوانین", related: "مزید موضوعات", read: "پڑھیں", minutes: "منٹ", section: "حفاظت", site: "حفاظتی آگاہی", by: "تیاری و ڈیزائن", rule: "اصول", pick: "اپنی زبان منتخب کریں",
+    dir: "rtl", heroTitle: "محفوظ گھر واپس جائیں", heroSub: "ہر دن، ہر کام میں۔ آپ کی زبان میں چھ مختصر موضوعات جو آپ اور آپ کی ٹیم کی حفاظت کرتے ہیں۔", start: "دس قوانین سے شروع کریں", tip: "آج کی ٹِپ", badges: "آپ کے بیج", progress: "{t} میں سے {n} مکمل", allDone: "آپ حفاظت کے ہیرو ہیں 🏆", mission: "مشن", tapHint: "ہر نکتہ سمجھنے کے بعد اس پر ٹیپ کریں", locked: "بیج کھولنے کے لیے تمام نکات پر نشان لگائیں", claim: "اپنا بیج لیں", unlocked: "بیج مل گیا!", next: "اگلا مشن", missions: "آپ کے مشن", watch: "دیکھیں", lead: "اہم موضوع", tenRules: "دس قوانین", related: "مزید موضوعات", read: "پڑھیں", minutes: "منٹ", section: "حفاظت", site: "حفاظتی آگاہی", by: "تیاری و ڈیزائن", rule: "اصول", pick: "اپنی زبان منتخب کریں",
     topics: "حفاظتی موضوعات", keyPoints: "اہم نکات", doTitle: "کریں", dontTitle: "نہ کریں",
     noVideo: "ویڈیو جلد شامل کی جائے گی", pledge: "میں سمجھ گیا اور عمل کروں گا", pledged: "عہد کر لیا",
     pledgedNote: "شکریہ۔ آپ کی حفاظت اہم ہے۔", home: "تمام موضوعات", lang: "زبان",

@@ -6,40 +6,40 @@
 <title>Safety QR Codes</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
 <script src="content.js"></script>
 <script src="qrcode.js"></script>
 <style>
-:root{--bg-deep:#020E33;--bg:#041547;--surface:#0A2366;--royal:#0A2E89;--azure:#1A7FE8;--teal:#05CEB3;--teal-deep:#039DB0;
+:root{--bg-deep:#020E33;--bg:#0B1430;--lime:#D7FF3C;--surface:#14254F;--royal:#0A2E89;--azure:#1A7FE8;--teal:#05CEB3;--teal-deep:#039DB0;
   --text:#E6EEFF;--muted:#9BB0E0;--rule:rgba(155,176,224,.22);--qrbg:#DDF8F3;--grad:linear-gradient(90deg,var(--teal-deep),var(--azure))}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--text);font-family:"IBM Plex Sans Arabic",system-ui,sans-serif;line-height:1.55}
 .tools{max-width:960px;margin:0 auto;padding:24px 16px;display:grid;gap:14px}
-.tools h1{font-size:1.6rem;font-weight:700;display:flex;align-items:center;gap:10px}
-.tools h1::before{content:"";width:14px;height:14px;background:var(--teal)}
+.tools h1{font-family:"Alexandria",sans-serif;font-size:1.6rem;font-weight:900;display:flex;align-items:center;gap:10px}
+.tools h1::before{content:"";width:14px;height:14px;border-radius:4px;background:var(--lime)}
 .tools p{color:var(--muted)}
 .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .row label{font-weight:600}
 .row input{flex:1;min-width:240px;font:inherit;padding:10px 12px;border:1px solid var(--rule);background:var(--surface);color:var(--text);direction:ltr}
 .row select,.row button{font:inherit;font-weight:600;padding:10px 16px;border:1px solid var(--rule);background:var(--surface);color:var(--text);cursor:pointer}
-.row button.primary{background:var(--teal);color:var(--bg-deep);border-color:var(--teal)}
+.row button.primary{background:var(--lime);color:var(--bg-deep);border-color:var(--lime);border-radius:10px}
 .warn{background:rgba(242,194,48,.12);border-inline-start:5px solid #F2C230;padding:10px 14px;font-size:.95rem}
 
 .sheet{max-width:960px;margin:0 auto 40px;padding:0 16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
-.card{background:var(--bg-deep);display:flex;flex-direction:column;break-inside:avoid;border-top:5px solid var(--teal);-webkit-print-color-adjust:exact;print-color-adjust:exact}
-.head{display:flex;align-items:center;gap:14px;padding:16px 16px 14px;background:linear-gradient(135deg,var(--royal),var(--bg-deep))}
+.card{border-radius:22px;overflow:hidden;background:#14254F;display:flex;flex-direction:column;break-inside:avoid;border-top:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.head{display:flex;align-items:center;gap:14px;padding:16px 16px 14px;background:radial-gradient(120% 120% at 100% 0%,#254563,#14254F 70%);border-bottom:8px solid transparent;border-image:linear-gradient(#D7FF3C 0 32%,#C9D2DC 32% 68%,#D7FF3C 68%) 1}
 .head .em{font-size:38px;line-height:1;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
 .titles{display:grid;line-height:1.25}
-.titles .tag{font-size:.7rem;color:var(--teal);font-weight:600;margin-bottom:2px}
-.titles .ar{font-weight:700;font-size:1.25rem}
+.titles .tag{font-size:.7rem;color:var(--lime);font-weight:600;margin-bottom:2px}
+.titles .ar{font-family:"Alexandria",sans-serif;font-weight:900;font-size:1.3rem}
 .titles .en{font-family:"IBM Plex Sans",sans-serif;font-weight:500;font-size:.82rem;color:var(--muted);direction:ltr;text-align:right}
 .titles .ur{font-family:"Noto Nastaliq Urdu",serif;font-size:.8rem;line-height:2.1;color:var(--muted)}
-.qr{margin:16px 26px 8px;padding:12px;background:var(--qrbg);display:grid;place-items:center}
+.qr{margin:18px 26px 8px;padding:12px;border-radius:14px;background:var(--qrbg);display:grid;place-items:center}
 .qr svg{width:100%;max-width:200px;height:auto;display:block}
 .scan{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;padding:6px 12px 12px;font-weight:700}
 .scan .en{font-family:"IBM Plex Sans",sans-serif}
 .scan .ur{font-family:"Noto Nastaliq Urdu",serif;font-size:.85rem}
-.scan .dot{width:6px;height:6px;background:var(--teal)}
+.scan .dot{width:6px;height:6px;border-radius:50%;background:var(--lime)}
 .foot{border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 16px;font-size:.8rem;color:var(--muted)}
 .foot b{color:var(--text);font-weight:600}
 .foot button{font:inherit;font-size:.75rem;border:1px solid var(--rule);background:transparent;color:var(--teal);cursor:pointer;padding:1px 8px}

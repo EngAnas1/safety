@@ -28,21 +28,21 @@ const CONFIG = {
 /* نصوص الواجهة */
 const UI = {
   ar: {
-    dir: "rtl", heroTitle: "ارجع لأهلك سالم", heroSub: "كل يوم، وفي كل مهمة. ستة مواضيع قصيرة بلغتك تحميك وتحمي فريقك.", start: "ابدأ بالقواعد العشر", tip: "نصيحة اليوم", badges: "شاراتك", progress: "أكملت {n} من {t}", allDone: "أنت بطل سلامة 🏆", mission: "المهمة", tapHint: "اضغط على كل بند بعد ما تفهمه", locked: "علّم كل البنود لتفتح الشارة", claim: "استلم الشارة", unlocked: "حصلت على الشارة!", next: "المهمة التالية", missions: "مهماتك", watch: "شاهد", lead: "الموضوع الرئيسي", tenRules: "القواعد العشر", related: "مواضيع أخرى", read: "اقرأ", minutes: "دقائق", section: "السلامة", site: "توعية السلامة", by: "إعداد وتصميم", rule: "القاعدة", pick: "اختر لغتك",
+    dir: "rtl", quizTitle: "اختبر نفسك", quizSub: "جاوب على 5 أسئلة. 5 من 5 تفتح لك الشارة.", startQuiz: "ابدأ الاختبار", qOf: "سؤال {n} من {t}", correct: "إجابة صحيحة!", wrong: "إجابة خاطئة", nextQ: "التالي", seeResult: "النتيجة", yourScore: "نتيجتك", retry: "أعد المحاولة", perfect: "5 من 5! الشارة صارت لك", almost: "قريب! تحتاج 5 من 5 لتحصل على الشارة", best: "أفضل نتيجة", refs: "المرجعية", heroTitle: "ارجع لأهلك سالم", heroSub: "كل يوم، وفي كل مهمة. ستة مواضيع قصيرة بلغتك تحميك وتحمي فريقك.", start: "ابدأ بالقواعد العشر", tip: "نصيحة اليوم", badges: "شاراتك", progress: "أكملت {n} من {t}", allDone: "أنت بطل سلامة 🏆", mission: "المهمة", tapHint: "اضغط على كل بند بعد ما تفهمه", locked: "علّم كل البنود لتفتح الشارة", claim: "استلم الشارة", unlocked: "حصلت على الشارة!", next: "المهمة التالية", missions: "مهماتك", watch: "شاهد", lead: "الموضوع الرئيسي", tenRules: "القواعد العشر", related: "مواضيع أخرى", read: "اقرأ", minutes: "دقائق", section: "السلامة", site: "توعية السلامة", by: "إعداد وتصميم", rule: "القاعدة", pick: "اختر لغتك",
     topics: "مواضيع السلامة", keyPoints: "أهم النقاط", doTitle: "افعل", dontTitle: "لا تفعل",
     noVideo: "المقطع يُضاف قريبًا", pledge: "فهمت وألتزم", pledged: "ملتزم",
     pledgedNote: "شكرًا لك. سلامتك تهمنا.", home: "كل المواضيع", lang: "اللغة",
     done: "تمت مشاهدته", stop: "لكلٍّ منّا صلاحية إيقاف أي عمل غير آمن."
   },
   en: {
-    dir: "ltr", heroTitle: "Go home safe.", heroSub: "Every day, every job. Six short topics in your language that protect you and your crew.", start: "Start with the 10 rules", tip: "Tip of the day", badges: "Your badges", progress: "{n} of {t} complete", allDone: "You're a safety hero 🏆", mission: "Mission", tapHint: "Tap each item once you understand it", locked: "Check every item to unlock the badge", claim: "Claim your badge", unlocked: "Badge unlocked!", next: "Next mission", missions: "Your missions", watch: "Watch", lead: "Top story", tenRules: "The ten rules", related: "More topics", read: "Read", minutes: "min", section: "Safety", site: "Safety Awareness", by: "Prepared & designed by", rule: "Rule", pick: "Choose your language",
+    dir: "ltr", quizTitle: "Test yourself", quizSub: "Answer 5 questions. Score 5 out of 5 to unlock the badge.", startQuiz: "Start the quiz", qOf: "Question {n} of {t}", correct: "Correct!", wrong: "Not quite", nextQ: "Next", seeResult: "See result", yourScore: "Your score", retry: "Try again", perfect: "5 out of 5! The badge is yours", almost: "Close! You need 5 out of 5 for the badge", best: "Best score", refs: "Based on", heroTitle: "Go home safe.", heroSub: "Every day, every job. Six short topics in your language that protect you and your crew.", start: "Start with the 10 rules", tip: "Tip of the day", badges: "Your badges", progress: "{n} of {t} complete", allDone: "You're a safety hero 🏆", mission: "Mission", tapHint: "Tap each item once you understand it", locked: "Check every item to unlock the badge", claim: "Claim your badge", unlocked: "Badge unlocked!", next: "Next mission", missions: "Your missions", watch: "Watch", lead: "Top story", tenRules: "The ten rules", related: "More topics", read: "Read", minutes: "min", section: "Safety", site: "Safety Awareness", by: "Prepared & designed by", rule: "Rule", pick: "Choose your language",
     topics: "Safety topics", keyPoints: "Key points", doTitle: "Do", dontTitle: "Don't",
     noVideo: "Video coming soon", pledge: "I understand and commit", pledged: "Committed",
     pledgedNote: "Thank you. Your safety matters.", home: "All topics", lang: "Language",
     done: "Watched", stop: "Each of us has the authority to stop any unsafe work."
   },
   ur: {
-    dir: "rtl", heroTitle: "محفوظ گھر واپس جائیں", heroSub: "ہر دن، ہر کام میں۔ آپ کی زبان میں چھ مختصر موضوعات جو آپ اور آپ کی ٹیم کی حفاظت کرتے ہیں۔", start: "دس قوانین سے شروع کریں", tip: "آج کی ٹِپ", badges: "آپ کے بیج", progress: "{t} میں سے {n} مکمل", allDone: "آپ حفاظت کے ہیرو ہیں 🏆", mission: "مشن", tapHint: "ہر نکتہ سمجھنے کے بعد اس پر ٹیپ کریں", locked: "بیج کھولنے کے لیے تمام نکات پر نشان لگائیں", claim: "اپنا بیج لیں", unlocked: "بیج مل گیا!", next: "اگلا مشن", missions: "آپ کے مشن", watch: "دیکھیں", lead: "اہم موضوع", tenRules: "دس قوانین", related: "مزید موضوعات", read: "پڑھیں", minutes: "منٹ", section: "حفاظت", site: "حفاظتی آگاہی", by: "تیاری و ڈیزائن", rule: "اصول", pick: "اپنی زبان منتخب کریں",
+    dir: "rtl", quizTitle: "خود کو آزمائیں", quizSub: "5 سوالوں کے جواب دیں۔ 5 میں سے 5 پر بیج ملے گا۔", startQuiz: "ٹیسٹ شروع کریں", qOf: "سوال {n} از {t}", correct: "درست جواب!", wrong: "غلط جواب", nextQ: "اگلا", seeResult: "نتیجہ", yourScore: "آپ کا اسکور", retry: "دوبارہ کوشش کریں", perfect: "5 میں سے 5! بیج آپ کا ہوا", almost: "قریب! بیج کے لیے 5 میں سے 5 چاہییں", best: "بہترین اسکور", refs: "حوالہ", heroTitle: "محفوظ گھر واپس جائیں", heroSub: "ہر دن، ہر کام میں۔ آپ کی زبان میں چھ مختصر موضوعات جو آپ اور آپ کی ٹیم کی حفاظت کرتے ہیں۔", start: "دس قوانین سے شروع کریں", tip: "آج کی ٹِپ", badges: "آپ کے بیج", progress: "{t} میں سے {n} مکمل", allDone: "آپ حفاظت کے ہیرو ہیں 🏆", mission: "مشن", tapHint: "ہر نکتہ سمجھنے کے بعد اس پر ٹیپ کریں", locked: "بیج کھولنے کے لیے تمام نکات پر نشان لگائیں", claim: "اپنا بیج لیں", unlocked: "بیج مل گیا!", next: "اگلا مشن", missions: "آپ کے مشن", watch: "دیکھیں", lead: "اہم موضوع", tenRules: "دس قوانین", related: "مزید موضوعات", read: "پڑھیں", minutes: "منٹ", section: "حفاظت", site: "حفاظتی آگاہی", by: "تیاری و ڈیزائن", rule: "اصول", pick: "اپنی زبان منتخب کریں",
     topics: "حفاظتی موضوعات", keyPoints: "اہم نکات", doTitle: "کریں", dontTitle: "نہ کریں",
     noVideo: "ویڈیو جلد شامل کی جائے گی", pledge: "میں سمجھ گیا اور عمل کروں گا", pledged: "عہد کر لیا",
     pledgedNote: "شکریہ۔ آپ کی حفاظت اہم ہے۔", home: "تمام موضوعات", lang: "زبان",
@@ -61,7 +61,7 @@ const TOPICS = [
         ["🔍", "حدّد المخاطر في موقع العمل: كهرباء، ارتفاع، رفع أحمال، حرارة، مواد خطرة."],
         ["👥", "اعرف من قد يتأذى: أنت، زملاؤك، المارّة."],
         ["📊", "قيّم الخطر: احتمال الحدوث × شدة الضرر."],
-        ["🛡️", "طبّق إجراءات التحكم: إزالة الخطر، استبدال، عزل، إجراءات إدارية، ثم معدات الوقاية."],
+        ["🛡️", "طبّق هرم التحكم بالترتيب: الإزالة، ثم الاستبدال، ثم الضوابط الهندسية، ثم الضوابط الإدارية، وأخيرًا معدات الوقاية الشخصية."],
         ["✍️", "وقّع على التقييم بعد قراءته وفهمه، لا قبل."]
       ],
       do: ["اقرأ التقييم مع فريقك قبل البدء", "اسأل إذا لم تفهم أي خطر", "حدّث التقييم إذا تغيّرت ظروف العمل"],
@@ -74,7 +74,7 @@ const TOPICS = [
         ["🔍", "Identify site hazards: electricity, height, lifting, heat, hazardous materials."],
         ["👥", "Know who could be harmed: you, your crew, passers-by."],
         ["📊", "Rate the risk: likelihood × severity."],
-        ["🛡️", "Apply controls in order: eliminate, substitute, isolate, procedures, then PPE."],
+        ["🛡️", "Follow the hierarchy of controls: elimination, substitution, engineering controls, administrative controls, then PPE."],
         ["✍️", "Sign the assessment after you read and understand it, not before."]
       ],
       do: ["Review it with your crew before starting", "Ask if any hazard is unclear", "Update it when conditions change"],
@@ -87,7 +87,7 @@ const TOPICS = [
         ["🔍", "کام کی جگہ کے خطرات پہچانیں: بجلی، اونچائی، وزن اٹھانا، گرمی، خطرناک مواد۔"],
         ["👥", "جانیں کس کو نقصان ہو سکتا ہے: آپ، آپ کے ساتھی، راہگیر۔"],
         ["📊", "خطرے کا اندازہ: امکان × نقصان کی شدت۔"],
-        ["🛡️", "کنٹرول ترتیب سے لگائیں: خطرہ ختم کریں، تبدیل کریں، الگ کریں، طریقہ کار، پھر حفاظتی سامان۔"],
+        ["🛡️", "کنٹرول کی ترتیب پر عمل کریں: خطرہ ختم کرنا، متبادل، انجینئرنگ کنٹرول، انتظامی کنٹرول، اور آخر میں ذاتی حفاظتی سامان۔"],
         ["✍️", "اسیسمنٹ پڑھ کر اور سمجھ کر دستخط کریں، پہلے نہیں۔"]
       ],
       do: ["کام سے پہلے ٹیم کے ساتھ پڑھیں", "کوئی خطرہ سمجھ نہ آئے تو پوچھیں", "حالات بدلیں تو اسیسمنٹ اپڈیٹ کریں"],
@@ -155,8 +155,8 @@ const TOPICS = [
         ["🥽", "النظارة الواقية أو واقي الوجه حسب المهمة."],
         ["🧤", "قفازات مناسبة للعمل: عازلة للكهرباء أو مقاومة للقطع."],
         ["👢", "حذاء السلامة في كل وقت داخل الموقع."],
-        ["🦺", "ملابس مقاومة للّهب FR وسترة عاكسة."],
-        ["🎧", "واقي الأذن في أماكن الضوضاء العالية."]
+        ["🦺", "ملابس مقاومة للقوس الكهربائي (AR) في الأعمال الكهربائية، وسترة عاكسة."],
+        ["🎧", "واقي الأذن عندما تصل الضوضاء إلى 85 ديسيبل أو أكثر."]
       ],
       do: ["افحص معداتك كل يوم", "استبدل التالف فورًا", "اختر المقاس المناسب لك"],
       dont: ["لا تعدّل المعدات", "لا تخلعها لأن الجو حار", "لا تستخدم معدات زميلك الشخصية"]
@@ -169,8 +169,8 @@ const TOPICS = [
         ["🥽", "Safety glasses or face shield to suit the task."],
         ["🧤", "Gloves for the job: electrically insulated or cut-resistant."],
         ["👢", "Safety boots at all times on site."],
-        ["🦺", "Flame-resistant (FR) clothing and a high-visibility vest."],
-        ["🎧", "Hearing protection in high-noise areas."]
+        ["🦺", "Arc-rated (AR) clothing for electrical work, and a high-visibility vest."],
+        ["🎧", "Hearing protection when noise reaches 85 dB(A) or more."]
       ],
       do: ["Inspect your PPE every day", "Replace damaged items right away", "Use the right size for you"],
       dont: ["Don't modify your equipment", "Don't take it off because it's hot", "Don't share personal PPE"]
@@ -183,8 +183,8 @@ const TOPICS = [
         ["🥽", "کام کے مطابق حفاظتی چشمہ یا فیس شیلڈ۔"],
         ["🧤", "کام کے مطابق دستانے: بجلی سے محفوظ یا کٹ سے محفوظ۔"],
         ["👢", "سائٹ پر ہر وقت حفاظتی جوتے۔"],
-        ["🦺", "آگ سے محفوظ (FR) لباس اور چمکدار جیکٹ۔"],
-        ["🎧", "زیادہ شور والی جگہ پر کانوں کی حفاظت۔"]
+        ["🦺", "بجلی کے کام میں آرک ریٹڈ (AR) لباس، اور چمکدار جیکٹ۔"],
+        ["🎧", "جب شور 85 ڈیسیبل یا زیادہ ہو تو کانوں کی حفاظت۔"]
       ],
       do: ["روزانہ اپنا سامان چیک کریں", "خراب چیز فوراً بدلیں", "اپنے ناپ کا سامان استعمال کریں"],
       dont: ["سامان میں تبدیلی نہ کریں", "گرمی کی وجہ سے نہ اتاریں", "دوسرے کا ذاتی سامان استعمال نہ کریں"]
@@ -289,7 +289,7 @@ const TOPICS = [
         ["🧮", "سجّل حضورك عند نقطة التجمع."],
         ["⛑️", "لا تقدّم إسعافًا إلا إذا كنت مدرّبًا والمكان آمن."]
       ],
-      do: ["اعرف أقرب طفاية ونقطة تجمع", "احفظ أرقام الطوارئ في جوالك", "بلّغ عن أي حادث وشيك Near Miss"],
+      do: ["اعرف أقرب طفاية ونقطة تجمع", "احفظ: الدفاع المدني 998، الإسعاف 997، الطوارئ الموحد 911", "بلّغ عن أي حادث وشيك Near Miss"],
       dont: ["لا تعد لأخذ أغراضك", "لا تلمس مصابًا بصعقة قبل فصل الكهرباء", "لا تغادر نقطة التجمع دون إذن"]
     },
     en: {
@@ -302,7 +302,7 @@ const TOPICS = [
         ["🧮", "Report in at the assembly point for the headcount."],
         ["⛑️", "Give first aid only if you are trained and the scene is safe."]
       ],
-      do: ["Know your nearest extinguisher and assembly point", "Save emergency numbers in your phone", "Report every near miss"],
+      do: ["Know your nearest extinguisher and assembly point", "Save: Civil Defense 998, Ambulance 997, Unified emergency 911", "Report every near miss"],
       dont: ["Don't go back for belongings", "Don't touch an electrocuted person before power is off", "Don't leave the assembly point without permission"]
     },
     ur: {
@@ -315,7 +315,7 @@ const TOPICS = [
         ["🧮", "اسمبلی پوائنٹ پر اپنی حاضری لگوائیں۔"],
         ["⛑️", "صرف تربیت یافتہ ہوں اور جگہ محفوظ ہو تو ابتدائی طبی امداد دیں۔"]
       ],
-      do: ["قریبی آگ بجھانے والا آلہ اور اسمبلی پوائنٹ جانیں", "ہنگامی نمبر فون میں محفوظ کریں", "ہر قریب الوقوع حادثے کی اطلاع دیں"],
+      do: ["قریبی آگ بجھانے والا آلہ اور اسمبلی پوائنٹ جانیں", "یاد رکھیں: سول ڈیفنس 998، ایمبولینس 997، یونیفائیڈ ایمرجنسی 911", "ہر قریب الوقوع حادثے کی اطلاع دیں"],
       dont: ["سامان لینے واپس نہ جائیں", "بجلی بند کیے بغیر کرنٹ لگے شخص کو نہ چھوئیں", "اجازت کے بغیر اسمبلی پوائنٹ نہ چھوڑیں"]
     }
   }

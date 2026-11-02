@@ -67,10 +67,14 @@ function renderTopic(u){
   </section>
   <div class="stripe thin"></div>
   <div class="wrap">
+    <div class="stage">
+    <div class="watchcol">
     <div class="frame" id="watch"><div class="player">${player(topic, u)}</div><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i></div>
     ${CONFIG.videoLang?.[topic.id] && CONFIG.videoLang[topic.id] !== lang ? `<p class="vnote">🔊 ${u.videoNote}</p>` : ""}
+    </div>
 
     <section class="quiz" id="quiz" aria-live="polite"></section>
+    </div>
 
     <div class="stop"><span class="oct emoji">✋</span><span>${u.stop}</span></div>
     ${refs ? `<div class="refs"><small>${u.refs}</small>${refs}</div>` : ""}

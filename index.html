@@ -14,8 +14,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zain:wght@400;700;800;900&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="img/hero-m.webp">
-<script src="content.js?v=202611021746"></script>
-<script src="quiz.js?v=202611021746"></script>
+<script src="content.js?v=202611021750"></script>
+<script src="quiz.js?v=202611021750"></script>
 <style>
 /* =====================================================================
    الألوان — مأخوذة من المقطع والرسمة. غيّرها هنا فقط
@@ -312,10 +312,42 @@ body.ur .quiz.result h3{font-weight:700;line-height:2}
 @media (min-width:761px){#picker .pin{justify-content:center}}
 
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.burst{display:none}}
-/* Same layout on every screen: the phone design, centered on wide screens */
-html{background:#050A1C}
-body{position:relative;max-width:480px;margin:0 auto;box-shadow:0 0 0 1px var(--line),0 0 80px rgba(0,0,0,.6)}
+/* ===================== Responsive =====================
+   Phone (default): one column, the design above.
+   Tablet (600px+): wider single column.
+   Computer (960px+): hero side by side, video and quiz side by side. */
 .creator{grid-template-columns:1fr}
+.stage{display:block}
+
+@media (min-width:600px){
+  .wrap{max-width:720px}
+  .hero .in{max-width:720px;margin:0 auto}
+  .hero .mimg{max-height:70vh;object-position:30% 15%}
+  .hero .copy{padding-inline:24px}
+  .creator{grid-template-columns:1fr 1fr}
+  .creator .cart{min-height:420px}
+}
+
+@media (min-width:960px){
+  .wrap{max-width:1200px;padding:0 32px}
+  .top .wrap{max-width:1200px}
+  .hero{min-height:min(88vh,820px);display:flex;align-items:center;background:radial-gradient(70% 90% at 25% 40%,rgba(37,69,99,.85),var(--night) 70%)}
+  .hero .in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:48px;max-width:1200px;padding:92px 32px 40px}
+  .hero .mimg{max-height:74vh;width:100%;aspect-ratio:1/1;object-fit:cover;object-position:50% 20%;border-radius:32px;-webkit-mask-image:none;mask-image:none;box-shadow:0 40px 80px -40px rgba(0,0,0,.8),0 0 0 1px var(--line),0 0 90px -20px rgba(215,255,60,.25)}
+  .hero .copy{margin-top:0;padding:0;max-width:560px}
+  .hero h1{font-size:clamp(3rem,4.6vw,4.8rem)}
+  body.ur .hero h1{font-size:clamp(2.4rem,3.6vw,3.6rem)}
+  .hero p{font-size:1.2rem}
+  .stage{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px;align-items:start;margin-top:30px}
+  .stage .frame{margin-top:0}
+  .stage .quiz{margin-top:0;position:sticky;top:84px}
+  .stop{max-width:none}
+  .creator{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);margin-top:20px}
+  .creator .cart{min-height:520px}
+  .creator .txt{padding:48px}
+  .creator h3{font-size:clamp(2.6rem,4vw,4rem)}
+  #picker .pin{max-width:560px}
+}
 .qicon{width:72px;height:72px;flex-shrink:0;filter:drop-shadow(0 8px 14px rgba(0,0,0,.4))}
 .trophy{font-size:96px;animation:flip 1.1s cubic-bezier(.2,.9,.3,1.1) both;filter:drop-shadow(0 0 30px rgba(215,255,60,.55))}
 .tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:5px;margin-bottom:16px;border-radius:16px;background:rgba(11,20,48,.7);border:1px solid var(--line)}
@@ -433,6 +465,6 @@ body.ur .tabs a{font-weight:700;font-size:.85rem;line-height:1.8}
 
 <main id="app"></main>
 
-<script src="app.js?v=202611021746"></script>
+<script src="app.js?v=202611021750"></script>
 </body>
 </html>

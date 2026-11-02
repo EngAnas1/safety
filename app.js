@@ -1,4 +1,7 @@
 "use strict";
+/* Motion is on unless the visitor asked their device for reduced motion */
+const MOTION = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+if(MOTION) document.documentElement.classList.add("motion");
 const params = new URLSearchParams(location.search);
 /* ?t= picks the section (each section has its own QR code). No ?t= or an unknown one
    (old links such as ?t=ppe) opens the first section, Life Saving Rules. */
@@ -87,8 +90,9 @@ function renderTopic(u){
 }
 
 function updateMeter(){
-  const n = bestScore(topic), total = QN(topic);
-  document.getElementById("meterBar").style.width = (n/total*100) + "%";
+  const n = bestScore(topic), total = QN(topic), bar = document.getElementById("meterBar");
+  /* start from the current width so the change animates */
+  requestAnimationFrame(() => requestAnimationFrame(() => { bar.style.width = (n/total*100) + "%"; }));
   document.getElementById("meterTxt").textContent = `${n}/${total}`;
 }
 
@@ -157,8 +161,8 @@ function quizAnswer(j){
   if(right) Q.score++;
   box.querySelectorAll(".opt").forEach((b, k) => {
     b.disabled = true;
-    if(Q.opts[k].k === item.a) b.classList.add("right");
-    else if(k === j) b.classList.add("wrong");
+    if(Q.opts[k].k === item.a){ b.classList.add("right"); b.querySelector(".key").textContent = "✓"; }
+    else if(k === j){ b.classList.add("wrong"); b.querySelector(".key").textContent = "✕"; }
   });
   if(navigator.vibrate) navigator.vibrate(right ? 30 : [60, 40, 60]);
   if(right && !reduced()) sparkle(box.querySelectorAll(".opt")[j]);
@@ -189,6 +193,9 @@ function quizResult(){
   document.getElementById("qretry").onclick = quizStart;
   box.scrollIntoView({block: "center", behavior: reduced() ? "auto" : "smooth"});
   if(!perfect) requestAnimationFrame(() => setTimeout(() => { const f = document.getElementById("ringFg"); if(f) f.style.strokeDashoffset = C * (1 - sc/total); }, 60));
+  /* the score counts up */
+  const txt = box.querySelector(".ring text");
+  if(txt && MOTION){ let n = 0; txt.textContent = `0/${total}`; const step = () => { if(n < sc){ n++; txt.textContent = `${n}/${total}`; setTimeout(step, 1000 / Math.max(sc, 1)); } }; setTimeout(step, 120); }
   if(perfect){
     if(navigator.vibrate) navigator.vibrate([50, 40, 50, 40, 120]);
     if(!reduced()) confetti(200);
@@ -236,7 +243,7 @@ function render(){
   document.getElementById("homeLink").href = "./?lang=" + lang;
   document.getElementById("langLbl").textContent = u.lang;
   document.getElementById("app").innerHTML = renderTopic(u);
-  updateMeter(); quizIntro();
+  updateMeter(); quizIntro(); setupMotion();
 }
 
 function setLang(l){
@@ -261,7 +268,33 @@ function showPicker(){
 document.querySelectorAll("#picker [data-lang]").forEach(b => b.onclick = () => setLang(b.dataset.lang));
 document.getElementById("langBtn").onclick = showPicker;
 
+/* ---------- Motion: reveal sections on scroll, gentle hero parallax ---------- */
+let revealObs = null;
+function setupMotion(){
+  if(!MOTION) return;
+  if(revealObs) revealObs.disconnect();
+  revealObs = "IntersectionObserver" in window ? new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add("in"); revealObs.unobserve(e.target); } });
+  }, {threshold: .15, rootMargin: "0px 0px -6% 0px"}) : null;
+  document.querySelectorAll(".frame, .quiz, .stop, .refs, .creator").forEach(el => {
+    el.classList.add("rv");
+    if(revealObs) revealObs.observe(el); else el.classList.add("in");
+  });
+}
+if(MOTION){
+  let ticking = false;
+  addEventListener("scroll", () => {
+    if(ticking) return; ticking = true;
+    requestAnimationFrame(() => {
+      const img = document.querySelector(".hero .mimg");
+      if(img && scrollY < innerHeight * 1.2) img.style.setProperty("--py", (scrollY * .28).toFixed(1));
+      ticking = false;
+    });
+  }, {passive: true});
+}
+
 /* Start: a QR scan opens with no ?lang=, so the visitor always picks a language first.
    After that, ?lang= in the URL keeps the choice on reload and in-page links. */
 const start = params.get("lang");
 if(isLang(start)) setLang(start); else { lang = "ar"; render(); showPicker(); }
+

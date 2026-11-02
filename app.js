@@ -70,7 +70,7 @@ function renderTopic(u){
     <div class="stage">
     <div class="watchcol">
     <div class="frame" id="watch"><div class="player">${player(topic, u)}</div><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i></div>
-    ${CONFIG.videoLang?.[topic.id] && CONFIG.videoLang[topic.id] !== lang ? `<p class="vnote">🔊 ${u.videoNote}</p>` : ""}
+    ${(() => { const vl = CONFIG.videoLang?.[topic.id]?.[lang]; return vl && vl !== lang ? `<p class="vnote">🔊 ${esc(fmt(u.videoNote, {lang: u.langName[vl]}))}</p>` : ""; })()}
     </div>
 
     <section class="quiz" id="quiz" aria-live="polite"></section>

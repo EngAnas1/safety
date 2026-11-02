@@ -6,7 +6,7 @@ const CONFIG = {
   // اسمك كما يظهر في الموقع
   ownerName: { ar: "م. أنس الزهراني", en: "Eng. Anas Alzahrani", ur: "انجینئر انس الزہرانی" },
   // سطر تحت اسمك في قسم "إعداد وتصميم" — عدّله كما تحب
-  ownerLine: { ar: "رسالتي: كل عامل يرجع لبيته سالم.", en: "My mission: every worker goes home safe.", ur: "میرا مشن: ہر کارکن محفوظ گھر واپس جائے۔" },
+  ownerLine: { ar: "السلامة قرار تتخذه قبل كل مهمة، لأن أهلك ينتظرونك.", en: "Safety is a decision you make before every task, because your family is waiting for you.", ur: "حفاظت ایک فیصلہ ہے جو آپ ہر کام سے پہلے کرتے ہیں، کیونکہ آپ کے گھر والے آپ کا انتظار کر رہے ہیں۔" },
   // الشريط العلوي (نفس الموجود في المقطع) — اتركه فارغًا "" لإخفائه
   siteTag: { ar: "", en: "", ur: "" },
 

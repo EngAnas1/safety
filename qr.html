@@ -2,13 +2,15 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Safety QR Codes</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zain:wght@400;700;800;900&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
-<script src="content.js?v=202611012114"></script>
-<script src="qrcode.js?v=202611012114"></script>
+<script src="content.js?v=202611021737"></script>
+<script src="qrcode.js?v=202611021737"></script>
 <style>
 :root{--bg-deep:#020E33;--bg:#0B1430;--lime:#D7FF3C;--surface:#14254F;--royal:#0A2E89;--azure:#1A7FE8;--teal:#05CEB3;--teal-deep:#039DB0;
   --text:#E6EEFF;--muted:#9BB0E0;--rule:rgba(155,176,224,.22);--qrbg:#DDF8F3;--grad:linear-gradient(90deg,var(--teal-deep),var(--azure))}
@@ -77,63 +79,12 @@ body.big .foot{font-size:1rem;padding:12px 18px}
       <option value="small">6 بطاقات في الصفحة</option>
       <option value="big">بطاقة كبيرة في كل صفحة</option>
     </select>
-    <button class="primary" onclick="print()">🖨️ طباعة</button>
+    <button class="primary" id="printBtn">🖨️ طباعة</button>
   </div>
 </section>
 
 <section class="sheet" id="sheet"></section>
 
-<script>
-/* QR as crisp SVG with high error correction (still scans with dirt or scratches) */
-function qrSVG(text){
-  const q = qrcode(0, "H"); q.addData(text); q.make();
-  const n = q.getModuleCount(), m = 2; let d = "";
-  for(let r=0;r<n;r++) for(let c=0;c<n;c++) if(q.isDark(r,c)) d += `M${c+m} ${r+m}h1v1h-1z`;
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${n+m*2} ${n+m*2}" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="#DDF8F3"/><path d="${d}" fill="#041547"/></svg>`;
-}
-
-const baseInput = document.getElementById("base");
-baseInput.value = location.href.replace(/[?#].*$/, "").replace(/qr\.html$/, "");
-
-function topicURL(t){
-  let b = baseInput.value.trim();
-  if(b && !b.endsWith("/") && !/\.html$/.test(b)) b += "/";
-  return t === TOPICS[0] ? b : b + "?t=" + t.id;
-}
-
-function draw(){
-  const v = baseInput.value;
-  document.getElementById("warn").hidden = /^https?:\/\//.test(v) && !/localhost|127\.0\.0\.1/.test(v);
-  /* qr.html?t=risk prints that section's card on its own, full page */
-  const only = new URLSearchParams(location.search).get("t");
-  const list = TOPICS.filter(t => !only || t.id === only);
-  document.getElementById("sheet").innerHTML = list.map(t => `
-    <article class="card">
-      <div class="head">
-        <img class="em" src="img/t-${t.id}.webp" alt="">
-        <div class="titles">${CONFIG.siteTag?.ar ? `<span class="tag">${CONFIG.siteTag.ar}</span>` : ""}<span class="ar">${t.ar.title}</span><span class="en">${t.en.title}</span><span class="ur">${t.ur.title}</span></div>
-      </div>
-      <div class="qr" id="qr-${t.id}">${qrSVG(topicURL(t))}</div>
-      <div class="scan"><span>📱 امسح</span><span class="dot"></span><span class="en">Scan</span><span class="dot"></span><span class="ur">اسکین کریں</span></div>
-      <div class="foot"><span>إعداد: <b>${CONFIG.ownerName.ar}</b></span><button onclick="downloadPNG('${t.id}')">تنزيل PNG</button></div>
-    </article>`).join("");
-}
-
-function downloadPNG(id){
-  const svg = document.querySelector("#qr-" + id + " svg");
-  const img = new Image(), size = 1200;
-  img.onload = () => {
-    const cv = document.createElement("canvas"); cv.width = cv.height = size;
-    const ctx = cv.getContext("2d"); ctx.imageSmoothingEnabled = false; ctx.drawImage(img, 0, 0, size, size);
-    const a = document.createElement("a"); a.download = "qr-" + id + ".png"; a.href = cv.toDataURL("image/png"); a.click();
-  };
-  img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg.outerHTML);
-}
-
-baseInput.addEventListener("input", draw);
-document.getElementById("size").addEventListener("change", e => document.body.classList.toggle("big", e.target.value === "big"));
-if(new URLSearchParams(location.search).get("t")){ document.body.classList.add("big"); document.getElementById("size").value = "big"; }
-draw();
-</script>
+<script src="qr-app.js?v=202611021737"></script>
 </body>
 </html>

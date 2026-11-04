@@ -7,6 +7,12 @@ const params = new URLSearchParams(location.search);
    (old links such as ?t=ppe) opens the first section, Life Saving Rules. */
 const topic = TOPICS.find(t => t.id === params.get("t")) || TOPICS[0];
 if(params.has("t") && !TOPICS.some(t => t.id === params.get("t"))){ params.delete("t"); history.replaceState(null, "", location.pathname + (params.toString() ? "?" + params : "")); }
+/* Workshops: ?t=ws lists them, ?t=ws&w=<id> opens one */
+const workshop = topic.id === "ws" ? (WORKSHOPS.find(w => w.id === params.get("w")) || null) : null;
+if(params.has("w") && !workshop){ params.delete("w"); history.replaceState(null, "", location.pathname + (params.toString() ? "?" + params : "")); }
+/* The unit whose video and quiz this page shows: a section, or one workshop */
+const unit = workshop ? { id: workshop.id, icon: "img/t-ws.webp", ar: workshop.ar, en: workshop.en, ur: workshop.ur } : topic;
+const hasQuiz = !!(QUIZ[unit.id] && QUIZ[unit.id].length);
 let lang = null;
 
 const store = {
@@ -18,9 +24,11 @@ const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt
 /* Only these languages are accepted from the URL or the picker */
 const LANGS = ["ar", "en", "ur"];
 const isLang = l => typeof l === "string" && LANGS.includes(l);
-const link = id => id === TOPICS[0].id ? `./?lang=${lang}` : `?t=${id}&lang=${lang}`;
+const link = (id, w) => id === TOPICS[0].id ? `./?lang=${lang}` : `?t=${id}${w ? `&w=${encodeURIComponent(w)}` : ""}&lang=${lang}`;
 const fmt = (s, o) => s.replace(/\{(\w+)\}/g, (_, k) => o[k]);
-const art = t => `img/t-${t.id}.webp`;
+const art = t => t.icon || `img/t-${t.id}.webp`;
+/* Only https links from the content files become clickable sources */
+const safeUrl = u => /^https:\/\/[^\s"'<>]+$/.test(u || "") ? u : "#";
 
 /* Quiz progress: best score per topic; a perfect score earns the badge */
 const QN = t => Math.min(QUIZ_SIZE, (QUIZ[t.id] || []).length);
@@ -33,17 +41,129 @@ function ytId(url){
   const m = url.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/);
   return m ? m[1] : null;
 }
-function player(t, u){
-  const src = (CONFIG.videos[t.id]?.[lang] || "").trim();
-  const poster = CONFIG.posters?.[t.id]?.[lang] || "";
+function player(src, poster, u){
+  src = (src || "").trim(); poster = poster || "";
   if(!src) return `<div class="empty"><span class="emoji">🎬</span><span>${u.noVideo}</span></div>`;
   const y = ytId(src);
   if(y) return `<iframe src="https://www.youtube-nocookie.com/embed/${y}?rel=0&playsinline=1" title="video" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
   return `<video src="${esc(src)}" ${poster ? `poster="${esc(poster)}"` : ""} controls playsinline preload="metadata"></video>`;
 }
 
+/* ---------- Shared pieces ---------- */
+const tabsHTML = () => TOPICS.length > 1 ? `<nav class="tabs" style="--n:${TOPICS.length}">${TOPICS.map(t => `<a href="${link(t.id)}" class="${t === topic ? "on" : ""}"><img src="${art(t)}" alt="">${esc(t[lang].title)}</a>`).join("")}</nav>` : "";
+const titleWords = t => t.split(" ").map((w, i) => `<span class="w" style="animation-delay:${.15 + i*.12}s">${esc(w)}</span>`).join(" ");
+const meterHTML = u => `<div class="meter"><span class="ml">${u.best}</span><div class="bar"><i id="meterBar"></i></div><b id="meterTxt"></b></div>`;
+const frameHTML = (src, poster, u) => `<div class="frame" id="watch"><div class="player">${player(src, poster, u)}</div><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i></div>`;
+const creatorHTML = u => `
+    <section class="sec">
+      <div class="creator">
+        <div class="cart"><img src="img/me.webp" alt="${esc(CONFIG.ownerName[lang])}" loading="lazy"></div>
+        <div class="txt">
+          <small>${u.by}</small>
+          <h3 class="display">${esc(CONFIG.ownerName[lang])}</h3>
+          <p>${esc(CONFIG.ownerLine?.[lang])}</p>
+        </div>
+      </div>
+    </section>`;
+const heroHTML = (u, title, sub, extra) => `
+  <section class="hero">
+    <div class="in">
+      <img class="mimg" src="img/hero-m.webp" alt="${esc(CONFIG.ownerName[lang])}">
+      <div class="copy" dir="${u.dir}">
+        ${tabsHTML()}
+        ${CONFIG.siteTag?.[lang] ? `<span class="tag">${esc(CONFIG.siteTag[lang])}</span>` : ""}
+        <h1 class="display">${titleWords(title)}</h1>
+        <p>${esc(sub)}</p>
+        ${extra || ""}
+      </div>
+    </div>
+  </section>
+  <div class="stripe thin"></div>`;
+
+/* ---------- Workshops ---------- */
+function renderWorkshopList(u){
+  const c = topic[lang];
+  document.title = c.title;
+  return heroHTML(u, c.title, c.intro) + `
+  <div class="wrap">
+    <div class="wgrid">${WORKSHOPS.map(w => { const t = w[lang], n = Math.min(QUIZ_SIZE, (QUIZ[w.id] || []).length), b = bestScore({id: w.id});
+      return `<a class="wcard" href="${link("ws", w.id)}">
+        <div class="wimg"><img src="${esc(w.poster[lang])}" alt="" loading="lazy"><span class="wplay">▶</span></div>
+        <div class="wbody">
+          <span class="kick">${u.wsKick}</span>
+          <h3>${esc(t.title)}</h3>
+          <p>${esc(t.sub)}</p>
+          <div class="wmeta"><span>🎬 ${u.wsVideo}</span><span>🎯 ${fmt(u.wsQs, {n: (QUIZ[w.id] || []).length})}</span>${n ? `<span>${u.best}: ${b}/${n}</span>` : ""}</div>
+          <span class="btn">${u.wsOpen}</span>
+        </div>
+      </a>`; }).join("")}
+    </div>
+    ${creatorHTML(u)}
+  </div>`;
+}
+
+function renderWorkshop(u){
+  const w = workshop, c = w[lang];
+  document.title = c.title;
+  const card = ([ic, h, d]) => `<div class="wtile"><span class="wic"><img src="img/ic/${esc(ic)}.webp" alt=""></span><b>${esc(h)}</b><small>${esc(d)}</small></div>`;
+  return heroHTML(u, c.title, c.sub, `
+        <div class="cta">
+          <a class="btn" href="#watch">▶ ${u.watch}</a>
+          <a class="chip" href="#quiz">🎯 ${u.quizTitle}</a>
+        </div>
+        ${meterHTML(u)}`) + `
+  <div class="wrap">
+    <a class="back" href="${link("ws")}">${u.dir === "rtl" ? "→" : "←"} ${u.wsAll}</a>
+    <div class="stage">
+      <div class="watchcol">
+        <p class="wwatch">🎬 ${esc(c.watch)}</p>
+        ${frameHTML(w.video[lang], w.poster[lang], u)}
+      </div>
+      <section class="quiz" id="quiz" aria-live="polite"></section>
+    </div>
+
+    <article class="wart">
+      <div class="wlead">${c.lead.map(p => `<p>${esc(p)}</p>`).join("")}</div>
+
+      <section class="wsec">
+        <h2>${esc(c.defTitle)}</h2>
+        <p class="wdef">${esc(c.def)}</p>
+        <div class="wtiles four">${c.types.map(card).join("")}</div>
+      </section>
+
+      <section class="wsec">
+        <h2>${esc(c.riskTitle)}</h2>
+        <div class="wtiles six">${c.risks.map(card).join("")}</div>
+      </section>
+
+      <section class="wsec">
+        <h2>${esc(c.chainTitle)}</h2>
+        <ol class="wchain">${c.chain.map(([ic, h, d], i) => `<li><span class="wic"><img src="img/ic/${esc(ic)}.webp" alt=""></span><div><b>${esc(h)}</b><small>${esc(d)}</small></div></li>`).join("")}</ol>
+        <p class="wend">${esc(c.chainEnd)}</p>
+      </section>
+
+      <section class="wsec wcheck">
+        <h2>${esc(c.checkTitle)}</h2>
+        <ul>${c.checks.map(x => `<li><span class="wok"><img src="img/ic/check.webp" alt=""></span>${esc(x)}</li>`).join("")}</ul>
+      </section>
+
+      <p class="wclose display">${esc(c.close)}</p>
+    </article>
+
+    <section class="wsources" id="sources">
+      <h2>📚 ${u.sources}</h2>
+      <p>${u.sourcesSub}</p>
+      <ol>${w.sources.map(src => { const t = src[lang]; return `<li><a class="src" href="${esc(safeUrl(src.url))}" target="_blank" rel="noopener noreferrer external">
+        <b>${esc(t.n)}</b><small>${esc(t.by)}</small><span>${esc(t.d)}</span><i>${u.openSource} ↗</i></a></li>`; }).join("")}</ol>
+    </section>
+    ${creatorHTML(u)}
+  </div>
+  <footer>${esc(CONFIG.siteTag?.[lang] || "")}</footer>`;
+}
+
 /* ---------- Topic ---------- */
 function renderTopic(u){
+  if(topic.id === "ws") return workshop ? renderWorkshop(u) : renderWorkshopList(u);
   const c = topic[lang];
   document.title = c.title;
   const refs = (REFS[topic.id] || []).map(r => `<span>${esc(refLabel(r))}</span>`).join("");
@@ -53,7 +173,7 @@ function renderTopic(u){
     <div class="in">
       <img class="mimg" src="img/hero-m.webp" alt="${esc(CONFIG.ownerName[lang])}">
       <div class="copy" dir="${u.dir}">
-        ${TOPICS.length > 1 ? `<nav class="tabs">${TOPICS.map(t => `<a href="${link(t.id)}" class="${t === topic ? "on" : ""}"><img src="${art(t)}" alt="">${esc(t[lang].title)}</a>`).join("")}</nav>` : ""}
+        ${tabsHTML()}
         ${CONFIG.siteTag?.[lang] ? `<span class="tag">${esc(CONFIG.siteTag[lang])}</span>` : ""}
         <h1 class="display">${words}</h1>
         <p>${esc(c.intro)}</p>
@@ -69,7 +189,7 @@ function renderTopic(u){
   <div class="wrap">
     <div class="stage">
     <div class="watchcol">
-    <div class="frame" id="watch"><div class="player">${player(topic, u)}</div><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i></div>
+    ${frameHTML(CONFIG.videos[topic.id]?.[lang], CONFIG.posters?.[topic.id]?.[lang], u)}
     ${(() => { const vl = CONFIG.videoLang?.[topic.id]?.[lang]; return vl && vl !== lang ? `<p class="vnote">🔊 ${esc(fmt(u.videoNote, {lang: u.langName[vl]}))}</p>` : ""; })()}
     </div>
 
@@ -94,7 +214,7 @@ function renderTopic(u){
 }
 
 function updateMeter(){
-  const n = bestScore(topic), total = QN(topic), bar = document.getElementById("meterBar");
+  const n = bestScore(unit), total = QN(unit), bar = document.getElementById("meterBar");
   /* start from the current width so the change animates */
   requestAnimationFrame(() => requestAnimationFrame(() => { bar.style.width = (n/total*100) + "%"; }));
   document.getElementById("meterTxt").textContent = `${n}/${total}`;
@@ -111,8 +231,8 @@ function quizIntro(){
   box.className = "quiz";
   box.innerHTML = `
     <div class="qhead">
-      <img class="qicon" src="${art(topic)}" alt="">
-      <div><h2>${u.quizTitle}</h2><p>${fmt(u.quizSub, {title: topic[lang].title})}</p></div>
+      <img class="qicon" src="${art(unit)}" alt="">
+      <div><h2>${u.quizTitle}</h2><p>${fmt(u.quizSub, {title: unit[lang].title})}</p></div>
     </div>
     <button class="btn qgo" id="qstart">🎯 ${u.startQuiz}</button>`;
   document.getElementById("qstart").onclick = quizStart;
@@ -121,9 +241,9 @@ function quizIntro(){
 /* Draw QUIZ_SIZE questions the worker hasn't seen yet; when the bank runs out,
    start a new cycle but never repeat the previous attempt's questions */
 function drawQuestions(){
-  const bank = QUIZ[topic.id].map((_, i) => i), key = "seen:" + topic.id, n = QN(topic);
+  const bank = QUIZ[unit.id].map((_, i) => i), key = "seen:" + unit.id, n = QN(unit);
   let seen = readIdx(key, bank.length);
-  const last = readIdx("last:" + topic.id, bank.length);
+  const last = readIdx("last:" + unit.id, bank.length);
   let fresh = shuffle(bank.filter(i => !seen.includes(i)));
   let pick = fresh.slice(0, n);
   if(pick.length < n){
@@ -132,7 +252,7 @@ function drawQuestions(){
     seen = [];
   }
   store.set(key, JSON.stringify(seen.concat(pick)));
-  store.set("last:" + topic.id, JSON.stringify(pick));
+  store.set("last:" + unit.id, JSON.stringify(pick));
   return shuffle(pick);
 }
 
@@ -143,7 +263,7 @@ function quizStart(){
 
 function quizQuestion(){
   const u = UI[lang], box = document.getElementById("quiz");
-  const item = QUIZ[topic.id][Q.order[Q.i]], t = item[lang], total = QN(topic);
+  const item = QUIZ[unit.id][Q.order[Q.i]], t = item[lang], total = QN(unit);
   Q.opts = shuffle(t.o.map((x, k) => ({x, k})));
   box.className = "quiz playing";
   box.innerHTML = `
@@ -160,7 +280,7 @@ function quizQuestion(){
 
 function quizAnswer(j){
   const u = UI[lang], box = document.getElementById("quiz");
-  const item = QUIZ[topic.id][Q.order[Q.i]], right = Q.opts[j].k === item.a;
+  const item = QUIZ[unit.id][Q.order[Q.i]], right = Q.opts[j].k === item.a;
   Q.res = Q.res || []; Q.res[Q.i] = right;
   if(right) Q.score++;
   box.querySelectorAll(".opt").forEach((b, k) => {
@@ -170,7 +290,7 @@ function quizAnswer(j){
   });
   if(navigator.vibrate) navigator.vibrate(right ? 30 : [60, 40, 60]);
   if(right && !reduced()) sparkle(box.querySelectorAll(".opt")[j]);
-  const last = Q.i === QN(topic) - 1;
+  const last = Q.i === QN(unit) - 1;
   document.getElementById("fb").innerHTML = `
     <div class="fbin ${right ? "ok" : "bad"}">
       <b>${right ? "✅ " + u.correct : "❌ " + u.wrong}</b>
@@ -182,8 +302,8 @@ function quizAnswer(j){
 }
 
 function quizResult(){
-  const u = UI[lang], box = document.getElementById("quiz"), total = QN(topic), sc = Q.score, perfect = sc === total;
-  if(sc > bestScore(topic)) store.set("best:" + topic.id, String(sc));
+  const u = UI[lang], box = document.getElementById("quiz"), total = QN(unit), sc = Q.score, perfect = sc === total;
+  if(sc > bestScore(unit)) store.set("best:" + unit.id, String(sc));
   updateMeter();
   const R = 52, C = 2 * Math.PI * R;
   box.className = "quiz result" + (perfect ? " won" : "");
@@ -191,7 +311,7 @@ function quizResult(){
     ${perfect
       ? `<div class="trophy emoji">🏆</div>`
       : `<svg class="ring" viewBox="0 0 120 120"><circle cx="60" cy="60" r="${R}" class="bg"/><circle cx="60" cy="60" r="${R}" class="fg" style="stroke-dasharray:${C};stroke-dashoffset:${C}" id="ringFg"/><text x="60" y="68" text-anchor="middle">${sc}/${total}</text></svg>`}
-    <h3>${perfect ? fmt(u.perfect, {title: topic[lang].title}) : u.almost}</h3>
+    <h3>${perfect ? fmt(u.perfect, {title: unit[lang].title}) : u.almost}</h3>
     <p class="sc">${u.yourScore}: <b>${sc}/${total}</b></p>
     <button class="btn" id="qretry">🔁 ${u.retry}</button>`;
   document.getElementById("qretry").onclick = quizStart;
@@ -247,7 +367,8 @@ function render(){
   document.getElementById("homeLink").href = "./?lang=" + lang;
   document.getElementById("langLbl").textContent = u.lang;
   document.getElementById("app").innerHTML = renderTopic(u);
-  updateMeter(); quizIntro(); setupMotion();
+  if(hasQuiz && document.getElementById("quiz")){ updateMeter(); quizIntro(); }
+  setupMotion();
 }
 
 function setLang(l){
@@ -262,7 +383,7 @@ function setLang(l){
 }
 
 function showPicker(){
-  const t = topic || {ar:{title:UI.ar.heroTitle}, en:{title:UI.en.heroTitle}, ur:{title:UI.ur.heroTitle}};
+  const t = workshop || topic;
   document.getElementById("pAr").textContent = t.ar.title;
   document.getElementById("pEn").textContent = t.en.title;
   document.getElementById("pUr").textContent = t.ur.title;
@@ -280,7 +401,7 @@ function setupMotion(){
   revealObs = "IntersectionObserver" in window ? new IntersectionObserver(entries => {
     entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add("in"); revealObs.unobserve(e.target); } });
   }, {threshold: .15, rootMargin: "0px 0px -6% 0px"}) : null;
-  document.querySelectorAll(".frame, .quiz, .stop, .refs, .creator").forEach(el => {
+  document.querySelectorAll(".frame, .quiz, .stop, .refs, .creator, .wcard, .wsec, .wlead, .wsources, .wclose").forEach(el => {
     el.classList.add("rv");
     if(revealObs) revealObs.observe(el); else el.classList.add("in");
   });

@@ -26,7 +26,7 @@ function draw(){
   document.getElementById("sheet").innerHTML = list.map(t => `
     <article class="card">
       <div class="head">
-        <img class="em" src="img/t-${t.id}.webp" alt="">
+        <img class="em" src="img/t-${t.id}.webp?v=202611041544" alt="">
         <div class="titles">${CONFIG.siteTag?.ar ? `<span class="tag">${esc(CONFIG.siteTag.ar)}</span>` : ""}<span class="ar">${esc(t.ar.title)}</span><span class="en">${esc(t.en.title)}</span><span class="ur">${esc(t.ur.title)}</span></div>
       </div>
       <div class="qr" id="qr-${t.id}">${qrSVG(topicURL(t))}</div>

@@ -11,7 +11,7 @@ if(params.has("t") && !TOPICS.some(t => t.id === params.get("t"))){ params.delet
 const workshop = topic.id === "ws" ? (WORKSHOPS.find(w => w.id === params.get("w")) || null) : null;
 if(params.has("w") && !workshop){ params.delete("w"); history.replaceState(null, "", location.pathname + (params.toString() ? "?" + params : "")); }
 /* The unit whose video and quiz this page shows: a section, or one workshop */
-const unit = workshop ? { id: workshop.id, icon: "img/t-ws.webp", ar: workshop.ar, en: workshop.en, ur: workshop.ur } : topic;
+const unit = workshop ? { id: workshop.id, icon: "img/t-ws.webp?v=202611041544", ar: workshop.ar, en: workshop.en, ur: workshop.ur } : topic;
 const hasQuiz = !!(QUIZ[unit.id] && QUIZ[unit.id].length);
 let lang = null;
 
@@ -26,7 +26,7 @@ const LANGS = ["ar", "en", "ur"];
 const isLang = l => typeof l === "string" && LANGS.includes(l);
 const link = (id, w) => id === TOPICS[0].id ? `./?lang=${lang}` : `?t=${id}${w ? `&w=${encodeURIComponent(w)}` : ""}&lang=${lang}`;
 const fmt = (s, o) => s.replace(/\{(\w+)\}/g, (_, k) => o[k]);
-const art = t => t.icon || `img/t-${t.id}.webp`;
+const art = t => t.icon || `img/t-${t.id}.webp?v=202611041544`;
 /* Only https links from the content files become clickable sources */
 const safeUrl = u => /^https:\/\/[^\s"'<>]+$/.test(u || "") ? u : "#";
 

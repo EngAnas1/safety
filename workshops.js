@@ -154,7 +154,7 @@ const WORKSHOPS = [
         ar: { n: "ISO 45001:2018", by: "المنظمة الدولية للمعايير ISO", d: "البند 8.1.4.2: التنسيق مع المقاولين لتحديد مخاطر أعمالهم والتحكم فيها." },
         en: { n: "ISO 45001:2018", by: "International Organization for Standardization", d: "Clause 8.1.4.2: coordinate with contractors to identify and control the risks of their work." },
         ur: { n: "ISO 45001:2018", by: "بین الاقوامی تنظیم برائے معیارات ISO", d: "شق 8.1.4.2: ٹھیکیداروں کے ساتھ مل کر ان کے کام کے خطرات کی نشاندہی اور کنٹرول۔" } },
-      { url: "https://www.cdc.gov/niosh/blogs/2022/protecting-temporary-workers.html",
+      { url: "https://www.cdc.gov/niosh/blogs/2022/protecting-temporary-workers.html#:~:text=host%20employer",
         ar: { n: "حماية العمال المؤقتين: أفضل الممارسات للمنشأة المستضيفة", by: "NIOSH / OSHA", d: "المنشأة المستضيفة مسؤولة عن سلامة كل من يعمل في موقعها، وعن تدريبه على مخاطر الموقع." },
         en: { n: "Protecting Temporary Workers: Best Practices for Host Employers", by: "NIOSH / OSHA", d: "The host employer is responsible for the safety of everyone working on its site, including site-specific training." },
         ur: { n: "عارضی مزدوروں کا تحفظ: میزبان آجر کے لیے بہترین طریقے", by: "NIOSH / OSHA", d: "میزبان آجر اپنی سائٹ پر کام کرنے والے ہر شخص کی حفاظت اور سائٹ کی تربیت کا ذمہ دار ہے۔" } }

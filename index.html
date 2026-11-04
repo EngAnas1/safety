@@ -14,8 +14,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zain:wght@400;700;800;900&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="img/hero-m.webp">
-<script src="content.js?v=202611041544"></script>
-<script src="quiz.js?v=202611041544"></script>
+<script src="content.js?v=202611041556"></script>
+<script src="quiz.js?v=202611041556"></script>
 <style>
 /* =====================================================================
    الألوان — مأخوذة من المقطع والرسمة. غيّرها هنا فقط
@@ -391,6 +391,44 @@ body.ur .src span{line-height:2}
   .wsources ol{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 
+
+/* ===================== Section content ===================== */
+.wic.emoji{font-size:22px;background:rgba(5,206,179,.16);box-shadow:none}
+.wscale{list-style:none;display:grid;gap:8px}
+.wscale li{display:grid;grid-template-columns:auto 1fr;column-gap:12px;align-items:center;background:var(--dusk);border:1px solid var(--line);border-radius:14px;padding:10px 14px}
+.wscale small{grid-column:2;color:var(--muted)}
+.sn{grid-row:span 2;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-weight:900;color:var(--night)}
+.sn.s1{background:#2FD07A}.sn.s2{background:#9BE15D}.sn.s3{background:#FFD23F}.sn.s4{background:#FF9A4D}.sn.s5{background:#FF4D57;color:#fff}
+.wlevels{display:grid;gap:8px}
+.lv{display:grid;gap:2px;border-radius:14px;padding:12px 16px;border:1px solid var(--line);background:var(--dusk)}
+.lv b{font-weight:900}
+.lv span{color:#C9D6EE}
+.lv.low{border-color:#2FD07A;background:linear-gradient(100deg,rgba(47,208,122,.18),var(--dusk) 70%)}
+.lv.med{border-color:#FFD23F;background:linear-gradient(100deg,rgba(255,210,63,.16),var(--dusk) 70%)}
+.lv.high{border-color:#FF9A4D;background:linear-gradient(100deg,rgba(255,154,77,.18),var(--dusk) 70%)}
+.lv.ext{border-color:#FF4D57;background:linear-gradient(100deg,rgba(255,77,87,.2),var(--dusk) 70%)}
+.wcheck .wok{color:var(--night);font-weight:900}
+.wrules{list-style:none;display:grid;gap:10px}
+.wrules > li{background:var(--dusk);border:1px solid var(--line);border-radius:18px;padding:14px 16px}
+.wrules header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.wrules header .emoji{font-size:22px}
+.wrules header b{font-weight:800;font-size:1.08rem}
+.rn{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:var(--teal);color:var(--night);font-weight:900;flex-shrink:0}
+.wrules ul{list-style:none;display:grid;gap:4px}
+.wrules ul li{display:flex;gap:8px;font-size:.95rem;color:#C9D6EE}
+.wrules ul li::before{flex-shrink:0;font-weight:900}
+.wrules ul li.yes::before{content:"✓";color:var(--lime)}
+.wrules ul li.no::before{content:"✕";color:var(--red)}
+.wrules ul li.info::before{content:"•";color:var(--muted)}
+@media (min-width:960px){
+  .wrules{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .wscale{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .wscale li{grid-template-columns:1fr;text-align:center;justify-items:center;row-gap:6px}
+  .wscale small{grid-column:1}
+  .sn{grid-row:auto}
+  .wlevels{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+
 /* ===================== Responsive =====================
    Phone (default): one column, the design above.
    Tablet (600px+): wider single column.
@@ -545,7 +583,8 @@ nav.tabs[style*="--n:3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
 
 <main id="app"></main>
 
-<script src="workshops.js?v=202611041544"></script>
-<script src="app.js?v=202611041544"></script>
+<script src="workshops.js?v=202611041556"></script>
+<script src="sections.js?v=202611041556"></script>
+<script src="app.js?v=202611041556"></script>
 </body>
 </html>

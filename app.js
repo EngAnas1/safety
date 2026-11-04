@@ -35,7 +35,6 @@ const QN = t => Math.min(QUIZ_SIZE, (QUIZ[t.id] || []).length);
 /* Stored values are read defensively: anything unexpected falls back to a safe default */
 const bestScore = t => { const n = parseInt(store.get("best:" + t.id), 10); return Number.isInteger(n) ? Math.min(Math.max(n, 0), QN(t)) : 0; };
 const readIdx = (key, max) => { try{ const a = JSON.parse(store.get(key) || "[]"); return Array.isArray(a) ? a.filter(i => Number.isInteger(i) && i >= 0 && i < max) : []; }catch(e){ return []; } };
-const refLabel = r => typeof r === "string" ? r : r[lang];
 
 function ytId(url){
   const m = url.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/);
@@ -80,6 +79,33 @@ const heroHTML = (u, title, sub, extra) => `
   </section>
   <div class="stripe thin"></div>`;
 
+/* Clickable sources: each opens its official page in a new tab */
+const sourcesHTML = (list, u) => list && list.length ? `
+    <section class="wsources" id="sources">
+      <h2>📚 ${u.sources}</h2>
+      <p>${u.sourcesSub}</p>
+      <ol>${list.map(src => { const t = src[lang]; return `<li><a class="src" href="${esc(safeUrl(src.url))}" target="_blank" rel="noopener noreferrer external">
+        <b>${esc(t.n)}</b><small>${esc(t.by)}</small><span>${esc(t.d)}</span><i>${u.openSource} ↗</i></a></li>`; }).join("")}</ol>
+    </section>` : "";
+
+/* Written content built from blocks (see sections.js) */
+const icHTML = ic => String(ic).startsWith("ic:") ? `<span class="wic"><img src="img/ic/${esc(ic.slice(3))}.webp" alt=""></span>` : `<span class="wic emoji">${esc(ic)}</span>`;
+function blocksHTML(blocks, u){
+  return (blocks || []).map(b => {
+    switch(b.type){
+      case "lead": return `<div class="wlead">${b.p.map(p => `<p>${esc(p)}</p>`).join("")}</div>`;
+      case "tiles": return `<section class="wsec"><h2>${esc(b.h)}</h2><div class="wtiles ${b.cols || ""}">${b.items.map(([ic, h, d]) => `<div class="wtile">${icHTML(ic)}<b>${esc(h)}</b><small>${esc(d)}</small></div>`).join("")}</div></section>`;
+      case "chain": return `<section class="wsec"><h2>${esc(b.h)}</h2><ol class="wchain">${b.items.map(([ic, h, d]) => `<li>${icHTML(ic)}<div><b>${esc(h)}</b><small>${esc(d)}</small></div></li>`).join("")}</ol>${b.end ? `<p class="wend">${esc(b.end)}</p>` : ""}</section>`;
+      case "checks": return `<section class="wsec wcheck"><h2>${esc(b.h)}</h2><ul>${b.items.map((x, i) => `<li><span class="wok">${i + 1}</span>${esc(x)}</li>`).join("")}</ul></section>`;
+      case "scale": return `<section class="wsec"><h2>${esc(b.h)}</h2><ol class="wscale">${b.items.map(([n, h, d]) => `<li><span class="sn s${n}">${n}</span><b>${esc(h)}</b>${d ? `<small>${esc(d)}</small>` : ""}</li>`).join("")}</ol></section>`;
+      case "levels": return `<section class="wsec"><h2>${esc(b.h)}</h2><div class="wlevels">${b.items.map(([k, h, d]) => `<div class="lv ${esc(k)}"><b>${esc(h)}</b><span>${esc(d)}</span></div>`).join("")}</div></section>`;
+      case "rules": return `<section class="wsec"><h2>${esc(b.h)}</h2><ol class="wrules">${(topic.rules || []).map((r, i) => `<li><header><span class="rn">${i + 1}</span><span class="emoji">${r.emoji}</span><b>${esc(r[lang].t)}</b></header><ul>${r[lang].items.map(([ok, x]) => `<li class="${ok === true ? "yes" : ok === false ? "no" : "info"}">${esc(x)}</li>`).join("")}</ul></li>`).join("")}</ol></section>`;
+      case "close": return `<p class="wclose display">${esc(b.t)}</p>`;
+      default: return "";
+    }
+  }).join("");
+}
+
 /* ---------- Workshops ---------- */
 function renderWorkshopList(u){
   const c = topic[lang];
@@ -98,6 +124,7 @@ function renderWorkshopList(u){
         </div>
       </a>`; }).join("")}
     </div>
+    ${sourcesHTML(WORKSHOPS.flatMap(w => w.sources).filter((x, i, a) => a.findIndex(y => y.url === x.url) === i), u)}
     ${creatorHTML(u)}
   </div>`;
 }
@@ -150,12 +177,7 @@ function renderWorkshop(u){
       <p class="wclose display">${esc(c.close)}</p>
     </article>
 
-    <section class="wsources" id="sources">
-      <h2>📚 ${u.sources}</h2>
-      <p>${u.sourcesSub}</p>
-      <ol>${w.sources.map(src => { const t = src[lang]; return `<li><a class="src" href="${esc(safeUrl(src.url))}" target="_blank" rel="noopener noreferrer external">
-        <b>${esc(t.n)}</b><small>${esc(t.by)}</small><span>${esc(t.d)}</span><i>${u.openSource} ↗</i></a></li>`; }).join("")}</ol>
-    </section>
+    ${sourcesHTML(w.sources, u)}
     ${creatorHTML(u)}
   </div>
   <footer>${esc(CONFIG.siteTag?.[lang] || "")}</footer>`;
@@ -166,7 +188,6 @@ function renderTopic(u){
   if(topic.id === "ws") return workshop ? renderWorkshop(u) : renderWorkshopList(u);
   const c = topic[lang];
   document.title = c.title;
-  const refs = (REFS[topic.id] || []).map(r => `<span>${esc(refLabel(r))}</span>`).join("");
   const words = c.title.split(" ").map((w, i) => `<span class="w" style="animation-delay:${.15 + i*.12}s">${esc(w)}</span>`).join(" ");
   return `
   <section class="hero">
@@ -197,7 +218,8 @@ function renderTopic(u){
     </div>
 
     <div class="stop"><span class="oct emoji">✋</span><span>${u.stop}</span></div>
-    ${refs ? `<div class="refs"><small>${u.refs}</small>${refs}</div>` : ""}
+    <article class="wart">${blocksHTML(SECTION_TEXT[topic.id]?.[lang], u)}</article>
+    ${sourcesHTML(SECTION_SOURCES[topic.id], u)}
 
     <section class="sec">
       <div class="creator">

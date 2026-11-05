@@ -45,7 +45,28 @@ function player(src, poster, u){
   if(!src) return `<div class="empty"><span class="emoji">🎬</span><span>${u.noVideo}</span></div>`;
   const y = ytId(src);
   if(y) return `<iframe src="https://www.youtube-nocookie.com/embed/${y}?rel=0&playsinline=1" title="video" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
-  return `<video src="${esc(src)}" ${poster ? `poster="${esc(poster)}"` : ""} controls playsinline preload="metadata"></video>`;
+  /* Every video gets the same protection: no download/PiP/cast buttons, no right-click or drag,
+     a moving watermark, and fullscreen on the whole player so the watermark stays visible */
+  return `<video src="${esc(src)}" ${poster ? `poster="${esc(poster)}"` : ""} controls playsinline preload="metadata"
+      controlslist="nodownload nofullscreen noremoteplayback noplaybackrate" disablepictureinpicture disableremoteplayback draggable="false"></video>
+    <div class="wm" aria-hidden="true"><span>${esc(CONFIG.ownerName[lang])} · enganas1.github.io/safety</span></div>
+    <button class="fsb" type="button" aria-label="fullscreen">⛶</button>`;
+}
+
+/* Wire the protection on every player after each render */
+function protectVideos(){
+  document.querySelectorAll(".player").forEach(pl => {
+    ["contextmenu", "dragstart"].forEach(ev => pl.addEventListener(ev, e => e.preventDefault()));
+    const fs = pl.querySelector(".fsb"), v = pl.querySelector("video");
+    if(!fs || !v) return;
+    if(!pl.requestFullscreen && !pl.webkitRequestFullscreen){ fs.hidden = true; return; }
+    fs.addEventListener("click", () => {
+      const doc = document;
+      if(doc.fullscreenElement || doc.webkitFullscreenElement){ (doc.exitFullscreen || doc.webkitExitFullscreen).call(doc); return; }
+      (pl.requestFullscreen || pl.webkitRequestFullscreen).call(pl);
+    });
+    v.addEventListener("dblclick", e => { e.preventDefault(); fs.click(); });
+  });
 }
 
 /* ---------- Shared pieces ---------- */
@@ -396,6 +417,7 @@ function render(){
   document.getElementById("app").innerHTML = renderTopic(u);
   if(hasQuiz && document.getElementById("quiz")){ updateMeter(); quizIntro(); }
   setupMotion();
+  protectVideos();
 }
 
 function setLang(l){

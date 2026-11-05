@@ -14,8 +14,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zain:wght@400;700;800;900&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="img/hero-m.webp">
-<script src="content.js?v=202611050907"></script>
-<script src="quiz.js?v=202611050907"></script>
+<script src="content.js?v=202611050914"></script>
+<script src="quiz.js?v=202611050914"></script>
 <style>
 /* =====================================================================
    الألوان — مأخوذة من المقطع والرسمة. غيّرها هنا فقط
@@ -294,22 +294,22 @@ body.ur .quiz.result h3{font-weight:700;line-height:2}
 .refs span{border:1px solid var(--line);border-radius:999px;padding:2px 12px}
 
 /* ---------- Language picker ---------- */
-#picker{position:fixed;inset:0;z-index:40;background:var(--night);overflow:auto}
-#picker .pin{max-width:520px;margin:0 auto;min-height:100%;display:flex;flex-direction:column}
-#picker .art{position:relative}
-#picker .art{-webkit-mask-image:linear-gradient(#000 65%,transparent);mask-image:linear-gradient(#000 65%,transparent)}
-#picker .art img{width:100%;aspect-ratio:1/1;object-fit:cover;object-position:50% 20%}
-#picker .pc{padding:0 18px 30px;margin-top:-30px;position:relative}
-#picker .t-ar{font-family:"Zain",sans-serif;font-weight:900;font-size:2rem;line-height:1.15}
-#picker .t-en{font-family:"Zain",sans-serif;font-weight:700;color:var(--lime);margin-top:6px;text-align:right}
-#picker .t-ur{font-family:"Noto Nastaliq Urdu",serif;color:var(--muted);line-height:2.3}
-#picker .choose{display:grid;gap:10px;margin-top:18px}
-#picker .choose button{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-radius:16px;background:var(--dusk);border:1.5px solid var(--line);font-family:"Zain",sans-serif;font-size:1.3rem;font-weight:800;transition:border-color .12s,transform .12s}
-#picker .choose button:hover{border-color:var(--lime)}
-#picker .choose button:active{transform:scale(.98)}
-#picker .choose button small{font-family:"Zain",sans-serif;font-size:.85rem;font-weight:500;color:var(--muted)}
-#picker .choose .ur{font-family:"Noto Nastaliq Urdu",serif;font-weight:700;padding-block:8px}
-@media (min-width:761px){#picker .pin{justify-content:center}}
+#picker{position:fixed;inset:0;z-index:40;overflow:auto;background:radial-gradient(70% 55% at 50% 38%,#1B3354,var(--night) 75%) var(--night)}
+#picker .pin{min-height:100%;max-width:460px;margin:0 auto;padding:32px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:14px}
+#picker .pav{width:104px;height:104px;border-radius:50%;overflow:hidden;border:3px solid var(--lime);box-shadow:0 0 0 8px rgba(215,255,60,.12),0 18px 40px -16px rgba(0,0,0,.8)}
+#picker .pav img{width:100%;height:100%;object-fit:cover;object-position:50% 18%}
+#picker .globe{font-size:40px;line-height:1;margin-top:6px}
+#picker .pq{display:flex;flex-direction:column;align-items:center;gap:2px;margin:0}
+#picker .q-ar{font-family:"Zain",sans-serif;font-weight:900;font-size:clamp(2rem,9vw,2.6rem);line-height:1.2}
+#picker .q-en{font-family:"Zain",sans-serif;font-weight:800;font-size:clamp(1.3rem,6vw,1.6rem);color:var(--lime)}
+#picker .q-ur{font-family:"Noto Nastaliq Urdu",serif;font-weight:700;font-size:clamp(1.15rem,5vw,1.4rem);line-height:2.1;color:#C9D6EE}
+#picker .choose{display:grid;gap:12px;width:100%;margin-top:8px}
+#picker .choose button{width:100%;padding:18px 20px;border-radius:18px;background:var(--dusk);border:2px solid var(--line);font-family:"Zain",sans-serif;font-size:1.5rem;font-weight:900;text-align:center;justify-content:center;display:flex;align-items:center;transition:transform .45s var(--spring),border-color .2s,background .2s}
+#picker .choose button:hover,#picker .choose button:focus-visible{border-color:var(--lime);background:rgba(215,255,60,.1)}
+#picker .choose .ur{font-family:"Noto Nastaliq Urdu",serif;font-weight:700;font-size:1.35rem;padding-block:10px}
+#picker .ptopic{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 10px;margin-top:10px;color:var(--muted);font-size:.9rem}
+#picker .ptopic{gap:4px 16px}
+#picker .ptopic .ur{font-family:"Noto Nastaliq Urdu",serif;font-size:.85rem}
 
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.burst{display:none}}
 
@@ -484,7 +484,6 @@ body.ur .src span{line-height:2}
   .creator .cart{min-height:520px}
   .creator .txt{padding:48px}
   .creator h3{font-size:clamp(2.6rem,4vw,4rem)}
-  #picker .pin{max-width:560px}
 }
 .qicon{width:72px;height:72px;flex-shrink:0;filter:drop-shadow(0 8px 14px rgba(0,0,0,.4))}
 .trophy{font-size:96px;animation:flip 1.1s cubic-bezier(.2,.9,.3,1.1) both;filter:drop-shadow(0 0 30px rgba(215,255,60,.55))}
@@ -564,9 +563,8 @@ body.ur .tabs a{font-weight:700;font-size:.85rem;line-height:1.8}
 .motion .creator.rv.in .cart img{clip-path:inset(0 0 0 0)}
 
 /* language picker: portrait settles, then the choices spring in */
-.motion #picker:not([hidden]) .art img{animation:heroIn 1s var(--smooth) both}
-.motion #picker:not([hidden]) .pc > *{animation:up .6s var(--spring) both}
-.motion #picker:not([hidden]) .t-en{animation-delay:.12s} .motion #picker:not([hidden]) .t-ur{animation-delay:.2s}
+.motion #picker:not([hidden]) .pav,.motion #picker:not([hidden]) .globe,.motion #picker:not([hidden]) .pq span,.motion #picker:not([hidden]) .ptopic{animation:up .6s var(--spring) both}
+.motion #picker:not([hidden]) .globe{animation-delay:.08s}.motion #picker:not([hidden]) .q-en{animation-delay:.14s}.motion #picker:not([hidden]) .q-ur{animation-delay:.2s}.motion #picker:not([hidden]) .ptopic{animation-delay:.6s}
 .motion #picker:not([hidden]) .choose button{animation:pop .6s var(--spring) both}
 .motion #picker:not([hidden]) .choose button:nth-child(1){animation-delay:.3s}
 .motion #picker:not([hidden]) .choose button:nth-child(2){animation-delay:.4s}
@@ -581,17 +579,19 @@ nav.tabs[style*="--n:3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
 
 <div id="picker" hidden>
   <div class="pin">
-    <div class="art"><img src="img/me.webp" alt=""></div>
-    <div class="pc">
-      <div class="t-ar" id="pAr"></div>
-      <div class="t-en" id="pEn" dir="ltr"></div>
-      <div class="t-ur" id="pUr"></div>
-      <div class="choose">
-        <button data-lang="ar"><span>العربية</span><small>اختر لغتك</small></button>
-        <button data-lang="en"><span>English</span><small>Choose language</small></button>
-        <button data-lang="ur" class="ur"><span>اردو</span><small>زبان منتخب کریں</small></button>
-      </div>
+    <div class="pav"><img src="img/me.webp" alt=""></div>
+    <div class="globe emoji" aria-hidden="true">🌐</div>
+    <h2 class="pq">
+      <span class="q-ar">اختر لغتك</span>
+      <span class="q-en" dir="ltr">Choose your language</span>
+      <span class="q-ur">اپنی زبان منتخب کریں</span>
+    </h2>
+    <div class="choose">
+      <button data-lang="ar" lang="ar">العربية</button>
+      <button data-lang="en" lang="en" dir="ltr">English</button>
+      <button data-lang="ur" lang="ur" class="ur">اردو</button>
     </div>
+    <div class="ptopic"><span id="pAr"></span><span id="pEn" dir="ltr"></span><span id="pUr" class="ur"></span></div>
   </div>
 </div>
 
@@ -604,8 +604,8 @@ nav.tabs[style*="--n:3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
 
 <main id="app"></main>
 
-<script src="workshops.js?v=202611050907"></script>
-<script src="sections.js?v=202611050907"></script>
-<script src="app.js?v=202611050907"></script>
+<script src="workshops.js?v=202611050914"></script>
+<script src="sections.js?v=202611050914"></script>
+<script src="app.js?v=202611050914"></script>
 </body>
 </html>

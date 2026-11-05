@@ -49,7 +49,7 @@ function player(src, poster, u){
      a moving watermark, and fullscreen on the whole player so the watermark stays visible */
   return `<video src="${esc(src)}" ${poster ? `poster="${esc(poster)}"` : ""} controls playsinline preload="metadata"
       controlslist="nodownload nofullscreen noremoteplayback noplaybackrate" disablepictureinpicture disableremoteplayback draggable="false"></video>
-    <div class="wm" aria-hidden="true"><span>${esc(CONFIG.ownerName[lang])} · enganas1.github.io/safety</span></div>
+    <div class="wm" aria-hidden="true"><span>${esc(CONFIG.ownerName[lang])} <bdi dir="ltr">${esc(CONFIG.ownerPhone || "")}</bdi></span></div>
     <button class="fsb" type="button" aria-label="fullscreen">⛶</button>`;
 }
 

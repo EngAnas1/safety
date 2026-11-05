@@ -4,6 +4,8 @@
 
 const CONFIG = {
   // اسمك كما يظهر في الموقع
+  // رقمك يظهر في العلامة المائية على المقاطع
+  ownerPhone: "054 319 4250",
   ownerName: { ar: "م. أنس الزهراني", en: "Eng. Anas Alzahrani", ur: "انجینئر انس الزہرانی" },
   // سطر تحت اسمك في قسم "إعداد وتصميم" — عدّله كما تحب
   ownerLine: { ar: "السلامة قرار تتخذه قبل كل مهمة، لأن أهلك ينتظرونك.", en: "Safety is a decision you make before every task, because your family is waiting for you.", ur: "حفاظت ایک فیصلہ ہے جو آپ ہر کام سے پہلے کرتے ہیں، کیونکہ آپ کے گھر والے آپ کا انتظار کر رہے ہیں۔" },

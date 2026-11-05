@@ -14,8 +14,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zain:wght@400;700;800;900&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="img/hero-m.webp">
-<script src="content.js?v=202611041639"></script>
-<script src="quiz.js?v=202611041639"></script>
+<script src="content.js?v=202611050907"></script>
+<script src="quiz.js?v=202611050907"></script>
 <style>
 /* =====================================================================
    الألوان — مأخوذة من المقطع والرسمة. غيّرها هنا فقط
@@ -429,6 +429,27 @@ body.ur .src span{line-height:2}
   .wlevels{grid-template-columns:repeat(4,minmax(0,1fr))}
 }
 
+
+/* ===================== Workshop media blocks ===================== */
+.wtiles.three{grid-template-columns:1fr}
+.wfig{border-radius:18px;overflow:hidden;background:var(--dusk);border:1px solid var(--line)}
+.wfig img{width:100%;display:block}
+.wfig figcaption{padding:10px 14px;color:#C9D6EE;font-weight:600}
+.wzones{list-style:none;display:grid;gap:8px}
+.wzones li{display:flex;gap:12px;align-items:center;background:var(--dusk);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.wzones b{display:block;font-weight:800}
+.wzones small{color:var(--muted)}
+.zn{width:34px;height:34px;flex-shrink:0;border-radius:50%;display:grid;place-items:center;font-weight:900;color:var(--night);background:linear-gradient(145deg,#2BD8C2,#039DB0)}
+.wcompare{display:grid;gap:10px}
+.wcompare figure{border-radius:16px;overflow:hidden;border:2px solid var(--line);background:var(--dusk)}
+.wcompare figure.ok{border-color:var(--lime)}
+.wcompare figure.bad{border-color:rgba(255,77,87,.6)}
+.wcompare img{width:100%;display:block}
+.wcompare figcaption{padding:8px 12px;font-weight:800}
+.wcompare .ok figcaption{color:var(--lime)} .wcompare .bad figcaption{color:#FFC4C8}
+@media (min-width:600px){.wtiles.three{grid-template-columns:repeat(3,minmax(0,1fr))}.wcompare{grid-template-columns:1fr 1fr}}
+@media (min-width:960px){.wzones{grid-template-columns:repeat(5,minmax(0,1fr))}.wzones li{flex-direction:column;align-items:flex-start}}
+
 /* ===================== Responsive =====================
    Phone (default): one column, the design above.
    Tablet (600px+): wider single column.
@@ -583,8 +604,8 @@ nav.tabs[style*="--n:3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
 
 <main id="app"></main>
 
-<script src="workshops.js?v=202611041639"></script>
-<script src="sections.js?v=202611041639"></script>
-<script src="app.js?v=202611041639"></script>
+<script src="workshops.js?v=202611050907"></script>
+<script src="sections.js?v=202611050907"></script>
+<script src="app.js?v=202611050907"></script>
 </body>
 </html>

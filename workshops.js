@@ -160,6 +160,136 @@ const WORKSHOPS = [
         ur: { n: "عارضی مزدوروں کا تحفظ: میزبان آجر کے لیے بہترین طریقے", by: "NIOSH / OSHA", d: "میزبان آجر اپنی سائٹ پر کام کرنے والے ہر شخص کی حفاظت اور سائٹ کی تربیت کا ذمہ دار ہے۔" } }
     ]
   }
+  ,
+  {
+    id: "traffic",
+    icon: "img/ic/car.webp",
+    video:  { ar: "videos/ws-traffic-ar.mp4", en: "videos/ws-traffic-ar.mp4", ur: "videos/ws-traffic-ar.mp4" },
+    poster: { ar: "videos/ws-traffic-ar.jpg", en: "videos/ws-traffic-ar.jpg", ur: "videos/ws-traffic-ar.jpg" },
+    videoLang: "ar",
+
+    ar: {
+      title: "حماية موقع العمل من المرور والجمهور",
+      sub: "ثلاثة يتشاركون موقع العمل… وتأمين الموقع يحميهم معًا",
+      watch: "شاهد: حماية موقع العمل في دقيقة ونصف",
+      blocks: [
+        { type: "lead", p: [
+          "موقع عمل صغير على الطريق يتشاركه ثلاثة: السائق، والمارّة، وفريق العمل. كل واحد منهم يرى الموقع بطريقة مختلفة.",
+          "السائق يمرّ في ثوانٍ ويعتمد على ما يراه أمامه، والمارّ لا يعرف مخاطر الموقع، والفريق منشغل بعمله وظهره غالبًا للطريق. لذلك تأمين الموقع لا يحمي الفريق وحده، بل يحمي الثلاثة معًا." ] },
+        { type: "tiles", h: "ثلاثة يتشاركون موقع العمل", cols: "three", items: [
+          ["ic:car", "السائق", "يمرّ بالموقع في ثوانٍ، ويعتمد على ما يراه أمامه"],
+          ["ic:person", "المارّة", "لا يعرفون ما نعرفه عن الموقع ومخاطره"],
+          ["ic:team", "فريق العمل", "منشغل بعمله، وظهره غالبًا للطريق"] ] },
+        { type: "figure", src: "img/ws/traffic-road.webp", cap: "المناطق الخمس لموقع العمل على الطريق، بترتيب مرور السائق" },
+        { type: "zones", h: "المناطق الخمس", items: [
+          ["التحذير المسبق", "لوحات قبل الموقع بمسافة تكفي ليتمهّل السائق"],
+          ["التحويل", "أقماع مائلة تدريجيًا ولوحة سهم مضاءة ترشد السائق إلى المسار الآخر"],
+          ["المنطقة العازلة", "مساحة فارغة تفصل المرور عن الفريق"],
+          ["منطقة العمل", "حواجز صلبة حول الحفريات والمعدات والعاملين"],
+          ["نهاية الأعمال", "لوحة تخبر السائق أن الطريق عاد إلى طبيعته"] ] },
+        { type: "figure", src: "img/ws/traffic-ped.webp", h: "المارّة", cap: "المارّة لا يعرفون مخاطر الموقع. حاجز واضح، ولوحة مفهومة، وممر آمن… يُبعدهم عن الحفرة" },
+        { type: "compare", h: "في الليل: الضوء يجعل الموقع مرئيًا", items: [
+          ["img/ws/traffic-night-off.webp", "بدون إضاءة", "bad"],
+          ["img/ws/traffic-night-on.webp", "إضاءة وأضواء تحذيرية وسترات عاكسة", "ok"] ] },
+        { type: "checks", h: "قبل أن تبدأ العمل على الطريق… تأكّد", items: [
+          "لوحات التحذير المسبق في مكانها وعلى مسافة كافية",
+          "الأقماع ولوحة السهم المضاءة توجّه المرور بعيدًا عن الموقع",
+          "المنطقة العازلة فارغة: لا معدات ولا مواد ولا عمال",
+          "حواجز صلبة حول الحفريات، وممر آمن للمارّة",
+          "إضاءة وأضواء تحذيرية وسترات عاكسة في العمل الليلي" ] },
+        { type: "close", t: "موقع مؤمَّن… فريق آمن، وجمهور آمن" }
+      ]
+    },
+
+    en: {
+      title: "Protecting the Work Site from Traffic and the Public",
+      sub: "Three share the work site… and securing it protects all of them",
+      watch: "Watch: protecting the work site in a minute and a half",
+      blocks: [
+        { type: "lead", p: [
+          "A small work site on the road is shared by three: the driver, pedestrians, and the work crew. Each of them sees the site differently.",
+          "The driver passes in seconds and relies on what is in front of him, the pedestrian doesn’t know the site’s hazards, and the crew is busy working, often with their backs to the road. So securing the site doesn’t protect the crew alone; it protects all three." ] },
+        { type: "tiles", h: "Three share the work site", cols: "three", items: [
+          ["ic:car", "The driver", "Passes the site in seconds and relies on what he sees ahead"],
+          ["ic:person", "Pedestrians", "Don’t know what we know about the site and its hazards"],
+          ["ic:team", "The work crew", "Busy working, often with their backs to the road"] ] },
+        { type: "figure", src: "img/ws/traffic-road.webp", cap: "The five zones of a road work site, in the order the driver meets them" },
+        { type: "zones", h: "The five zones", items: [
+          ["Advance warning", "Signs far enough before the site for the driver to slow down"],
+          ["Transition", "Gradually angled cones and a lit arrow board guide the driver into the other lane"],
+          ["Buffer zone", "An empty space separating traffic from the crew"],
+          ["Work area", "Rigid barriers around excavations, equipment and workers"],
+          ["End of works", "A sign telling the driver the road is back to normal"] ] },
+        { type: "figure", src: "img/ws/traffic-ped.webp", h: "Pedestrians", cap: "Pedestrians don’t know the site’s hazards. A clear barrier, an understandable sign and a safe walkway… keep them away from the excavation" },
+        { type: "compare", h: "At night: light makes the site visible", items: [
+          ["img/ws/traffic-night-off.webp", "No lighting", "bad"],
+          ["img/ws/traffic-night-on.webp", "Lighting, warning lights and reflective vests", "ok"] ] },
+        { type: "checks", h: "Before you start work on the road… verify", items: [
+          "Advance warning signs are in place, far enough ahead",
+          "Cones and the lit arrow board steer traffic away from the site",
+          "The buffer zone is empty: no equipment, materials or workers",
+          "Rigid barriers around excavations, and a safe walkway for pedestrians",
+          "Lighting, warning lights and reflective vests for night work" ] },
+        { type: "close", t: "A secured site… a safe crew, and a safe public" }
+      ]
+    },
+
+    ur: {
+      title: "ٹریفک اور عوام سے کام کی جگہ کا تحفظ",
+      sub: "تین فریق کام کی جگہ میں شریک ہیں… اور جگہ محفوظ بنانا تینوں کو بچاتا ہے",
+      watch: "دیکھیے: ڈیڑھ منٹ میں کام کی جگہ کا تحفظ",
+      blocks: [
+        { type: "lead", p: [
+          "سڑک پر ایک چھوٹی سی کام کی جگہ میں تین فریق شریک ہیں: ڈرائیور، راہگیر، اور کام کی ٹیم۔ ہر ایک جگہ کو مختلف انداز سے دیکھتا ہے۔",
+          "ڈرائیور چند سیکنڈ میں گزرتا ہے اور جو سامنے دیکھے اسی پر بھروسہ کرتا ہے، راہگیر جگہ کے خطرات نہیں جانتا، اور ٹیم کام میں مصروف ہوتی ہے، اکثر سڑک کی طرف پیٹھ کیے۔ اس لیے جگہ محفوظ بنانا صرف ٹیم کو نہیں، تینوں کو بچاتا ہے۔" ] },
+        { type: "tiles", h: "تین فریق کام کی جگہ میں شریک", cols: "three", items: [
+          ["ic:car", "ڈرائیور", "چند سیکنڈ میں گزرتا ہے، اور سامنے دیکھی چیز پر بھروسہ کرتا ہے"],
+          ["ic:person", "راہگیر", "جگہ اور اس کے خطرات کے بارے میں وہ نہیں جانتے جو ہم جانتے ہیں"],
+          ["ic:team", "کام کی ٹیم", "کام میں مصروف، اکثر سڑک کی طرف پیٹھ کیے"] ] },
+        { type: "figure", src: "img/ws/traffic-road.webp", cap: "سڑک پر کام کی جگہ کے پانچ حصے، اس ترتیب سے جس میں ڈرائیور گزرتا ہے" },
+        { type: "zones", h: "پانچ حصے", items: [
+          ["پیشگی انتباہ", "جگہ سے پہلے اتنے فاصلے پر بورڈ کہ ڈرائیور رفتار کم کر لے"],
+          ["راستہ موڑنا", "بتدریج ترچھے کون اور روشن تیر والا بورڈ ڈرائیور کو دوسری لین کی طرف لے جاتے ہیں"],
+          ["حفاظتی خالی جگہ", "خالی جگہ جو ٹریفک کو ٹیم سے الگ رکھتی ہے"],
+          ["کام کا علاقہ", "کھدائی، آلات اور کارکنوں کے گرد مضبوط رکاوٹیں"],
+          ["کام کا اختتام", "بورڈ جو ڈرائیور کو بتائے کہ سڑک معمول پر آ گئی"] ] },
+        { type: "figure", src: "img/ws/traffic-ped.webp", h: "راہگیر", cap: "راہگیر جگہ کے خطرات نہیں جانتے۔ واضح رکاوٹ، سمجھ میں آنے والا بورڈ، اور محفوظ راستہ… انہیں کھدائی سے دور رکھتے ہیں" },
+        { type: "compare", h: "رات میں: روشنی جگہ کو نظر آنے والا بناتی ہے", items: [
+          ["img/ws/traffic-night-off.webp", "روشنی کے بغیر", "bad"],
+          ["img/ws/traffic-night-on.webp", "روشنی، انتباہی بتیاں اور چمکدار جیکٹیں", "ok"] ] },
+        { type: "checks", h: "سڑک پر کام شروع کرنے سے پہلے… یقینی بنائیں", items: [
+          "پیشگی انتباہی بورڈ اپنی جگہ پر اور کافی فاصلے پر ہوں",
+          "کون اور روشن تیر والا بورڈ ٹریفک کو جگہ سے دور موڑیں",
+          "حفاظتی خالی جگہ خالی ہو: نہ آلات، نہ سامان، نہ کارکن",
+          "کھدائی کے گرد مضبوط رکاوٹیں، اور راہگیروں کے لیے محفوظ راستہ",
+          "رات کے کام میں روشنی، انتباہی بتیاں اور چمکدار جیکٹیں" ] },
+        { type: "close", t: "محفوظ جگہ… محفوظ ٹیم، اور محفوظ عوام" }
+      ]
+    },
+
+    sources: [
+      { url: "https://mutcd.fhwa.dot.gov/HTM/2009/part6/fig6c_01_longdesc.htm",
+        ar: { n: "مناطق التحكم المروري المؤقت (الشكل 6C-1)", by: "MUTCD — الإدارة الفيدرالية للطرق الأمريكية FHWA", d: "يقسّم موقع العمل على الطريق إلى: التحذير المسبق، والتحويل، ومنطقة النشاط (ومنها المنطقة العازلة)، ونهاية الأعمال." },
+        en: { n: "Temporary Traffic Control zone areas (Figure 6C-1)", by: "MUTCD — U.S. Federal Highway Administration", d: "Divides a road work zone into advance warning, transition, activity area (including the buffer space), and termination." },
+        ur: { n: "عارضی ٹریفک کنٹرول کے حصے (شکل 6C-1)", by: "MUTCD — امریکی وفاقی ہائی وے ایڈمنسٹریشن", d: "سڑک پر کام کی جگہ کو تقسیم کرتا ہے: پیشگی انتباہ، راستہ موڑنا، سرگرمی کا علاقہ (بشمول حفاظتی جگہ)، اور اختتام۔" } },
+      { url: "https://mutcd.fhwa.dot.gov/htm/2009/part6/part6_toc.htm",
+        ar: { n: "الجزء السادس: التحكم المروري المؤقت", by: "MUTCD — FHWA", d: "الدليل الكامل للوحات والأقماع والحواجز والإضاءة في مناطق العمل." },
+        en: { n: "Part 6: Temporary Traffic Control", by: "MUTCD — FHWA", d: "The full guide to signs, cones, barriers and lighting in work zones." },
+        ur: { n: "حصہ 6: عارضی ٹریفک کنٹرول", by: "MUTCD — FHWA", d: "کام کی جگہوں میں بورڈ، کون، رکاوٹوں اور روشنی کی مکمل رہنمائی۔" } },
+      { url: "https://www.osha.gov/laws-regs/regulations/standardnumber/1926/1926.200",
+        ar: { n: "اللوحات والإشارات والحواجز في مواقع الإنشاء", by: "OSHA 1926.200", d: "وسائل التحكم المروري لحماية العاملين يجب أن تطابق الجزء السادس من MUTCD." },
+        en: { n: "Accident prevention signs and tags; traffic control", by: "OSHA 1926.200", d: "Traffic control devices protecting construction workers must conform to Part 6 of the MUTCD." },
+        ur: { n: "تعمیراتی جگہوں پر بورڈ، اشارے اور رکاوٹیں", by: "OSHA 1926.200", d: "کارکنوں کے تحفظ کے لیے ٹریفک کنٹرول کے آلات MUTCD کے حصہ 6 کے مطابق ہوں۔" } },
+      { url: "https://osha.gov/highway-workzones/standards",
+        ar: { n: "مناطق العمل على الطرق: المعايير", by: "OSHA", d: "المعايير المطبّقة على العمل بجوار المرور واللوحات والحواجز." },
+        en: { n: "Highway Work Zones: Standards", by: "OSHA", d: "The standards that apply to working next to traffic, signs and barricades." },
+        ur: { n: "سڑک پر کام کی جگہیں: معیارات", by: "OSHA", d: "ٹریفک کے ساتھ کام، بورڈ اور رکاوٹوں پر لاگو معیارات۔" } },
+      { url: "https://www.hse.gov.uk/construction/safetytopics/publicprotection.htm#:~:text=excavations%2C%20manholes",
+        ar: { n: "حماية الجمهور في مواقع الإنشاء", by: "هيئة الصحة والسلامة البريطانية HSE", d: "المارّة قد يسقطون في الحفريات وفتحات الصرف، فيلزم حواجز أو أغطية، ومحيط واضح للموقع." },
+        en: { n: "Protecting the public", by: "UK Health and Safety Executive (HSE)", d: "People can fall into excavations and manholes, so barriers or covers and a clear site perimeter are needed." },
+        ur: { n: "تعمیراتی جگہوں پر عوام کا تحفظ", by: "برطانوی ہیلتھ اینڈ سیفٹی ایگزیکٹو HSE", d: "لوگ کھدائی اور مین ہول میں گر سکتے ہیں، اس لیے رکاوٹیں یا ڈھکن اور واضح حد بندی ضروری ہے۔" } }
+    ]
+  }
 ];
 
 /* أسئلة ورشة العمالة غير النظامية — من محتوى العرض والمقطع والمصادر */
@@ -212,4 +342,56 @@ QUIZ.irregular = [
     ar: { q: "حسب نظام العمل السعودي (المادة 39)، هل يجوز للمنشأة أن تشغّل عامل منشأة أخرى؟", o: ["نعم، بموافقة شفهية من الكفيل", "نعم، إذا كان العمل قصيرًا", "لا، إلا عبر الطريق النظامي المعتمد مثل برنامج أجير"], e: "المادة 39 تمنع تشغيل عامل الغير، والعمل المعتمد عبر برنامج أجير لا يُعد مخالفة." },
     en: { q: "Under Saudi Labor Law (Article 39), may an establishment employ another establishment’s worker?", o: ["Yes, with the sponsor’s verbal approval", "Yes, if the job is short", "No, except through the approved lawful route such as the Ajeer program"], e: "Article 39 prohibits employing another employer’s worker; approved work through Ajeer is not a violation." },
     ur: { q: "سعودی لیبر قانون (دفعہ 39) کے مطابق کیا کوئی ادارہ دوسرے ادارے کا مزدور رکھ سکتا ہے؟", o: ["ہاں، کفیل کی زبانی اجازت سے", "ہاں، اگر کام مختصر ہو", "نہیں، سوائے منظور شدہ قانونی راستے جیسے اجیر پروگرام کے"], e: "دفعہ 39 دوسرے کا مزدور رکھنا منع کرتی ہے؛ اجیر کے ذریعے منظور شدہ کام خلاف ورزی نہیں۔" } }
+];
+
+/* أسئلة ورشة حماية موقع العمل من المرور والجمهور */
+QUIZ.traffic = [
+  { a: 1,
+    ar: { q: "من الثلاثة الذين يتشاركون موقع العمل على الطريق؟", o: ["المهندس والمشرف والعامل", "السائق والمارّة وفريق العمل", "العميل والمقاول والمورّد"], e: "ثلاثة يتشاركون الموقع: السائق، والمارّة، وفريق العمل، وتأمينه يحميهم معًا." },
+    en: { q: "Which three share a road work site?", o: ["The engineer, supervisor and worker", "The driver, pedestrians and the work crew", "The client, contractor and supplier"], e: "Three share the site: the driver, pedestrians and the crew, and securing it protects all of them." },
+    ur: { q: "سڑک پر کام کی جگہ میں کون تین شریک ہیں؟", o: ["انجینئر، سپروائزر اور کارکن", "ڈرائیور، راہگیر اور کام کی ٹیم", "کلائنٹ، ٹھیکیدار اور سپلائر"], e: "تین شریک ہیں: ڈرائیور، راہگیر اور ٹیم، اور جگہ محفوظ بنانا تینوں کو بچاتا ہے۔" } },
+  { a: 0,
+    ar: { q: "لماذا فريق العمل معرّض للخطر من المرور؟", o: ["منشغل بعمله، وظهره غالبًا للطريق", "لأنه يقود بسرعة", "لأنه لا يلبس خوذة"], e: "الفريق منشغل بعمله، وظهره غالبًا للطريق، فلا يرى السيارة القادمة." },
+    en: { q: "Why is the work crew at risk from traffic?", o: ["They’re busy working, often with their backs to the road", "They drive too fast", "They don’t wear hard hats"], e: "The crew is busy working, often with their backs to the road, so they don’t see the oncoming car." },
+    ur: { q: "کام کی ٹیم ٹریفک سے خطرے میں کیوں ہے؟", o: ["کام میں مصروف، اکثر سڑک کی طرف پیٹھ کیے", "کیونکہ وہ تیز گاڑی چلاتے ہیں", "کیونکہ وہ ہیلمٹ نہیں پہنتے"], e: "ٹیم کام میں مصروف ہوتی ہے، اکثر سڑک کی طرف پیٹھ کیے، اس لیے آنے والی گاڑی نہیں دیکھتی۔" } },
+  { a: 2,
+    ar: { q: "ما أول منطقة يمرّ بها السائق قبل موقع العمل؟", o: ["منطقة العمل", "المنطقة العازلة", "التحذير المسبق"], e: "التحذير المسبق: لوحات قبل الموقع بمسافة تكفي ليتمهّل السائق." },
+    en: { q: "What is the first zone a driver passes before the work site?", o: ["The work area", "The buffer zone", "Advance warning"], e: "Advance warning: signs far enough before the site for the driver to slow down." },
+    ur: { q: "کام کی جگہ سے پہلے ڈرائیور سب سے پہلے کس حصے سے گزرتا ہے؟", o: ["کام کا علاقہ", "حفاظتی خالی جگہ", "پیشگی انتباہ"], e: "پیشگی انتباہ: جگہ سے پہلے اتنے فاصلے پر بورڈ کہ ڈرائیور رفتار کم کر لے۔" } },
+  { a: 1,
+    ar: { q: "ما الذي يرشد السائق إلى المسار الآخر في منطقة التحويل؟", o: ["عامل يلوّح بيده فقط", "أقماع مائلة تدريجيًا ولوحة سهم مضاءة", "شريط تحذير على الأرض"], e: "التحويل: أقماع مائلة تدريجيًا ولوحة سهم مضاءة ترشد السائق إلى المسار الآخر." },
+    en: { q: "What guides the driver into the other lane in the transition zone?", o: ["A worker waving his hand only", "Gradually angled cones and a lit arrow board", "Warning tape on the ground"], e: "Transition: gradually angled cones and a lit arrow board guide the driver into the other lane." },
+    ur: { q: "راستہ موڑنے والے حصے میں ڈرائیور کو دوسری لین کی طرف کون لے جاتا ہے؟", o: ["صرف ہاتھ ہلاتا کارکن", "بتدریج ترچھے کون اور روشن تیر والا بورڈ", "زمین پر انتباہی ٹیپ"], e: "راستہ موڑنا: بتدریج ترچھے کون اور روشن تیر والا بورڈ ڈرائیور کو دوسری لین میں لے جاتے ہیں۔" } },
+  { a: 2,
+    ar: { q: "ما وظيفة المنطقة العازلة؟", o: ["تخزين المواد والمعدات", "موقف لسيارات الفريق", "مساحة فارغة تفصل المرور عن الفريق"], e: "المنطقة العازلة مساحة فارغة تفصل المرور عن الفريق، وتعطي هامشًا لسيارة خرجت عن مسارها." },
+    en: { q: "What is the buffer zone for?", o: ["Storing materials and equipment", "Parking the crew’s vehicles", "An empty space separating traffic from the crew"], e: "The buffer is an empty space separating traffic from the crew, giving room for a vehicle that strays." },
+    ur: { q: "حفاظتی خالی جگہ کس لیے ہے؟", o: ["سامان اور آلات رکھنے کے لیے", "ٹیم کی گاڑیاں کھڑی کرنے کے لیے", "خالی جگہ جو ٹریفک کو ٹیم سے الگ رکھتی ہے"], e: "حفاظتی جگہ خالی ہوتی ہے تاکہ ٹریفک ٹیم سے الگ رہے اور بھٹکی گاڑی کو گنجائش ملے۔" } },
+  { a: 0,
+    ar: { q: "وضعت مولّدًا داخل المنطقة العازلة لأنه أقرب. ما الخطأ؟", o: ["المنطقة العازلة يجب أن تبقى فارغة", "لا خطأ، المهم أنه قريب", "الخطأ أنه بلا غطاء فقط"], e: "المنطقة العازلة تبقى فارغة: لا معدات ولا مواد ولا عمال." },
+    en: { q: "You put a generator in the buffer zone because it’s closer. What’s wrong?", o: ["The buffer zone must stay empty", "Nothing, closer is better", "Only that it has no cover"], e: "The buffer zone stays empty: no equipment, no materials, no workers." },
+    ur: { q: "آپ نے جنریٹر حفاظتی خالی جگہ میں رکھ دیا کیونکہ قریب ہے۔ غلطی کیا ہے؟", o: ["حفاظتی جگہ خالی رہنی چاہیے", "کوئی غلطی نہیں، قریب ہونا بہتر ہے", "صرف یہ کہ اس پر ڈھکن نہیں"], e: "حفاظتی جگہ خالی رہتی ہے: نہ آلات، نہ سامان، نہ کارکن۔" } },
+  { a: 1,
+    ar: { q: "ما الذي يحيط بالحفريات والمعدات والعاملين في منطقة العمل؟", o: ["شريط بلاستيك فقط", "حواجز صلبة", "لا شيء إذا كان العمل قصيرًا"], e: "منطقة العمل: حواجز صلبة حول الحفريات والمعدات والعاملين." },
+    en: { q: "What surrounds excavations, equipment and workers in the work area?", o: ["Plastic tape only", "Rigid barriers", "Nothing if the job is short"], e: "Work area: rigid barriers around excavations, equipment and workers." },
+    ur: { q: "کام کے علاقے میں کھدائی، آلات اور کارکنوں کے گرد کیا ہوتا ہے؟", o: ["صرف پلاسٹک ٹیپ", "مضبوط رکاوٹیں", "کچھ نہیں اگر کام مختصر ہو"], e: "کام کا علاقہ: کھدائی، آلات اور کارکنوں کے گرد مضبوط رکاوٹیں۔" } },
+  { a: 2,
+    ar: { q: "ما وظيفة لوحة نهاية الأعمال؟", o: ["تطلب من السائق التوقف", "تشكر الفريق", "تخبر السائق أن الطريق عاد إلى طبيعته"], e: "نهاية الأعمال: لوحة تخبر السائق أن الطريق عاد إلى طبيعته." },
+    en: { q: "What does the end-of-works sign do?", o: ["Tells the driver to stop", "Thanks the crew", "Tells the driver the road is back to normal"], e: "End of works: a sign telling the driver the road is back to normal." },
+    ur: { q: "کام کے اختتام کا بورڈ کیا کرتا ہے؟", o: ["ڈرائیور کو رکنے کا کہتا ہے", "ٹیم کا شکریہ ادا کرتا ہے", "ڈرائیور کو بتاتا ہے کہ سڑک معمول پر آ گئی"], e: "کام کا اختتام: بورڈ جو ڈرائیور کو بتائے کہ سڑک معمول پر آ گئی۔" } },
+  { a: 0,
+    ar: { q: "ما الذي يُبعد المارّة عن الحفرة؟", o: ["حاجز واضح، ولوحة مفهومة، وممر آمن", "تنبيههم بالصوت فقط", "تغطية الحفرة بقطعة قماش"], e: "المارّة لا يعرفون مخاطر الموقع: حاجز واضح، ولوحة مفهومة، وممر آمن." },
+    en: { q: "What keeps pedestrians away from the excavation?", o: ["A clear barrier, an understandable sign and a safe walkway", "Just shouting a warning", "Covering the hole with a cloth"], e: "Pedestrians don’t know the hazards: a clear barrier, an understandable sign and a safe walkway." },
+    ur: { q: "راہگیروں کو کھدائی سے کیا دور رکھتا ہے؟", o: ["واضح رکاوٹ، سمجھ میں آنے والا بورڈ، اور محفوظ راستہ", "صرف آواز دے کر خبردار کرنا", "گڑھے کو کپڑے سے ڈھانپنا"], e: "راہگیر خطرات نہیں جانتے: واضح رکاوٹ، سمجھ میں آنے والا بورڈ، اور محفوظ راستہ۔" } },
+  { a: 1,
+    ar: { q: "ما الذي يجعل موقع العمل مرئيًا في الليل؟", o: ["أقماع إضافية فقط", "إضاءة وأضواء تحذيرية وسترات عاكسة", "إطفاء الأنوار لتقليل التشتت"], e: "في الليل: إضاءة وأضواء تحذيرية وسترات عاكسة تجعل الموقع والفريق مرئيين." },
+    en: { q: "What makes the work site visible at night?", o: ["Extra cones only", "Lighting, warning lights and reflective vests", "Turning lights off to reduce distraction"], e: "At night: lighting, warning lights and reflective vests make the site and crew visible." },
+    ur: { q: "رات میں کام کی جگہ کو کیا نظر آنے والا بناتا ہے؟", o: ["صرف اضافی کون", "روشنی، انتباہی بتیاں اور چمکدار جیکٹیں", "خلل کم کرنے کے لیے بتیاں بند کرنا"], e: "رات میں روشنی، انتباہی بتیاں اور چمکدار جیکٹیں جگہ اور ٹیم کو نظر آنے والا بناتی ہیں۔" } },
+  { a: 2,
+    ar: { q: "لماذا توضع لوحات التحذير المسبق على مسافة قبل الموقع؟", o: ["لتوفير مكان في الموقع", "لأنها كبيرة الحجم", "حتى يكون لدى السائق وقت كافٍ ليتمهّل"], e: "السائق يمرّ في ثوانٍ؛ المسافة تعطيه وقتًا ليرى ويتمهّل قبل الوصول." },
+    en: { q: "Why are advance warning signs placed a distance before the site?", o: ["To save space on site", "Because they are large", "So the driver has enough time to slow down"], e: "The driver passes in seconds; the distance gives him time to see and slow down before arriving." },
+    ur: { q: "پیشگی انتباہی بورڈ جگہ سے پہلے فاصلے پر کیوں لگائے جاتے ہیں؟", o: ["جگہ بچانے کے لیے", "کیونکہ وہ بڑے ہوتے ہیں", "تاکہ ڈرائیور کو رفتار کم کرنے کا وقت ملے"], e: "ڈرائیور چند سیکنڈ میں گزرتا ہے؛ فاصلہ اسے دیکھنے اور رفتار کم کرنے کا وقت دیتا ہے۔" } },
+  { a: 0,
+    ar: { q: "وصلت للموقع ووجدت لوحة السهم المضاءة لا تعمل. ماذا تفعل؟", o: ["لا يبدأ العمل حتى تُصلَح أو تُستبدل، وأبلّغ المشرف", "أبدأ العمل، الأقماع تكفي", "أنتظر حتى الليل"], e: "لوحة السهم جزء من التحويل الآمن؛ بدونها يقلّ وضوح المسار للسائق." },
+    en: { q: "You arrive and the lit arrow board isn’t working. What do you do?", o: ["Work doesn’t start until it’s fixed or replaced, and I tell the supervisor", "Start, the cones are enough", "Wait until night"], e: "The arrow board is part of a safe transition; without it the path is less clear to drivers." },
+    ur: { q: "آپ پہنچے اور روشن تیر والا بورڈ کام نہیں کر رہا۔ کیا کریں؟", o: ["ٹھیک یا تبدیل ہونے تک کام شروع نہ ہو، اور سپروائزر کو بتائیں", "شروع کریں، کون کافی ہیں", "رات تک انتظار کریں"], e: "تیر والا بورڈ محفوظ راستہ موڑنے کا حصہ ہے؛ اس کے بغیر ڈرائیور کو راستہ کم واضح ہوتا ہے۔" } }
 ];

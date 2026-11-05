@@ -100,6 +100,9 @@ function blocksHTML(blocks, u){
       case "scale": return `<section class="wsec"><h2>${esc(b.h)}</h2><ol class="wscale">${b.items.map(([n, h, d]) => `<li><span class="sn s${n}">${n}</span><b>${esc(h)}</b>${d ? `<small>${esc(d)}</small>` : ""}</li>`).join("")}</ol></section>`;
       case "levels": return `<section class="wsec"><h2>${esc(b.h)}</h2><div class="wlevels">${b.items.map(([k, h, d]) => `<div class="lv ${esc(k)}"><b>${esc(h)}</b><span>${esc(d)}</span></div>`).join("")}</div></section>`;
       case "rules": return `<section class="wsec"><h2>${esc(b.h)}</h2><ol class="wrules">${(topic.rules || []).map((r, i) => `<li><header><span class="rn">${i + 1}</span><span class="emoji">${r.emoji}</span><b>${esc(r[lang].t)}</b></header><ul>${r[lang].items.map(([ok, x]) => `<li class="${ok === true ? "yes" : ok === false ? "no" : "info"}">${esc(x)}</li>`).join("")}</ul></li>`).join("")}</ol></section>`;
+      case "figure": return `<section class="wsec">${b.h ? `<h2>${esc(b.h)}</h2>` : ""}<figure class="wfig"><img src="${esc(b.src)}" alt="" loading="lazy"><figcaption>${esc(b.cap)}</figcaption></figure></section>`;
+      case "zones": return `<section class="wsec"><h2>${esc(b.h)}</h2><ol class="wzones">${b.items.map(([h, d], i) => `<li><span class="zn">${i + 1}</span><div><b>${esc(h)}</b><small>${esc(d)}</small></div></li>`).join("")}</ol></section>`;
+      case "compare": return `<section class="wsec"><h2>${esc(b.h)}</h2><div class="wcompare">${b.items.map(([src, cap, k]) => `<figure class="${k === "ok" ? "ok" : "bad"}"><img src="${esc(src)}" alt="" loading="lazy"><figcaption>${k === "ok" ? "✓" : "✕"} ${esc(cap)}</figcaption></figure>`).join("")}</div></section>`;
       case "close": return `<p class="wclose display">${esc(b.t)}</p>`;
       default: return "";
     }
@@ -145,10 +148,12 @@ function renderWorkshop(u){
       <div class="watchcol">
         <p class="wwatch">🎬 ${esc(c.watch)}</p>
         ${frameHTML(w.video[lang], w.poster[lang], u)}
+        ${w.videoLang && w.videoLang !== lang ? `<p class="vnote">🔊 ${esc(fmt(u.videoNote, {lang: u.langName[w.videoLang]}))}</p>` : ""}
       </div>
       <section class="quiz" id="quiz" aria-live="polite"></section>
     </div>
 
+    ${c.blocks ? `<article class="wart">${blocksHTML(c.blocks, u)}</article>` : `
     <article class="wart">
       <div class="wlead">${c.lead.map(p => `<p>${esc(p)}</p>`).join("")}</div>
 
@@ -175,7 +180,7 @@ function renderWorkshop(u){
       </section>
 
       <p class="wclose display">${esc(c.close)}</p>
-    </article>
+    </article>`}
 
     ${sourcesHTML(w.sources, u)}
     ${creatorHTML(u)}

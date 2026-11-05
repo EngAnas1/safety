@@ -164,9 +164,8 @@ const WORKSHOPS = [
   {
     id: "traffic",
     icon: "img/ic/car.webp",
-    video:  { ar: "videos/ws-traffic-ar.mp4", en: "videos/ws-traffic-ar.mp4", ur: "videos/ws-traffic-ar.mp4" },
-    poster: { ar: "videos/ws-traffic-ar.jpg", en: "videos/ws-traffic-ar.jpg", ur: "videos/ws-traffic-ar.jpg" },
-    videoLang: "ar",
+    video:  { ar: "videos/ws-traffic-ar.mp4", en: "videos/ws-traffic-en.mp4", ur: "videos/ws-traffic-ur.mp4" },
+    poster: { ar: "videos/ws-traffic-ar.jpg", en: "videos/ws-traffic-en.jpg", ur: "videos/ws-traffic-ur.jpg" },
 
     ar: {
       title: "حماية موقع العمل من المرور والجمهور",
@@ -202,68 +201,68 @@ const WORKSHOPS = [
     },
 
     en: {
-      title: "Protecting the Work Site from Traffic and the Public",
-      sub: "Three share the work site… and securing it protects all of them",
-      watch: "Watch: protecting the work site in a minute and a half",
+      title: "Protecting the Work Zone from Traffic and the Public",
+      sub: "Three road users share the work zone… and a properly secured work zone protects all three",
+      watch: "Watch: Work Zone Protection in 90 Seconds",
       blocks: [
         { type: "lead", p: [
           "A small work site on the road is shared by three: the driver, pedestrians, and the work crew. Each of them sees the site differently.",
           "The driver passes in seconds and relies on what is in front of him, the pedestrian doesn’t know the site’s hazards, and the crew is busy working, often with their backs to the road. So securing the site doesn’t protect the crew alone; it protects all three." ] },
-        { type: "tiles", h: "Three share the work site", cols: "three", items: [
-          ["ic:car", "The driver", "Passes the site in seconds and relies on what he sees ahead"],
-          ["ic:person", "Pedestrians", "Don’t know what we know about the site and its hazards"],
-          ["ic:team", "The work crew", "Busy working, often with their backs to the road"] ] },
-        { type: "figure", src: "img/ws/traffic-road.webp", cap: "The five zones of a road work site, in the order the driver meets them" },
-        { type: "zones", h: "The five zones", items: [
-          ["Advance warning", "Signs far enough before the site for the driver to slow down"],
-          ["Transition", "Gradually angled cones and a lit arrow board guide the driver into the other lane"],
-          ["Buffer zone", "An empty space separating traffic from the crew"],
-          ["Work area", "Rigid barriers around excavations, equipment and workers"],
-          ["End of works", "A sign telling the driver the road is back to normal"] ] },
-        { type: "figure", src: "img/ws/traffic-ped.webp", h: "Pedestrians", cap: "Pedestrians don’t know the site’s hazards. A clear barrier, an understandable sign and a safe walkway… keep them away from the excavation" },
-        { type: "compare", h: "At night: light makes the site visible", items: [
-          ["img/ws/traffic-night-off.webp", "No lighting", "bad"],
-          ["img/ws/traffic-night-on.webp", "Lighting, warning lights and reflective vests", "ok"] ] },
+        { type: "tiles", h: "Three road users share the work zone", cols: "three", items: [
+          ["ic:car", "Drivers", "Pass the site in seconds and rely on what they see ahead"],
+          ["ic:person", "Pedestrians", "Unaware of the site hazards we know about"],
+          ["ic:team", "Work crew", "Focused on the task, often with their back to traffic"] ] },
+        { type: "figure", src: "img/ws/traffic-road-en.webp", cap: "Temporary traffic management: the five zones, in the order drivers meet them" },
+        { type: "zones", h: "The five TTM zones", items: [
+          ["Advance Warning Area", "Advance warning signs placed far enough ahead for drivers to reduce speed"],
+          ["Transition Area", "A gradual cone taper and an illuminated arrow board guide drivers into the open lane"],
+          ["Buffer Space", "A clear, unoccupied space separating live traffic from the work crew"],
+          ["Work Area", "Rigid barriers around excavations, plant and workers"],
+          ["Termination Area", "An END OF ROADWORKS sign informs drivers that normal road conditions resume"] ] },
+        { type: "figure", src: "img/ws/traffic-ped-en.webp", h: "Pedestrian Safety", cap: "Pedestrians are unaware of site hazards. Clear barriers, understandable signage and a protected pedestrian walkway… keep them away from the excavation" },
+        { type: "compare", h: "At night: lighting makes the work zone visible", items: [
+          ["img/ws/traffic-night-off-en.webp", "Without lighting", "bad"],
+          ["img/ws/traffic-night-on-en.webp", "Work lighting, warning beacons and high-visibility vests", "ok"] ] },
         { type: "checks", h: "Before you start work on the road… verify", items: [
           "Advance warning signs are in place, far enough ahead",
           "Cones and the lit arrow board steer traffic away from the site",
-          "The buffer zone is empty: no equipment, materials or workers",
+          "The buffer space is empty: no plant, materials or workers",
           "Rigid barriers around excavations, and a safe walkway for pedestrians",
           "Lighting, warning lights and reflective vests for night work" ] },
-        { type: "close", t: "A secured site… a safe crew, and a safe public" }
+        { type: "close", t: "A secured work zone… safe workers, safe public" }
       ]
     },
 
     ur: {
-      title: "ٹریفک اور عوام سے کام کی جگہ کا تحفظ",
-      sub: "تین فریق کام کی جگہ میں شریک ہیں… اور جگہ محفوظ بنانا تینوں کو بچاتا ہے",
-      watch: "دیکھیے: ڈیڑھ منٹ میں کام کی جگہ کا تحفظ",
+      title: "ورک زون کو ٹریفک اور عوام سے محفوظ رکھنا",
+      sub: "تین فریق ورک زون میں شریک ہیں… اور محفوظ ورک زون تینوں کی حفاظت کرتا ہے",
+      watch: "دیکھیے: ورک زون کی حفاظت ڈیڑھ منٹ میں",
       blocks: [
         { type: "lead", p: [
-          "سڑک پر ایک چھوٹی سی کام کی جگہ میں تین فریق شریک ہیں: ڈرائیور، راہگیر، اور کام کی ٹیم۔ ہر ایک جگہ کو مختلف انداز سے دیکھتا ہے۔",
-          "ڈرائیور چند سیکنڈ میں گزرتا ہے اور جو سامنے دیکھے اسی پر بھروسہ کرتا ہے، راہگیر جگہ کے خطرات نہیں جانتا، اور ٹیم کام میں مصروف ہوتی ہے، اکثر سڑک کی طرف پیٹھ کیے۔ اس لیے جگہ محفوظ بنانا صرف ٹیم کو نہیں، تینوں کو بچاتا ہے۔" ] },
-        { type: "tiles", h: "تین فریق کام کی جگہ میں شریک", cols: "three", items: [
-          ["ic:car", "ڈرائیور", "چند سیکنڈ میں گزرتا ہے، اور سامنے دیکھی چیز پر بھروسہ کرتا ہے"],
-          ["ic:person", "راہگیر", "جگہ اور اس کے خطرات کے بارے میں وہ نہیں جانتے جو ہم جانتے ہیں"],
-          ["ic:team", "کام کی ٹیم", "کام میں مصروف، اکثر سڑک کی طرف پیٹھ کیے"] ] },
-        { type: "figure", src: "img/ws/traffic-road.webp", cap: "سڑک پر کام کی جگہ کے پانچ حصے، اس ترتیب سے جس میں ڈرائیور گزرتا ہے" },
-        { type: "zones", h: "پانچ حصے", items: [
-          ["پیشگی انتباہ", "جگہ سے پہلے اتنے فاصلے پر بورڈ کہ ڈرائیور رفتار کم کر لے"],
-          ["راستہ موڑنا", "بتدریج ترچھے کون اور روشن تیر والا بورڈ ڈرائیور کو دوسری لین کی طرف لے جاتے ہیں"],
-          ["حفاظتی خالی جگہ", "خالی جگہ جو ٹریفک کو ٹیم سے الگ رکھتی ہے"],
-          ["کام کا علاقہ", "کھدائی، آلات اور کارکنوں کے گرد مضبوط رکاوٹیں"],
-          ["کام کا اختتام", "بورڈ جو ڈرائیور کو بتائے کہ سڑک معمول پر آ گئی"] ] },
-        { type: "figure", src: "img/ws/traffic-ped.webp", h: "راہگیر", cap: "راہگیر جگہ کے خطرات نہیں جانتے۔ واضح رکاوٹ، سمجھ میں آنے والا بورڈ، اور محفوظ راستہ… انہیں کھدائی سے دور رکھتے ہیں" },
-        { type: "compare", h: "رات میں: روشنی جگہ کو نظر آنے والا بناتی ہے", items: [
-          ["img/ws/traffic-night-off.webp", "روشنی کے بغیر", "bad"],
-          ["img/ws/traffic-night-on.webp", "روشنی، انتباہی بتیاں اور چمکدار جیکٹیں", "ok"] ] },
+          "سڑک پر ایک چھوٹی سی کام کی جگہ میں تین فریق شریک ہیں: ڈرائیور، پیدل چلنے والا، اور کام کی ٹیم۔ ہر ایک جگہ کو مختلف انداز سے دیکھتا ہے۔",
+          "ڈرائیور چند سیکنڈ میں گزرتا ہے اور جو سامنے دیکھے اسی پر بھروسہ کرتا ہے، پیدل چلنے والا سائٹ کے خطرات نہیں جانتا، اور ٹیم کام میں مصروف ہوتی ہے، اکثر سڑک کی طرف پیٹھ کیے۔ اس لیے جگہ محفوظ بنانا صرف ٹیم کو نہیں، تینوں کو بچاتا ہے۔" ] },
+        { type: "tiles", h: "تین فریق ورک زون میں شریک ہیں", cols: "three", items: [
+          ["ic:car", "ڈرائیور", "چند سیکنڈ میں سائٹ سے گزرتا ہے، اور جو سامنے دیکھتا ہے اسی پر چلتا ہے"],
+          ["ic:person", "پیدل چلنے والے", "سائٹ کے خطرات سے واقف نہیں"],
+          ["ic:team", "ورک ٹیم", "اپنے کام میں مصروف، اکثر ٹریفک کی طرف پیٹھ"] ] },
+        { type: "figure", src: "img/ws/traffic-road-en.webp", cap: "سڑک پر ورک زون کے پانچ زون، اس ترتیب سے جس میں ڈرائیور گزرتا ہے" },
+        { type: "zones", h: "ٹی ٹی ایم کے پانچ زون", items: [
+          ["ایڈوانس وارننگ ایریا", "سائٹ سے پہلے کافی فاصلے پر وارننگ سائن، تاکہ ڈرائیور رفتار کم کرے"],
+          ["ٹرانزیشن ایریا", "کونز کی بتدریج ٹیپر اور روشن ایرو بورڈ ڈرائیور کو کھلی لین کی طرف لے جاتے ہیں"],
+          ["بفر اسپیس", "خالی جگہ جو ٹریفک کو ورک ٹیم سے الگ رکھتی ہے"],
+          ["ورک ایریا", "کھدائی، مشینری اور مزدوروں کے گرد مضبوط بیریئر"],
+          ["ٹرمینیشن ایریا", "سائن جو ڈرائیور کو بتاتا ہے کہ سڑک معمول پر آ گئی"] ] },
+        { type: "figure", src: "img/ws/traffic-ped-en.webp", h: "پیدل چلنے والوں کی حفاظت", cap: "پیدل چلنے والے سائٹ کے خطرات سے واقف نہیں۔ واضح بیریئر، سمجھ میں آنے والا سائن، اور محفوظ راستہ… انہیں کھدائی سے دور رکھتے ہیں" },
+        { type: "compare", h: "رات میں: روشنی ورک زون کو نمایاں کرتی ہے", items: [
+          ["img/ws/traffic-night-off-en.webp", "بغیر روشنی", "bad"],
+          ["img/ws/traffic-night-on-en.webp", "ورک لائٹس، وارننگ بیکنز اور ہائی وزیبلٹی جیکٹس", "ok"] ] },
         { type: "checks", h: "سڑک پر کام شروع کرنے سے پہلے… یقینی بنائیں", items: [
           "پیشگی انتباہی بورڈ اپنی جگہ پر اور کافی فاصلے پر ہوں",
           "کون اور روشن تیر والا بورڈ ٹریفک کو جگہ سے دور موڑیں",
           "حفاظتی خالی جگہ خالی ہو: نہ آلات، نہ سامان، نہ کارکن",
-          "کھدائی کے گرد مضبوط رکاوٹیں، اور راہگیروں کے لیے محفوظ راستہ",
+          "کھدائی کے گرد مضبوط رکاوٹیں، اور پیدل چلنے والوں کے لیے محفوظ راستہ",
           "رات کے کام میں روشنی، انتباہی بتیاں اور چمکدار جیکٹیں" ] },
-        { type: "close", t: "محفوظ جگہ… محفوظ ٹیم، اور محفوظ عوام" }
+        { type: "close", t: "محفوظ ورک زون… محفوظ ورک ٹیم، محفوظ عوام" }
       ]
     },
 

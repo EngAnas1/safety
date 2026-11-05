@@ -40,6 +40,8 @@ function ytId(url){
   const m = url.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/);
   return m ? m[1] : null;
 }
+/* Sections listed here play without the watermark (all other protection stays) */
+const NO_WATERMARK = ["lsr"];
 function player(src, poster, u){
   src = (src || "").trim(); poster = poster || "";
   if(!src) return `<div class="empty"><span class="emoji">🎬</span><span>${u.noVideo}</span></div>`;
@@ -49,7 +51,7 @@ function player(src, poster, u){
      a moving watermark, and fullscreen on the whole player so the watermark stays visible */
   return `<video src="${esc(src)}" ${poster ? `poster="${esc(poster)}"` : ""} controls playsinline preload="metadata"
       controlslist="nodownload nofullscreen noremoteplayback noplaybackrate" disablepictureinpicture disableremoteplayback draggable="false"></video>
-    <div class="wm" aria-hidden="true"><span>${esc(CONFIG.ownerName[lang])} <bdi dir="ltr">${esc(CONFIG.ownerPhone || "")}</bdi></span></div>
+    ${NO_WATERMARK.includes(unit.id) ? "" : `<div class="wm" aria-hidden="true"><span>${esc(CONFIG.ownerName[lang])} <bdi dir="ltr">${esc(CONFIG.ownerPhone || "")}</bdi></span></div>`}
     <button class="fsb" type="button" aria-label="fullscreen">⛶</button>`;
 }
 

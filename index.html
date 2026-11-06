@@ -14,8 +14,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zain:wght@400;700;800;900&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="img/hero-m.webp">
-<script src="content.js?v=202611051011"></script>
-<script src="quiz.js?v=202611051011"></script>
+<script src="content.js?v=202611061317"></script>
+<script src="quiz.js?v=202611061317"></script>
 <style>
 /* =====================================================================
    الألوان — مأخوذة من المقطع والرسمة. غيّرها هنا فقط
@@ -464,6 +464,17 @@ body.ur .src span{line-height:2}
 .player:-webkit-full-screen{border-radius:0;width:100%;height:100%;background:#000}
 .player:fullscreen .wm span{font-size:1.4rem}
 
+
+.wtiles.five{grid-template-columns:repeat(2,minmax(0,1fr))}
+.wph{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(circle,#2a1a10,#0B1430 75%)}
+.wph img{width:42%;max-width:150px;filter:drop-shadow(0 12px 24px rgba(0,0,0,.5))}
+.wlab{display:grid;gap:14px;align-items:center;padding:20px;border-radius:22px;border:1.5px solid rgba(255,154,77,.55);background:radial-gradient(120% 140% at 100% 0%,rgba(255,122,31,.22),var(--dusk) 60%)}
+.wlab h2{margin-bottom:6px}
+.wlab p{color:#C9D6EE}
+.wlab .btn{justify-self:start;background:#FF9A4D;color:#1a0d05}
+@media (min-width:600px){.wtiles.five{grid-template-columns:repeat(3,minmax(0,1fr))}.wlab{grid-template-columns:1fr auto}}
+@media (min-width:960px){.wtiles.five{grid-template-columns:repeat(5,minmax(0,1fr))}}
+
 /* ===================== Responsive =====================
    Phone (default): one column, the design above.
    Tablet (600px+): wider single column.
@@ -618,8 +629,8 @@ nav.tabs[style*="--n:3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
 
 <main id="app"></main>
 
-<script src="workshops.js?v=202611051011"></script>
-<script src="sections.js?v=202611051011"></script>
-<script src="app.js?v=202611051011"></script>
+<script src="workshops.js?v=202611061317"></script>
+<script src="sections.js?v=202611061317"></script>
+<script src="app.js?v=202611061317"></script>
 </body>
 </html>

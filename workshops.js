@@ -289,6 +289,210 @@ const WORKSHOPS = [
         ur: { n: "تعمیراتی جگہوں پر عوام کا تحفظ", by: "برطانوی ہیلتھ اینڈ سیفٹی ایگزیکٹو HSE", d: "لوگ کھدائی اور مین ہول میں گر سکتے ہیں، اس لیے رکاوٹیں یا ڈھکن اور واضح حد بندی ضروری ہے۔" } }
     ]
   }
+  ,
+  {
+    id: "fire",
+    emoji: "🧯",
+    icon: "img/ic/fire.webp",
+    video:  { ar: "", en: "", ur: "" },
+    poster: { ar: "", en: "", ur: "" },
+    lab: "https://claude.ai/artifact/KGZL6vBq3amtYMTWUPApgF",
+
+    ar: {
+      title: "أساسيات مكافحة الحريق",
+      sub: "أغلب الحرائق تبدأ من شرارة صغيرة… اعرف كيف تمنعها وكيف تطفئها",
+      watch: "شاهد: أساسيات مكافحة الحريق",
+      blocks: [
+        { type: "lead", p: [
+          "قالت العرب قديمًا: «معظم النار من مستصغر الشرر». الحريق يبقى نارًا ما دام تحت السيطرة، فإذا فقدنا السيطرة عليه صار حادثًا.",
+          "في هذه الورشة تتعرف على عناصر الحريق ومراحله، وطرق إطفائه، وأنواع الحرائق وطفاياتها، والطريقة الصحيحة لاستخدام الطفاية. وفيها مختبر تفاعلي تجرّب فيه بنفسك." ] },
+        { type: "lab", h: "جرّب بنفسك في المختبر التفاعلي", p: "رباعي الحريق، ومراحل الحريق، والطفايات، وطريقة PASS… كلها بمحاكاة ثلاثية الأبعاد.", btn: "افتح مختبر مكافحة الحريق" },
+        { type: "tiles", h: "رباعي الحريق: أربعة عناصر يحتاجها الحريق", cols: "four", items: [
+          ["🪵", "الوقود", "صلب مثل الخشب والورق، أو سائل مثل الزيوت والبنزين، أو غاز مثل البيوتان والميثان"],
+          ["💨", "الأكسجين", "موجود في الهواء بنسبة 19–21٪ تقريبًا"],
+          ["🔥", "الحرارة", "ترفع المادة إلى درجة اشتعالها"],
+          ["⚛️", "التفاعل المتسلسل", "تفاعلات سريعة تُبقي اللهب مستمرًا وتنشره"] ] },
+        { type: "tiles", h: "طرق الإطفاء: أزل عنصرًا واحدًا وينطفئ الحريق", cols: "four", items: [
+          ["🚚", "التجويع", "إبعاد الوقود أو عزله عن النار"],
+          ["🫧", "الخنق", "قطع الأكسجين بالرغوة أو ثاني أكسيد الكربون"],
+          ["💧", "التبريد", "خفض الحرارة تحت درجة الاشتعال بالماء"],
+          ["🧪", "كسر التفاعل المتسلسل", "بالبودرة الكيميائية الجافة"] ] },
+        { type: "zones", h: "مراحل الحريق الأربع", items: [
+          ["المرحلة الابتدائية", "جزيئات احتراق دقيقة لا تُرى، بلا دخان ولا لهب. يكشفها الكاشف الأيوني"],
+          ["مرحلة الدخان", "دخان مرئي بدون لهب أو حرارة واضحة. يكشفها الكاشف الكهروضوئي"],
+          ["مرحلة اللهب", "لهب ظاهر ودخان أكثر وحرارة محسوسة. يكشفها كاشف الأشعة تحت الحمراء"],
+          ["مرحلة الحرارة", "حرارة عالية وغازات سامة، وتتطور خلال ثوانٍ. يكشفها كاشف الحرارة"] ] },
+        { type: "tiles", h: "أنواع الحرائق", cols: "five", items: [
+          ["🅰️", "الفئة A", "مواد صلبة عادية: خشب، ورق، قماش. تُطفأ بالماء أو الرغوة"],
+          ["🅱️", "الفئة B", "سوائل وغازات قابلة للاشتعال. تُطفأ بالرغوة أو البودرة الجافة"],
+          ["⚡", "الفئة C", "معدات كهربائية. تُطفأ بثاني أكسيد الكربون أو البودرة الجافة"],
+          ["🔩", "الفئة D", "معادن مثل الألومنيوم والمغنيسيوم. تُطفأ ببودرة خاصة"],
+          ["🍳", "الفئة K", "زيوت الطبخ في المطابخ"] ] },
+        { type: "tiles", h: "أنواع الطفايات", cols: "four", items: [
+          ["💧", "طفاية الماء", "للفئة A فقط. لا تُستخدم أبدًا على الكهرباء"],
+          ["🫧", "طفاية الرغوة (بيج/أصفر)", "للفئتين A وB. لا تُستخدم على الكهرباء"],
+          ["🌫️", "طفاية ثاني أكسيد الكربون (أحمر/أسود)", "للفئتين B وC. بوق كبير وبلا مؤشر ضغط، وضعيفة في الهواء الطلق"],
+          ["🧯", "طفاية البودرة الجافة (أحمر/أزرق)", "للفئات A وB وC. سريعة، لكن الحريق قد يعود لأنها لا تبرّد"] ] },
+        { type: "checks", h: "طريقة PASS لاستخدام الطفاية", items: [
+          "P: اسحب مسمار الأمان",
+          "A: وجّه الفوهة إلى قاعدة اللهب",
+          "S: اضغط على المقبض",
+          "S: حرّك الفوهة يمينًا ويسارًا حتى تنطفئ النار" ] },
+        { type: "tiles", h: "قبل وأثناء الإطفاء", cols: "four", items: [
+          ["🌬️", "الريح خلفك", "قاتل الحريق والريح في ظهرك، لا في وجهك"],
+          ["📏", "مسافة آمنة", "ابقَ على 8 أقدام (حوالي 2.4 متر) على الأقل"],
+          ["⬇️", "انخفض واقترب", "اقترب منخفضًا، ووجّه إلى قاعدة النار لا إلى أعلاها"],
+          ["↩️", "ارجع بنفس الطريق", "بعد الإطفاء تراجع بحذر، وانتبه لعودة الاشتعال"] ] },
+        { type: "tiles", h: "أخطاء شائعة", cols: "four", items: [
+          ["❌", "الإطفاء عكس الريح", "يقلل الكفاءة ويعرّضك للحرارة والدخان"],
+          ["❌", "توجيه المادة لأعلى اللهب", "الصحيح: قاعدة اللهب"],
+          ["❌", "الرش قبل الوصول للمسافة الفعّالة", "تفرغ الطفاية قبل أن تصل للنار"],
+          ["❌", "ترك الموقع قبل التأكد", "عدم التأكد من الإطفاء الكامل قد يسبب عودة الحريق"] ] },
+        { type: "checks", h: "قبل أن تحتاج الطفاية… تأكّد", items: [
+          "الطفاية في مكانها الصحيح، وظاهرة، ولا شيء يعيق الوصول إليها",
+          "مسمار الأمان مثبّت",
+          "مؤشر الضغط في المنطقة الخضراء",
+          "نوع الطفاية مناسب لنوع المواد في المكان",
+          "لا تواجه حريقًا بدون تدريب ومعدات مناسبة" ] },
+        { type: "close", t: "معظم النار من مستصغر الشرر… الوقاية تبدأ قبل الشرارة" }
+      ]
+    },
+
+    en: {
+      title: "Basic Fire Fighting",
+      sub: "Most fires start from a tiny spark… learn how to prevent them and how to put them out",
+      watch: "Watch: Basic fire fighting",
+      blocks: [
+        { type: "lead", p: [
+          "An old Arab saying goes: “Most fires start from a tiny spark.” Fire stays fire while it is under control; once control is lost, it becomes an incident.",
+          "In this workshop you learn the elements and stages of fire, how fires are extinguished, the classes of fire and their extinguishers, and the right way to use an extinguisher. There is also an interactive lab to try it yourself." ] },
+        { type: "lab", h: "Try it yourself in the interactive lab", p: "The fire tetrahedron, fire stages, extinguishers and the PASS technique… all in 3D simulation.", btn: "Open the fire fighting lab" },
+        { type: "tiles", h: "The fire tetrahedron: four elements a fire needs", cols: "four", items: [
+          ["🪵", "Fuel", "Solid like wood and paper, liquid like oils and gasoline, or gas like butane and methane"],
+          ["💨", "Oxygen", "About 19–21% of the air"],
+          ["🔥", "Heat", "Raises the material to its ignition temperature"],
+          ["⚛️", "Chain reaction", "Rapid reactions that keep the flame going and spreading"] ] },
+        { type: "tiles", h: "Extinguishing methods: remove one element and the fire goes out", cols: "four", items: [
+          ["🚚", "Starvation", "Remove or isolate the fuel"],
+          ["🫧", "Smothering", "Cut off oxygen with foam or CO₂"],
+          ["💧", "Cooling", "Bring the temperature below ignition with water"],
+          ["🧪", "Chain-reaction inhibition", "With dry chemical powder"] ] },
+        { type: "zones", h: "The four stages of fire", items: [
+          ["Preliminary stage", "Invisible combustion particles, no smoke or flame. Detected by ionization detectors"],
+          ["Smoking stage", "Visible smoke without flame or noticeable heat. Detected by photoelectric detectors"],
+          ["Flame stage", "Visible flames, more smoke, perceptible heat. Detected by infrared detectors"],
+          ["Heat stage", "Intense heat and toxic gases, developing within seconds. Detected by heat detectors"] ] },
+        { type: "tiles", h: "Classes of fire", cols: "five", items: [
+          ["🅰️", "Class A", "Ordinary solids: wood, paper, textiles. Water or foam"],
+          ["🅱️", "Class B", "Flammable liquids and gases. Foam or dry powder"],
+          ["⚡", "Class C", "Energized electrical equipment. CO₂ or dry powder"],
+          ["🔩", "Class D", "Metals such as aluminum and magnesium. Special dry powder"],
+          ["🍳", "Class K", "Cooking oils in kitchens"] ] },
+        { type: "tiles", h: "Types of extinguishers", cols: "four", items: [
+          ["💧", "Water", "Class A only. Never on electrical fires"],
+          ["🫧", "Foam (beige/yellow)", "Classes A and B. Not on electrical fires"],
+          ["🌫️", "CO₂ (red/black)", "Classes B and C. Large horn, no pressure gauge, weak outdoors"],
+          ["🧯", "Dry powder (red/blue)", "Classes A, B and C. Fast, but no cooling, so the fire may reignite"] ] },
+        { type: "checks", h: "The PASS technique", items: [
+          "P: Pull the safety pin",
+          "A: Aim at the base of the flames",
+          "S: Squeeze the handle",
+          "S: Sweep from side to side until the fire is out" ] },
+        { type: "tiles", h: "Before and during extinguishing", cols: "four", items: [
+          ["🌬️", "Wind at your back", "Fight the fire with the wind behind you, not in your face"],
+          ["📏", "Safe distance", "Stay at least 8 feet (about 2.4 m) away"],
+          ["⬇️", "Stay low", "Approach low and aim at the base, not the top of the fire"],
+          ["↩️", "Back away the same way", "After it’s out, retreat carefully and watch for reignition"] ] },
+        { type: "tiles", h: "Common mistakes", cols: "four", items: [
+          ["❌", "Fighting against the wind", "Lowers efficiency and exposes you to heat and smoke"],
+          ["❌", "Aiming at the top of the flames", "Correct: the base of the flames"],
+          ["❌", "Discharging too early", "The extinguisher empties before reaching the fire"],
+          ["❌", "Leaving before it’s fully out", "Not confirming extinguishment can lead to reignition"] ] },
+        { type: "checks", h: "Before you need the extinguisher… verify", items: [
+          "It is in the right place, visible and unobstructed",
+          "The safety pin is in place",
+          "The pressure gauge is in the green zone",
+          "The extinguisher type suits the materials in the area",
+          "Don’t fight a fire without training and the right equipment" ] },
+        { type: "close", t: "Most fires start from a tiny spark… prevention starts before the spark" }
+      ]
+    },
+
+    ur: {
+      title: "آگ بجھانے کی بنیادی باتیں",
+      sub: "زیادہ تر آگ ایک چھوٹی سی چنگاری سے شروع ہوتی ہے… اسے روکنا اور بجھانا سیکھیں",
+      watch: "دیکھیے: آگ بجھانے کی بنیادی باتیں",
+      blocks: [
+        { type: "lead", p: [
+          "عربوں کا پرانا قول ہے: ”زیادہ تر آگ چھوٹی چنگاری سے لگتی ہے“۔ آگ جب تک قابو میں ہے آگ ہے؛ قابو سے نکل جائے تو حادثہ بن جاتی ہے۔",
+          "اس ورکشاپ میں آپ آگ کے عناصر اور مراحل، آگ بجھانے کے طریقے، آگ کی اقسام اور ان کے آلات، اور آگ بجھانے والے آلے کا درست استعمال سیکھیں گے۔ ساتھ میں ایک انٹرایکٹو لیب بھی ہے جس میں آپ خود آزما سکتے ہیں۔" ] },
+        { type: "lab", h: "انٹرایکٹو لیب میں خود آزمائیں", p: "آگ کا چار رخی ڈھانچہ، آگ کے مراحل، آلات اور PASS طریقہ… سب سہ جہتی نقل میں۔", btn: "آگ بجھانے کی لیب کھولیں" },
+        { type: "tiles", h: "آگ کے چار عناصر", cols: "four", items: [
+          ["🪵", "ایندھن", "ٹھوس جیسے لکڑی اور کاغذ، مائع جیسے تیل اور پیٹرول، یا گیس جیسے بیوٹین اور میتھین"],
+          ["💨", "آکسیجن", "ہوا میں تقریباً 19–21٪"],
+          ["🔥", "حرارت", "مادے کو جلنے کے درجہ حرارت تک لے جاتی ہے"],
+          ["⚛️", "مسلسل کیمیائی عمل", "تیز ردعمل جو شعلے کو جاری اور پھیلاتے ہیں"] ] },
+        { type: "tiles", h: "بجھانے کے طریقے: ایک عنصر ہٹائیں اور آگ بجھ جاتی ہے", cols: "four", items: [
+          ["🚚", "ایندھن ہٹانا", "ایندھن کو آگ سے دور یا الگ کرنا"],
+          ["🫧", "دم گھونٹنا", "جھاگ یا کاربن ڈائی آکسائیڈ سے آکسیجن روکنا"],
+          ["💧", "ٹھنڈا کرنا", "پانی سے درجہ حرارت جلنے کی حد سے نیچے لانا"],
+          ["🧪", "کیمیائی عمل توڑنا", "خشک کیمیائی پاؤڈر سے"] ] },
+        { type: "zones", h: "آگ کے چار مراحل", items: [
+          ["ابتدائی مرحلہ", "نظر نہ آنے والے ذرات، نہ دھواں نہ شعلہ۔ آئیونائزیشن ڈیٹیکٹر پکڑتا ہے"],
+          ["دھوئیں کا مرحلہ", "نظر آنے والا دھواں، شعلہ یا واضح حرارت نہیں۔ فوٹو الیکٹرک ڈیٹیکٹر پکڑتا ہے"],
+          ["شعلے کا مرحلہ", "نظر آنے والا شعلہ، زیادہ دھواں، محسوس ہونے والی حرارت۔ انفراریڈ ڈیٹیکٹر پکڑتا ہے"],
+          ["حرارت کا مرحلہ", "شدید حرارت اور زہریلی گیسیں، سیکنڈوں میں بڑھتی ہیں۔ ہیٹ ڈیٹیکٹر پکڑتا ہے"] ] },
+        { type: "tiles", h: "آگ کی اقسام", cols: "five", items: [
+          ["🅰️", "کلاس A", "عام ٹھوس اشیاء: لکڑی، کاغذ، کپڑا۔ پانی یا جھاگ"],
+          ["🅱️", "کلاس B", "آتش گیر مائعات اور گیسیں۔ جھاگ یا خشک پاؤڈر"],
+          ["⚡", "کلاس C", "بجلی کے آلات۔ کاربن ڈائی آکسائیڈ یا خشک پاؤڈر"],
+          ["🔩", "کلاس D", "دھاتیں جیسے ایلومینیم اور میگنیشیم۔ خاص پاؤڈر"],
+          ["🍳", "کلاس K", "کچن میں کھانا پکانے کا تیل"] ] },
+        { type: "tiles", h: "آگ بجھانے والے آلات کی اقسام", cols: "four", items: [
+          ["💧", "پانی", "صرف کلاس A۔ بجلی پر کبھی نہیں"],
+          ["🫧", "جھاگ (بیج/پیلا)", "کلاس A اور B۔ بجلی پر نہیں"],
+          ["🌫️", "کاربن ڈائی آکسائیڈ (سرخ/سیاہ)", "کلاس B اور C۔ بڑا ہارن، پریشر گیج نہیں، کھلی جگہ پر کمزور"],
+          ["🧯", "خشک پاؤڈر (سرخ/نیلا)", "کلاس A، B اور C۔ تیز، لیکن ٹھنڈا نہیں کرتا اس لیے آگ دوبارہ لگ سکتی ہے"] ] },
+        { type: "checks", h: "PASS طریقہ", items: [
+          "P: حفاظتی پن کھینچیں",
+          "A: شعلے کی جڑ کی طرف رخ کریں",
+          "S: ہینڈل دبائیں",
+          "S: دائیں بائیں گھمائیں جب تک آگ بجھ نہ جائے" ] },
+        { type: "tiles", h: "بجھانے سے پہلے اور دوران", cols: "four", items: [
+          ["🌬️", "ہوا آپ کی پیٹھ پر", "ہوا پیچھے ہو، سامنے نہیں"],
+          ["📏", "محفوظ فاصلہ", "کم از کم 8 فٹ (تقریباً 2.4 میٹر) دور رہیں"],
+          ["⬇️", "جھک کر قریب جائیں", "جھک کر قریب جائیں اور جڑ پر رخ کریں، اوپر نہیں"],
+          ["↩️", "اسی راستے واپس", "بجھنے کے بعد احتیاط سے پیچھے ہٹیں، دوبارہ بھڑکنے پر نظر رکھیں"] ] },
+        { type: "tiles", h: "عام غلطیاں", cols: "four", items: [
+          ["❌", "ہوا کے خلاف بجھانا", "کارکردگی کم اور حرارت و دھوئیں کا سامنا"],
+          ["❌", "شعلے کے اوپر رخ کرنا", "درست: شعلے کی جڑ"],
+          ["❌", "بہت پہلے چھڑکنا", "آلہ آگ تک پہنچنے سے پہلے خالی ہو جاتا ہے"],
+          ["❌", "مکمل بجھنے سے پہلے چھوڑ دینا", "آگ دوبارہ لگ سکتی ہے"] ] },
+        { type: "checks", h: "آلے کی ضرورت سے پہلے… یقینی بنائیں", items: [
+          "آلہ صحیح جگہ پر، نظر آنے والا اور راستہ صاف ہو",
+          "حفاظتی پن اپنی جگہ پر ہو",
+          "پریشر گیج سبز حصے میں ہو",
+          "آلے کی قسم جگہ کے مواد کے مطابق ہو",
+          "تربیت اور مناسب سامان کے بغیر آگ کا سامنا نہ کریں" ] },
+        { type: "close", t: "زیادہ تر آگ چھوٹی چنگاری سے لگتی ہے… بچاؤ چنگاری سے پہلے شروع ہوتا ہے" }
+      ]
+    },
+
+    sources: [
+      { url: "https://www.osha.gov/laws-regs/regulations/standardnumber/1910/1910.157",
+        ar: { n: "طفايات الحريق المحمولة", by: "OSHA 1910.157", d: "وضع الطفايات واستخدامها وصيانتها وفحصها، والفحص البصري الشهري والصيانة السنوية." },
+        en: { n: "Portable fire extinguishers", by: "OSHA 1910.157", d: "Placement, use, maintenance and testing of extinguishers, with monthly visual checks and annual maintenance." },
+        ur: { n: "پورٹیبل آگ بجھانے والے آلات", by: "OSHA 1910.157", d: "آلات کی جگہ، استعمال، دیکھ بھال اور جانچ، ماہانہ معائنہ اور سالانہ مرمت کے ساتھ۔" } },
+      { url: "https://www.osha.gov/etools/evacuation-plans-procedures/emergency-standards/portable-extinguishers/required",
+        ar: { n: "متطلبات طفايات الحريق", by: "OSHA — دليل الإخلاء والطوارئ", d: "الفحص الشهري والسنوي، وتدريب العاملين على استخدام الطفاية عند التعيين وسنويًا." },
+        en: { n: "Portable extinguishers: OSHA requirements", by: "OSHA eTool: Evacuation Plans and Procedures", d: "Monthly and annual checks, and training employees to use extinguishers on hiring and yearly." },
+        ur: { n: "آگ بجھانے والے آلات کے تقاضے", by: "OSHA — انخلا اور ایمرجنسی گائیڈ", d: "ماہانہ اور سالانہ جانچ، اور ملازمین کو بھرتی پر اور سالانہ تربیت۔" } },
+      { url: "https://www.osha.gov/fire-safety",
+        ar: { n: "السلامة من الحريق", by: "OSHA", d: "نظرة عامة على مخاطر الحريق في أماكن العمل والمعايير المطبّقة." },
+        en: { n: "Fire Safety", by: "OSHA", d: "Overview of workplace fire hazards and the standards that apply." },
+        ur: { n: "آگ سے حفاظت", by: "OSHA", d: "کام کی جگہوں پر آگ کے خطرات اور لاگو معیارات کا جائزہ۔" } }
+    ]
+  }
 ];
 
 /* أسئلة ورشة العمالة غير النظامية — من محتوى العرض والمقطع والمصادر */
@@ -393,4 +597,56 @@ QUIZ.traffic = [
     ar: { q: "وصلت للموقع ووجدت لوحة السهم المضاءة لا تعمل. ماذا تفعل؟", o: ["لا يبدأ العمل حتى تُصلَح أو تُستبدل، وأبلّغ المشرف", "أبدأ العمل، الأقماع تكفي", "أنتظر حتى الليل"], e: "لوحة السهم جزء من التحويل الآمن؛ بدونها يقلّ وضوح المسار للسائق." },
     en: { q: "You arrive and the lit arrow board isn’t working. What do you do?", o: ["Work doesn’t start until it’s fixed or replaced, and I tell the supervisor", "Start, the cones are enough", "Wait until night"], e: "The arrow board is part of a safe transition; without it the path is less clear to drivers." },
     ur: { q: "آپ پہنچے اور روشن تیر والا بورڈ کام نہیں کر رہا۔ کیا کریں؟", o: ["ٹھیک یا تبدیل ہونے تک کام شروع نہ ہو، اور سپروائزر کو بتائیں", "شروع کریں، کون کافی ہیں", "رات تک انتظار کریں"], e: "تیر والا بورڈ محفوظ راستہ موڑنے کا حصہ ہے؛ اس کے بغیر ڈرائیور کو راستہ کم واضح ہوتا ہے۔" } }
+];
+
+/* أسئلة ورشة أساسيات مكافحة الحريق — من كتاب SAF02 */
+QUIZ.fire = [
+  { a: 1,
+    ar: { q: "ما العناصر الأربعة لرباعي الحريق؟", o: ["الماء والهواء والتراب والنار", "الوقود والأكسجين والحرارة والتفاعل المتسلسل", "الدخان واللهب والرماد والحرارة"], e: "رباعي الحريق: وقود، وأكسجين، وحرارة، وتفاعل كيميائي متسلسل." },
+    en: { q: "What are the four elements of the fire tetrahedron?", o: ["Water, air, earth and fire", "Fuel, oxygen, heat and chain reaction", "Smoke, flame, ash and heat"], e: "The tetrahedron: fuel, oxygen, heat and the chemical chain reaction." },
+    ur: { q: "آگ کے چار عناصر کون سے ہیں؟", o: ["پانی، ہوا، مٹی اور آگ", "ایندھن، آکسیجن، حرارت اور مسلسل کیمیائی عمل", "دھواں، شعلہ، راکھ اور حرارت"], e: "چار عناصر: ایندھن، آکسیجن، حرارت اور مسلسل کیمیائی عمل۔" } },
+  { a: 2,
+    ar: { q: "ما نسبة الأكسجين في الهواء تقريبًا؟", o: ["5–10٪", "50٪", "19–21٪"], e: "الأكسجين موجود في الهواء بنسبة 19–21٪ تقريبًا." },
+    en: { q: "About how much of the air is oxygen?", o: ["5–10%", "50%", "19–21%"], e: "Oxygen makes up about 19–21% of the air." },
+    ur: { q: "ہوا میں آکسیجن تقریباً کتنی ہے؟", o: ["5–10٪", "50٪", "19–21٪"], e: "ہوا میں آکسیجن تقریباً 19–21٪ ہے۔" } },
+  { a: 0,
+    ar: { q: "إطفاء الحريق بخفض حرارته تحت درجة الاشتعال بالماء يسمى:", o: ["التبريد", "التجويع", "الخنق"], e: "التبريد: خفض الحرارة تحت درجة الاشتعال، غالبًا بالماء." },
+    en: { q: "Putting out a fire by bringing its temperature below ignition with water is called:", o: ["Cooling", "Starvation", "Smothering"], e: "Cooling: lowering the temperature below the ignition point, usually with water." },
+    ur: { q: "پانی سے درجہ حرارت جلنے کی حد سے نیچے لا کر آگ بجھانا کہلاتا ہے:", o: ["ٹھنڈا کرنا", "ایندھن ہٹانا", "دم گھونٹنا"], e: "ٹھنڈا کرنا: درجہ حرارت جلنے کی حد سے نیچے لانا، عموماً پانی سے۔" } },
+  { a: 1,
+    ar: { q: "إبعاد الوقود عن النار أو عزله يسمى:", o: ["التبريد", "التجويع", "كسر التفاعل"], e: "التجويع: حرمان النار من الوقود بإبعاده أو عزله." },
+    en: { q: "Removing or isolating the fuel from the fire is called:", o: ["Cooling", "Starvation", "Chain inhibition"], e: "Starvation: depriving the fire of fuel by removing or isolating it." },
+    ur: { q: "ایندھن کو آگ سے دور یا الگ کرنا کہلاتا ہے:", o: ["ٹھنڈا کرنا", "ایندھن ہٹانا", "کیمیائی عمل توڑنا"], e: "ایندھن ہٹانا: آگ کو ایندھن سے محروم کرنا۔" } },
+  { a: 2,
+    ar: { q: "حريق في لوحة كهربائية مكهربة. أي طفاية تختار؟", o: ["طفاية الماء", "طفاية الرغوة", "ثاني أكسيد الكربون أو البودرة الجافة"], e: "الماء والرغوة موصلان للكهرباء. افصل التيار إن أمكن واستخدم CO₂ أو البودرة الجافة." },
+    en: { q: "A fire in an energized electrical panel. Which extinguisher?", o: ["Water", "Foam", "CO₂ or dry powder"], e: "Water and foam conduct electricity. Cut the power if possible and use CO₂ or dry powder." },
+    ur: { q: "بجلی والے پینل میں آگ۔ کون سا آلہ استعمال کریں؟", o: ["پانی", "جھاگ", "کاربن ڈائی آکسائیڈ یا خشک پاؤڈر"], e: "پانی اور جھاگ بجلی کے موصل ہیں۔ ممکن ہو تو بجلی بند کریں اور CO₂ یا پاؤڈر استعمال کریں۔" } },
+  { a: 0,
+    ar: { q: "حريق خشب وورق وقماش، من أي فئة؟", o: ["الفئة A", "الفئة B", "الفئة D"], e: "الفئة A: المواد الصلبة العادية مثل الخشب والورق والقماش." },
+    en: { q: "A fire in wood, paper and textiles is which class?", o: ["Class A", "Class B", "Class D"], e: "Class A: ordinary solid combustibles such as wood, paper and textiles." },
+    ur: { q: "لکڑی، کاغذ اور کپڑے کی آگ کس کلاس کی ہے؟", o: ["کلاس A", "کلاس B", "کلاس D"], e: "کلاس A: عام ٹھوس اشیاء جیسے لکڑی، کاغذ اور کپڑا۔" } },
+  { a: 1,
+    ar: { q: "حريق في معدن المغنيسيوم أو الألومنيوم:", o: ["يُطفأ بالماء", "فئة D ويُطفأ ببودرة خاصة", "يُطفأ بالرغوة"], e: "الفئة D: معادن، وتُطفأ ببودرة خاصة لأن المواد العادية قد تزيد التفاعل." },
+    en: { q: "A fire in magnesium or aluminum:", o: ["Put it out with water", "Is Class D and needs special powder", "Put it out with foam"], e: "Class D: metals, extinguished with a special powder; ordinary agents may intensify the reaction." },
+    ur: { q: "میگنیشیم یا ایلومینیم کی آگ:", o: ["پانی سے بجھائیں", "کلاس D ہے اور خاص پاؤڈر چاہیے", "جھاگ سے بجھائیں"], e: "کلاس D: دھاتیں، خاص پاؤڈر سے؛ عام مواد ردعمل بڑھا سکتے ہیں۔" } },
+  { a: 2,
+    ar: { q: "ماذا تعني P في طريقة PASS؟", o: ["اضغط المقبض", "حرّك الفوهة", "اسحب مسمار الأمان"], e: "PASS: اسحب المسمار، وجّه للقاعدة، اضغط المقبض، حرّك يمينًا ويسارًا." },
+    en: { q: "What does P stand for in PASS?", o: ["Press the handle", "Point the nozzle", "Pull the safety pin"], e: "PASS: Pull the pin, Aim at the base, Squeeze the handle, Sweep side to side." },
+    ur: { q: "PASS میں P کا مطلب کیا ہے؟", o: ["ہینڈل دبائیں", "نوزل گھمائیں", "حفاظتی پن کھینچیں"], e: "PASS: پن کھینچیں، جڑ کی طرف رخ، ہینڈل دبائیں، دائیں بائیں گھمائیں۔" } },
+  { a: 0,
+    ar: { q: "إلى أين توجّه فوهة الطفاية؟", o: ["قاعدة اللهب", "أعلى اللهب", "الدخان"], e: "وجّه دائمًا إلى قاعدة اللهب أو قلب الحريق، لا إلى أعلاه." },
+    en: { q: "Where do you aim the extinguisher?", o: ["The base of the flames", "The top of the flames", "The smoke"], e: "Always aim at the base or heart of the fire, never the top." },
+    ur: { q: "آلے کا رخ کہاں کریں؟", o: ["شعلے کی جڑ", "شعلے کا اوپر", "دھواں"], e: "ہمیشہ شعلے کی جڑ یا آگ کے دل پر، اوپر نہیں۔" } },
+  { a: 1,
+    ar: { q: "من أي جهة تقاتل الحريق في مكان مفتوح؟", o: ["والريح في وجهك", "والريح خلفك", "لا يهم اتجاه الريح"], e: "قاتل الحريق والريح خلفك؛ عكس الريح يعرّضك للحرارة والدخان ويقلل الكفاءة." },
+    en: { q: "Which way do you face a fire outdoors?", o: ["With the wind in your face", "With the wind at your back", "Wind direction doesn’t matter"], e: "Keep the wind at your back; facing it exposes you to heat and smoke and lowers efficiency." },
+    ur: { q: "کھلی جگہ پر آگ کا سامنا کس طرف سے کریں؟", o: ["ہوا چہرے پر ہو", "ہوا پیٹھ پر ہو", "ہوا کا رخ اہم نہیں"], e: "ہوا پیٹھ پر رکھیں؛ مخالف رخ پر حرارت اور دھواں آتا ہے اور کارکردگی کم ہوتی ہے۔" } },
+  { a: 2,
+    ar: { q: "لماذا قد يعود الحريق بعد إطفائه بطفاية البودرة الجافة؟", o: ["لأنها موصلة للكهرباء", "لأنها تحتوي ماء", "لأنها لا تبرّد المادة المحترقة"], e: "البودرة تخنق النار بسرعة لكنها لا تبرّد، فقد يعود الاشتعال؛ تأكد من الإطفاء الكامل." },
+    en: { q: "Why can a fire reignite after a dry powder extinguisher?", o: ["It conducts electricity", "It contains water", "It doesn’t cool the burning material"], e: "Powder knocks the fire down fast but doesn’t cool, so it can reignite; confirm it is fully out." },
+    ur: { q: "خشک پاؤڈر کے بعد آگ دوبارہ کیوں لگ سکتی ہے؟", o: ["یہ بجلی کا موصل ہے", "اس میں پانی ہوتا ہے", "یہ جلتے مادے کو ٹھنڈا نہیں کرتا"], e: "پاؤڈر تیزی سے بجھاتا ہے مگر ٹھنڈا نہیں کرتا؛ مکمل بجھنے کی تصدیق کریں۔" } },
+  { a: 0,
+    ar: { q: "طفاية بلا مؤشر ضغط ولها بوق كبير، ما نوعها؟", o: ["ثاني أكسيد الكربون", "البودرة الجافة", "الماء"], e: "طفاية CO₂ لها بوق كبير وبلا مؤشر ضغط، وتصلح للفئتين B وC." },
+    en: { q: "An extinguisher with a large horn and no pressure gauge is:", o: ["CO₂", "Dry powder", "Water"], e: "CO₂ extinguishers have a large horn and no gauge; they suit Classes B and C." },
+    ur: { q: "بڑے ہارن والا اور پریشر گیج کے بغیر آلہ کون سا ہے؟", o: ["کاربن ڈائی آکسائیڈ", "خشک پاؤڈر", "پانی"], e: "CO₂ آلے کا بڑا ہارن ہوتا ہے اور گیج نہیں؛ کلاس B اور C کے لیے۔" } }
 ];

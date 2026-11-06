@@ -126,6 +126,7 @@ function blocksHTML(blocks, u){
       case "figure": return `<section class="wsec">${b.h ? `<h2>${esc(b.h)}</h2>` : ""}<figure class="wfig"><img src="${esc(b.src)}" alt="" loading="lazy"><figcaption>${esc(b.cap)}</figcaption></figure></section>`;
       case "zones": return `<section class="wsec"><h2>${esc(b.h)}</h2><ol class="wzones">${b.items.map(([h, d], i) => `<li><span class="zn">${i + 1}</span><div><b>${esc(h)}</b><small>${esc(d)}</small></div></li>`).join("")}</ol></section>`;
       case "compare": return `<section class="wsec"><h2>${esc(b.h)}</h2><div class="wcompare">${b.items.map(([src, cap, k]) => `<figure class="${k === "ok" ? "ok" : "bad"}"><img src="${esc(src)}" alt="" loading="lazy"><figcaption>${k === "ok" ? "✓" : "✕"} ${esc(cap)}</figcaption></figure>`).join("")}</div></section>`;
+      case "lab": return workshop?.lab ? `<section class="wsec wlab"><div><h2>🧪 ${esc(b.h)}</h2><p>${esc(b.p)}</p></div><a class="btn" href="${esc(safeUrl(workshop.lab))}" target="_blank" rel="noopener noreferrer external">${esc(b.btn)} ↗</a></section>` : "";
       case "close": return `<p class="wclose display">${esc(b.t)}</p>`;
       default: return "";
     }
@@ -140,7 +141,7 @@ function renderWorkshopList(u){
   <div class="wrap">
     <div class="wgrid">${WORKSHOPS.map(w => { const t = w[lang], n = Math.min(QUIZ_SIZE, (QUIZ[w.id] || []).length), b = bestScore({id: w.id});
       return `<a class="wcard" href="${link("ws", w.id)}">
-        <div class="wimg"><img src="${esc(w.poster[lang])}" alt="" loading="lazy"><span class="wplay">▶</span></div>
+        <div class="wimg">${w.poster[lang] ? `<img src="${esc(w.poster[lang])}" alt="" loading="lazy"><span class="wplay">▶</span>` : `<span class="wph"><img src="${esc(w.icon)}" alt=""></span>`}</div>
         <div class="wbody">
           <span class="kick">${u.wsKick}</span>
           <h3>${esc(t.title)}</h3>

@@ -126,7 +126,7 @@ function blocksHTML(blocks, u){
       case "figure": return `<section class="wsec">${b.h ? `<h2>${esc(b.h)}</h2>` : ""}<figure class="wfig"><img src="${esc(b.src)}" alt="" loading="lazy"><figcaption>${esc(b.cap)}</figcaption></figure></section>`;
       case "zones": return `<section class="wsec"><h2>${esc(b.h)}</h2><ol class="wzones">${b.items.map(([h, d], i) => `<li><span class="zn">${i + 1}</span><div><b>${esc(h)}</b><small>${esc(d)}</small></div></li>`).join("")}</ol></section>`;
       case "compare": return `<section class="wsec"><h2>${esc(b.h)}</h2><div class="wcompare">${b.items.map(([src, cap, k]) => `<figure class="${k === "ok" ? "ok" : "bad"}"><img src="${esc(src)}" alt="" loading="lazy"><figcaption>${k === "ok" ? "✓" : "✕"} ${esc(cap)}</figcaption></figure>`).join("")}</div></section>`;
-      case "lab": return workshop?.lab ? `<section class="wsec wlab"><div><h2>🧪 ${esc(b.h)}</h2><p>${esc(b.p)}</p></div><a class="btn" href="${esc(safeUrl(workshop.lab))}" target="_blank" rel="noopener noreferrer external">${esc(b.btn)} ↗</a></section>` : "";
+      case "lab": return workshop?.lab ? `<section class="wsec wlab"><div><h2>🧪 ${esc(b.h)}</h2><p>${esc(b.p)}</p></div><a class="btn" href="${/^lab\/[\w-]+\.html$/.test(workshop.lab) ? esc(workshop.lab + "?lang=" + lang) : "#"}">${esc(b.btn)} ${lang === "en" ? "→" : "←"}</a></section>` : "";
       case "close": return `<p class="wclose display">${esc(b.t)}</p>`;
       default: return "";
     }

@@ -296,7 +296,7 @@ const WORKSHOPS = [
     icon: "img/ic/fire.webp",
     video:  { ar: "", en: "", ur: "" },
     poster: { ar: "", en: "", ur: "" },
-    lab: "https://claude.ai/artifact/KGZL6vBq3amtYMTWUPApgF",
+    lab: "lab/fire.html",
 
     ar: {
       title: "أساسيات مكافحة الحريق",

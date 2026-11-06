@@ -90,7 +90,7 @@ const creatorHTML = u => `
 const heroHTML = (u, title, sub, extra) => `
   <section class="hero">
     <div class="in">
-      <img class="mimg" src="img/hero-m.webp" alt="${esc(CONFIG.ownerName[lang])}">
+      <img class="mimg logo" src="img/logo.webp" alt="Eng. Anas Alzahrani">
       <div class="copy" dir="${u.dir}">
         ${tabsHTML()}
         ${CONFIG.siteTag?.[lang] ? `<span class="tag">${esc(CONFIG.siteTag[lang])}</span>` : ""}
@@ -221,7 +221,7 @@ function renderTopic(u){
   return `
   <section class="hero">
     <div class="in">
-      <img class="mimg" src="img/hero-m.webp" alt="${esc(CONFIG.ownerName[lang])}">
+      <img class="mimg logo" src="img/logo.webp" alt="Eng. Anas Alzahrani">
       <div class="copy" dir="${u.dir}">
         ${tabsHTML()}
         ${CONFIG.siteTag?.[lang] ? `<span class="tag">${esc(CONFIG.siteTag[lang])}</span>` : ""}

@@ -13,9 +13,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zain:wght@400;700;800;900&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="img/hero-m.webp">
-<script src="content.js?v=202611061317"></script>
-<script src="quiz.js?v=202611061317"></script>
+<link rel="preload" as="image" href="img/logo.webp">
+<script src="content.js?v=202611061340"></script>
+<script src="quiz.js?v=202611061340"></script>
 <style>
 /* =====================================================================
    الألوان — مأخوذة من المقطع والرسمة. غيّرها هنا فقط
@@ -588,7 +588,7 @@ body.ur .tabs a{font-weight:700;font-size:.85rem;line-height:1.8}
 .motion .creator.rv.in .cart img{clip-path:inset(0 0 0 0)}
 
 /* language picker: portrait settles, then the choices spring in */
-.motion #picker:not([hidden]) .pav,.motion #picker:not([hidden]) .globe,.motion #picker:not([hidden]) .pq span,.motion #picker:not([hidden]) .ptopic{animation:up .6s var(--spring) both}
+.motion #picker:not([hidden]) .plogo,.motion #picker:not([hidden]) .globe,.motion #picker:not([hidden]) .pq span,.motion #picker:not([hidden]) .ptopic{animation:up .6s var(--spring) both}
 .motion #picker:not([hidden]) .globe{animation-delay:.08s}.motion #picker:not([hidden]) .q-en{animation-delay:.14s}.motion #picker:not([hidden]) .q-ur{animation-delay:.2s}.motion #picker:not([hidden]) .ptopic{animation-delay:.6s}
 .motion #picker:not([hidden]) .choose button{animation:pop .6s var(--spring) both}
 .motion #picker:not([hidden]) .choose button:nth-child(1){animation-delay:.3s}
@@ -598,13 +598,21 @@ body.ur .tabs a{font-weight:700;font-size:.85rem;line-height:1.8}
 /* the score meter fills smoothly after the page settles */
 .meter .bar i{transition:width 1.2s var(--smooth) .2s}
 nav.tabs[style*="--n:3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+
+/* ===================== Logo in place of the photo (top + picker) ===================== */
+.hero .in .mimg.logo{display:block;width:min(78%,380px);height:auto;max-height:none;aspect-ratio:auto;object-fit:contain;margin:0 auto;padding-top:84px;border-radius:0;box-shadow:none;-webkit-mask-image:none;mask-image:none;filter:drop-shadow(0 0 40px rgba(215,255,60,.18))}
+.hero:has(.mimg.logo){background:radial-gradient(60% 45% at 50% 22%,rgba(5,206,179,.16),transparent 70%),var(--night)}
+.hero .in .mimg.logo + .copy{margin-top:18px}
+#picker .plogo{width:min(70%,260px)}
+#picker .plogo img{width:100%;height:auto;filter:drop-shadow(0 0 30px rgba(215,255,60,.2))}
+@media (min-width:960px){.hero .in .mimg.logo{width:100%;max-width:440px;padding-top:0;justify-self:center}.hero .in .mimg.logo + .copy{margin-top:0}}
 </style>
 </head>
 <body>
 
 <div id="picker" hidden>
   <div class="pin">
-    <div class="pav"><img src="img/me.webp" alt=""></div>
+    <div class="plogo"><img src="img/logo.webp" alt="Eng. Anas Alzahrani"></div>
     <div class="globe emoji" aria-hidden="true">🌐</div>
     <h2 class="pq">
       <span class="q-ar">اختر لغتك</span>
@@ -629,8 +637,8 @@ nav.tabs[style*="--n:3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
 
 <main id="app"></main>
 
-<script src="workshops.js?v=202611061317"></script>
-<script src="sections.js?v=202611061317"></script>
-<script src="app.js?v=202611061317"></script>
+<script src="workshops.js?v=202611061340"></script>
+<script src="sections.js?v=202611061340"></script>
+<script src="app.js?v=202611061340"></script>
 </body>
 </html>

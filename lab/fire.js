@@ -1,7 +1,7 @@
 /* Fire lab loader: picks the visitor's language (?lang=ar|en|ur, default ar),
    sets direction and page chrome, then loads that language's build of the lab. */
 const L = (l => ["ar", "en", "ur"].includes(l) ? l : "ar")(new URLSearchParams(location.search).get("lang"));
-const V = "202611061714";
+const V = "202611061736";
 const UI = {
   ar: { title: "مختبر مكافحة الحريق", sub: "أساسيات مكافحة الحريق · تعلّم بالتجربة", back: "رجوع للورشة ←", hint: "اسحب لتدوير المشهد" },
   en: { title: "Fire Fighting Lab", sub: "Fire fighting basics · learn by doing", back: "← Back to workshop", hint: "Drag to rotate the scene" },

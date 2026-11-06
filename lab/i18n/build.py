@@ -2,8 +2,8 @@
 """Build the English and Urdu copies of the fire lab from the Arabic source.
 
 fire-ar.js is the only file to edit by hand. Every run of Arabic text in it
-(split at quotes, HTML tags and ${…}) is looked up, in order of first
-appearance, in fire_tr.py, and fire-en.js / fire-ur.js are written next to it.
+(split at quotes, HTML tags and ${…}) is looked up by its exact text in
+fire_tr.py, and fire-en.js / fire-ur.js are written next to it.
 The build fails if the Arabic source has segments the table doesn't cover,
 or if any Arabic letter survives in the English copy.
 
@@ -19,12 +19,15 @@ A = '؀-ۿﭐ-﷿ﹰ-﻿'
 SEG = re.compile(r'[' + A + r'][^<>`\'"${}\n\\]*?(?=[<>`\'"${}\n\\]|$)')
 src = (lab / 'fire-ar.js').read_text(encoding='utf-8')
 
-order = []
+found = []
 for m in SEG.finditer(src):
     t = m.group().rstrip(' ')
-    if t not in order: order.append(t)
-if len(order) != len(T):
-    sys.exit(f'fire_tr.py has {len(T)} entries but fire-ar.js has {len(order)} segments; update the table')
+    if t not in found: found.append(t)
+missing = [t for t in found if t not in T]
+if missing:
+    sys.exit('No translation in fire_tr.py for:\n  ' + '\n  '.join(missing))
+unused = [k for k in T if k not in found]
+if unused: print('note: unused entries in fire_tr.py:', unused)
 
 # Source-level fixes where word order or direction differs from Arabic
 RAW = {
@@ -38,7 +41,7 @@ for li, lang in enumerate(('en', 'ur')):
     s = src
     for a, b in RAW[lang]:
         assert s.count(a) == 1, (lang, a); s = s.replace(a, b)
-    table = {k: v[li] for k, v in zip(order, T) if v[li] is not None}
+    table = {k: v[li] for k, v in T.items() if v[li] is not None}
     def sub(m):
         t = m.group(); core = t.rstrip(' ')
         return table[core] + t[len(core):] if core in table else t

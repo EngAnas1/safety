@@ -309,7 +309,7 @@ const WORKSHOPS = [
         { type: "lab", h: "جرّب بنفسك في المختبر التفاعلي", p: "رباعي الحريق، ومراحل الحريق، والطفايات، وطريقة PASS… كلها بمحاكاة ثلاثية الأبعاد.", btn: "افتح مختبر مكافحة الحريق" },
         { type: "tiles", h: "رباعي الحريق: أربعة عناصر يحتاجها الحريق", cols: "four", items: [
           ["🪵", "الوقود", "صلب مثل الخشب والورق، أو سائل مثل الزيوت والبنزين، أو غاز مثل البيوتان والميثان"],
-          ["💨", "الأكسجين", "موجود في الهواء بنسبة 19–21٪ تقريبًا"],
+          ["💨", "الأكسجين", "نسبته في الهواء حوالي 21٪ (20.9٪)"],
           ["🔥", "الحرارة", "ترفع المادة إلى درجة اشتعالها"],
           ["⚛️", "التفاعل المتسلسل", "تفاعلات سريعة تُبقي اللهب مستمرًا وتنشره"] ] },
         { type: "tiles", h: "طرق الإطفاء: أزل عنصرًا واحدًا وينطفئ الحريق", cols: "four", items: [
@@ -319,15 +319,15 @@ const WORKSHOPS = [
           ["🧪", "كسر التفاعل المتسلسل", "بالبودرة الكيميائية الجافة"] ] },
         { type: "zones", h: "مراحل الحريق الأربع", items: [
           ["المرحلة الابتدائية", "جزيئات احتراق دقيقة لا تُرى، بلا دخان ولا لهب. يكشفها الكاشف الأيوني"],
-          ["مرحلة الدخان", "دخان مرئي بدون لهب أو حرارة واضحة. يكشفها الكاشف الكهروضوئي"],
-          ["مرحلة اللهب", "لهب ظاهر ودخان أكثر وحرارة محسوسة. يكشفها كاشف الأشعة تحت الحمراء"],
+          ["مرحلة الدخان (الاحتراق البطيء)", "دخان مرئي بدون لهب أو حرارة واضحة. يكشفها الكاشف الكهروضوئي"],
+          ["مرحلة اللهب", "لهب ظاهر ودخان أكثر وحرارة محسوسة. يكشفها كاشف اللهب بالأشعة تحت الحمراء"],
           ["مرحلة الحرارة", "حرارة عالية وغازات سامة، وتتطور خلال ثوانٍ. يكشفها كاشف الحرارة"] ] },
         { type: "tiles", h: "أنواع الحرائق", cols: "five", items: [
           ["🅰️", "الفئة A", "مواد صلبة عادية: خشب، ورق، قماش. تُطفأ بالماء أو الرغوة"],
           ["🅱️", "الفئة B", "سوائل وغازات قابلة للاشتعال. تُطفأ بالرغوة أو البودرة الجافة"],
-          ["⚡", "الفئة C", "معدات كهربائية. تُطفأ بثاني أكسيد الكربون أو البودرة الجافة"],
+          ["⚡", "الفئة C", "معدات كهربائية مكهربة (موصولة بالتيار). تُطفأ بثاني أكسيد الكربون أو البودرة الجافة"],
           ["🔩", "الفئة D", "معادن مثل الألومنيوم والمغنيسيوم. تُطفأ ببودرة خاصة"],
-          ["🍳", "الفئة K", "زيوت الطبخ في المطابخ"] ] },
+          ["🍳", "الفئة K", "زيوت ودهون الطبخ. تُطفأ بطفاية الكيميائي الرطب (فئة K) أو بطانية الحريق"] ] },
         { type: "tiles", h: "أنواع الطفايات", cols: "four", items: [
           ["💧", "طفاية الماء", "للفئة A فقط. لا تُستخدم أبدًا على الكهرباء"],
           ["🫧", "طفاية الرغوة (بيج/أصفر)", "للفئتين A وB. لا تُستخدم على الكهرباء"],
@@ -340,7 +340,7 @@ const WORKSHOPS = [
           "S: حرّك الفوهة يمينًا ويسارًا حتى تنطفئ النار" ] },
         { type: "tiles", h: "قبل وأثناء الإطفاء", cols: "four", items: [
           ["🌬️", "الريح خلفك", "قاتل الحريق والريح في ظهرك، لا في وجهك"],
-          ["📏", "مسافة آمنة", "ابقَ على 8 أقدام (حوالي 2.4 متر) على الأقل"],
+          ["📏", "مسافة آمنة", "ابدأ من 6–8 أقدام (حوالي 2–2.5 متر) حسب حجم الطفاية"],
           ["⬇️", "انخفض واقترب", "اقترب منخفضًا، ووجّه إلى قاعدة النار لا إلى أعلاها"],
           ["↩️", "ارجع بنفس الطريق", "بعد الإطفاء تراجع بحذر، وانتبه لعودة الاشتعال"] ] },
         { type: "tiles", h: "أخطاء شائعة", cols: "four", items: [
@@ -369,7 +369,7 @@ const WORKSHOPS = [
         { type: "lab", h: "Try it yourself in the interactive lab", p: "The fire tetrahedron, fire stages, extinguishers and the PASS technique… all in 3D simulation.", btn: "Open the fire fighting lab" },
         { type: "tiles", h: "The fire tetrahedron: four elements a fire needs", cols: "four", items: [
           ["🪵", "Fuel", "Solid like wood and paper, liquid like oils and gasoline, or gas like butane and methane"],
-          ["💨", "Oxygen", "About 19–21% of the air"],
+          ["💨", "Oxygen", "About 21% of the air (20.9%)"],
           ["🔥", "Heat", "Raises the material to its ignition temperature"],
           ["⚛️", "Chain reaction", "Rapid reactions that keep the flame going and spreading"] ] },
         { type: "tiles", h: "Extinguishing methods: remove one element and the fire goes out", cols: "four", items: [
@@ -378,16 +378,16 @@ const WORKSHOPS = [
           ["💧", "Cooling", "Bring the temperature below ignition with water"],
           ["🧪", "Chain-reaction inhibition", "With dry chemical powder"] ] },
         { type: "zones", h: "The four stages of fire", items: [
-          ["Preliminary stage", "Invisible combustion particles, no smoke or flame. Detected by ionization detectors"],
-          ["Smoking stage", "Visible smoke without flame or noticeable heat. Detected by photoelectric detectors"],
-          ["Flame stage", "Visible flames, more smoke, perceptible heat. Detected by infrared detectors"],
+          ["Incipient stage", "Invisible combustion particles, no smoke or flame. Detected by ionization detectors"],
+          ["Smoldering stage", "Visible smoke without flame or noticeable heat. Detected by photoelectric detectors"],
+          ["Flame stage", "Visible flames, more smoke, perceptible heat. Detected by infrared flame detectors"],
           ["Heat stage", "Intense heat and toxic gases, developing within seconds. Detected by heat detectors"] ] },
         { type: "tiles", h: "Classes of fire", cols: "five", items: [
           ["🅰️", "Class A", "Ordinary solids: wood, paper, textiles. Water or foam"],
           ["🅱️", "Class B", "Flammable liquids and gases. Foam or dry powder"],
           ["⚡", "Class C", "Energized electrical equipment. CO₂ or dry powder"],
           ["🔩", "Class D", "Metals such as aluminum and magnesium. Special dry powder"],
-          ["🍳", "Class K", "Cooking oils in kitchens"] ] },
+          ["🍳", "Class K", "Cooking oils and fats. Wet chemical (Class K) extinguisher or fire blanket"] ] },
         { type: "tiles", h: "Types of extinguishers", cols: "four", items: [
           ["💧", "Water", "Class A only. Never on electrical fires"],
           ["🫧", "Foam (beige/yellow)", "Classes A and B. Not on electrical fires"],
@@ -400,7 +400,7 @@ const WORKSHOPS = [
           "S: Sweep from side to side until the fire is out" ] },
         { type: "tiles", h: "Before and during extinguishing", cols: "four", items: [
           ["🌬️", "Wind at your back", "Fight the fire with the wind behind you, not in your face"],
-          ["📏", "Safe distance", "Stay at least 8 feet (about 2.4 m) away"],
+          ["📏", "Safe distance", "Start 6–8 feet (about 2–2.5 m) away, depending on extinguisher size"],
           ["⬇️", "Stay low", "Approach low and aim at the base, not the top of the fire"],
           ["↩️", "Back away the same way", "After it’s out, retreat carefully and watch for reignition"] ] },
         { type: "tiles", h: "Common mistakes", cols: "four", items: [
@@ -429,25 +429,25 @@ const WORKSHOPS = [
         { type: "lab", h: "انٹرایکٹو لیب میں خود آزمائیں", p: "آگ کا چار رخی ہرم، آگ کے مراحل، آلات اور PASS طریقہ… سب سہ جہتی نقل میں۔", btn: "آگ بجھانے کی لیب کھولیں" },
         { type: "tiles", h: "آگ کے چار عناصر", cols: "four", items: [
           ["🪵", "ایندھن", "ٹھوس جیسے لکڑی اور کاغذ، مائع جیسے تیل اور پیٹرول، یا گیس جیسے بیوٹین اور میتھین"],
-          ["💨", "آکسیجن", "ہوا میں تقریباً 19–21٪"],
+          ["💨", "آکسیجن", "ہوا میں تقریباً 21٪ (20.9٪)"],
           ["🔥", "حرارت", "مادے کو جلنے کے درجہ حرارت تک لے جاتی ہے"],
           ["⚛️", "مسلسل کیمیائی عمل", "تیز ردعمل جو شعلے کو جاری اور پھیلاتے ہیں"] ] },
         { type: "tiles", h: "بجھانے کے طریقے: ایک عنصر ہٹائیں اور آگ بجھ جاتی ہے", cols: "four", items: [
-          ["🚚", "ایندھن ہٹانا", "ایندھن کو آگ سے دور یا الگ کرنا"],
-          ["🫧", "دم گھونٹنا", "جھاگ یا کاربن ڈائی آکسائیڈ سے آکسیجن روکنا"],
-          ["💧", "ٹھنڈا کرنا", "پانی سے درجہ حرارت جلنے کی حد سے نیچے لانا"],
-          ["🧪", "کیمیائی عمل توڑنا", "خشک کیمیائی پاؤڈر سے"] ] },
+          ["🚚", "ایندھن ہٹانا (Starvation)", "ایندھن کو آگ سے دور یا الگ کرنا"],
+          ["🫧", "دم گھونٹنا (Smothering)", "جھاگ یا کاربن ڈائی آکسائیڈ سے آکسیجن روکنا"],
+          ["💧", "ٹھنڈا کرنا (Cooling)", "پانی سے درجہ حرارت جلنے کی حد سے نیچے لانا"],
+          ["🧪", "کیمیائی عمل توڑنا (Chain inhibition)", "خشک کیمیائی پاؤڈر سے"] ] },
         { type: "zones", h: "آگ کے چار مراحل", items: [
           ["ابتدائی مرحلہ", "نظر نہ آنے والے ذرات، نہ دھواں نہ شعلہ۔ آئیونائزیشن ڈیٹیکٹر پکڑتا ہے"],
-          ["دھوئیں کا مرحلہ", "نظر آنے والا دھواں، شعلہ یا واضح حرارت نہیں۔ فوٹو الیکٹرک ڈیٹیکٹر پکڑتا ہے"],
-          ["شعلے کا مرحلہ", "نظر آنے والا شعلہ، زیادہ دھواں، محسوس ہونے والی حرارت۔ انفراریڈ ڈیٹیکٹر پکڑتا ہے"],
+          ["سلگنے (دھوئیں) کا مرحلہ", "نظر آنے والا دھواں، شعلہ یا واضح حرارت نہیں۔ فوٹو الیکٹرک ڈیٹیکٹر پکڑتا ہے"],
+          ["شعلے کا مرحلہ", "نظر آنے والا شعلہ، زیادہ دھواں، محسوس ہونے والی حرارت۔ انفراریڈ فلیم ڈیٹیکٹر پکڑتا ہے"],
           ["حرارت کا مرحلہ", "شدید حرارت اور زہریلی گیسیں، سیکنڈوں میں بڑھتی ہیں۔ ہیٹ ڈیٹیکٹر پکڑتا ہے"] ] },
         { type: "tiles", h: "آگ کی اقسام", cols: "five", items: [
           ["🅰️", "کلاس A", "عام ٹھوس اشیاء: لکڑی، کاغذ، کپڑا۔ پانی یا جھاگ"],
           ["🅱️", "کلاس B", "آتش گیر مائعات اور گیسیں۔ جھاگ یا خشک پاؤڈر"],
-          ["⚡", "کلاس C", "بجلی کے آلات۔ کاربن ڈائی آکسائیڈ یا خشک پاؤڈر"],
+          ["⚡", "کلاس C", "چالو بجلی کے آلات۔ کاربن ڈائی آکسائیڈ یا خشک پاؤڈر"],
           ["🔩", "کلاس D", "دھاتیں جیسے ایلومینیم اور میگنیشیم۔ خاص پاؤڈر"],
-          ["🍳", "کلاس K", "کچن میں کھانا پکانے کا تیل"] ] },
+          ["🍳", "کلاس K", "کھانا پکانے کا تیل اور چکنائی۔ ویٹ کیمیکل (کلاس K) آلہ یا فائر بلینکٹ"] ] },
         { type: "tiles", h: "آگ بجھانے والے آلات کی اقسام", cols: "four", items: [
           ["💧", "پانی", "صرف کلاس A۔ بجلی پر کبھی نہیں"],
           ["🫧", "جھاگ (بیج/پیلا)", "کلاس A اور B۔ بجلی پر نہیں"],
@@ -460,7 +460,7 @@ const WORKSHOPS = [
           "S: دائیں بائیں گھمائیں جب تک آگ بجھ نہ جائے" ] },
         { type: "tiles", h: "بجھانے سے پہلے اور دوران", cols: "four", items: [
           ["🌬️", "ہوا آپ کی پیٹھ پر", "ہوا پیچھے ہو، سامنے نہیں"],
-          ["📏", "محفوظ فاصلہ", "کم از کم 8 فٹ (تقریباً 2.4 میٹر) دور رہیں"],
+          ["📏", "محفوظ فاصلہ", "آلے کے سائز کے مطابق 6–8 فٹ (تقریباً 2–2.5 میٹر) سے شروع کریں"],
           ["⬇️", "جھک کر قریب جائیں", "جھک کر قریب جائیں اور جڑ پر رخ کریں، اوپر نہیں"],
           ["↩️", "اسی راستے واپس", "بجھنے کے بعد احتیاط سے پیچھے ہٹیں، دوبارہ بھڑکنے پر نظر رکھیں"] ] },
         { type: "tiles", h: "عام غلطیاں", cols: "four", items: [
@@ -606,17 +606,17 @@ QUIZ.fire = [
     en: { q: "What are the four elements of the fire tetrahedron?", o: ["Water, air, earth and fire", "Fuel, oxygen, heat and chain reaction", "Smoke, flame, ash and heat"], e: "The tetrahedron: fuel, oxygen, heat and the chemical chain reaction." },
     ur: { q: "آگ کے چار عناصر کون سے ہیں؟", o: ["پانی، ہوا، مٹی اور آگ", "ایندھن، آکسیجن، حرارت اور مسلسل کیمیائی عمل", "دھواں، شعلہ، راکھ اور حرارت"], e: "چار عناصر: ایندھن، آکسیجن، حرارت اور مسلسل کیمیائی عمل۔" } },
   { a: 2,
-    ar: { q: "ما نسبة الأكسجين في الهواء تقريبًا؟", o: ["5–10٪", "50٪", "19–21٪"], e: "الأكسجين موجود في الهواء بنسبة 19–21٪ تقريبًا." },
-    en: { q: "About how much of the air is oxygen?", o: ["5–10%", "50%", "19–21%"], e: "Oxygen makes up about 19–21% of the air." },
-    ur: { q: "ہوا میں آکسیجن تقریباً کتنی ہے؟", o: ["5–10٪", "50٪", "19–21٪"], e: "ہوا میں آکسیجن تقریباً 19–21٪ ہے۔" } },
+    ar: { q: "ما نسبة الأكسجين في الهواء تقريبًا؟", o: ["5–10٪", "50٪", "حوالي 21٪"], e: "نسبة الأكسجين في الهواء حوالي 21٪ (20.9٪)." },
+    en: { q: "About how much of the air is oxygen?", o: ["5–10%", "50%", "About 21%"], e: "Oxygen makes up about 21% of the air (20.9%)." },
+    ur: { q: "ہوا میں آکسیجن تقریباً کتنی ہے؟", o: ["5–10٪", "50٪", "تقریباً 21٪"], e: "ہوا میں آکسیجن تقریباً 21٪ (20.9٪) ہے۔" } },
   { a: 0,
     ar: { q: "إطفاء الحريق بخفض حرارته تحت درجة الاشتعال بالماء يسمى:", o: ["التبريد", "التجويع", "الخنق"], e: "التبريد: خفض الحرارة تحت درجة الاشتعال، غالبًا بالماء." },
     en: { q: "Putting out a fire by bringing its temperature below ignition with water is called:", o: ["Cooling", "Starvation", "Smothering"], e: "Cooling: lowering the temperature below the ignition point, usually with water." },
-    ur: { q: "پانی سے درجہ حرارت جلنے کی حد سے نیچے لا کر آگ بجھانا کہلاتا ہے:", o: ["ٹھنڈا کرنا", "ایندھن ہٹانا", "دم گھونٹنا"], e: "ٹھنڈا کرنا: درجہ حرارت جلنے کی حد سے نیچے لانا، عموماً پانی سے۔" } },
+    ur: { q: "پانی سے درجہ حرارت جلنے کی حد سے نیچے لا کر آگ بجھانا کہلاتا ہے:", o: ["ٹھنڈا کرنا (Cooling)", "ایندھن ہٹانا (Starvation)", "دم گھونٹنا (Smothering)"], e: "ٹھنڈا کرنا: درجہ حرارت جلنے کی حد سے نیچے لانا، عموماً پانی سے۔" } },
   { a: 1,
     ar: { q: "إبعاد الوقود عن النار أو عزله يسمى:", o: ["التبريد", "التجويع", "كسر التفاعل"], e: "التجويع: حرمان النار من الوقود بإبعاده أو عزله." },
     en: { q: "Removing or isolating the fuel from the fire is called:", o: ["Cooling", "Starvation", "Chain inhibition"], e: "Starvation: depriving the fire of fuel by removing or isolating it." },
-    ur: { q: "ایندھن کو آگ سے دور یا الگ کرنا کہلاتا ہے:", o: ["ٹھنڈا کرنا", "ایندھن ہٹانا", "کیمیائی عمل توڑنا"], e: "ایندھن ہٹانا: آگ کو ایندھن سے محروم کرنا۔" } },
+    ur: { q: "ایندھن کو آگ سے دور یا الگ کرنا کہلاتا ہے:", o: ["ٹھنڈا کرنا (Cooling)", "ایندھن ہٹانا (Starvation)", "کیمیائی عمل توڑنا (Chain inhibition)"], e: "ایندھن ہٹانا: آگ کو ایندھن سے محروم کرنا۔" } },
   { a: 2,
     ar: { q: "حريق في لوحة كهربائية مكهربة. أي طفاية تختار؟", o: ["طفاية الماء", "طفاية الرغوة", "ثاني أكسيد الكربون أو البودرة الجافة"], e: "الماء والرغوة موصلان للكهرباء. افصل التيار إن أمكن واستخدم CO₂ أو البودرة الجافة." },
     en: { q: "A fire in an energized electrical panel. Which extinguisher?", o: ["Water", "Foam", "CO₂ or dry powder"], e: "Water and foam conduct electricity. Cut the power if possible and use CO₂ or dry powder." },

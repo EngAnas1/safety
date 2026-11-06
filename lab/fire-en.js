@@ -268,7 +268,7 @@ CH.push({id:'tetra',name:'Fire tetrahedron',build(){
     <div class="btns">${faces.map(f=>btn('f:'+f.id,`<span class="sw" style="background:#${f.c.toString(16).padStart(6,'0')}"></span>Remove ${f.n}<small>${f.me}</small>`)).join('')}</div>
     <div class="out" id="o1">The fire is burning because all four elements are present: <b>fuel + oxygen + heat + chain reaction</b>.</div>
     <div class="btns one">${btn('reset','Relight the fire','primary')}</div>
-    <ul class="facts"><li><b>Oxygen</b> is about 19–21% of the air.</li><li><b>Heat</b> must bring the material to its ignition temperature.</li><li><b>Fuel</b> can be solid, liquid or gas.</li></ul>`,
+    <ul class="facts"><li><b>Oxygen</b> makes up about 21% of the air (20.9%).</li><li><b>Heat</b> must bring the material to its ignition temperature.</li><li><b>Fuel</b> can be solid, liquid or gas.</li></ul>`,
    act(a){if(a==='reset'){faces.forEach(f=>{f.on=true});st.method=null;fire.T=1;L.position.set(0,0,0);lid.position.y=4;$('#o1').innerHTML='The fire is burning because all four elements are present: <b>fuel + oxygen + heat + chain reaction</b>.';return}
      if(a.startsWith('f:')){const f=faces.find(x=>x.id===a.slice(2));if(!f.on)return;f.on=false;st.method=f.id;st.t=0;fire.T=0;
       const txt={fuel:'<b>Starvation:</b> we moved the fuel away, so nothing is left to burn.',oxy:'<b>Smothering:</b> we covered the fire and cut off the oxygen, like foam or CO₂ does.',heat:'<b>Cooling:</b> water absorbed the heat until it fell below the ignition temperature.',chain:'<b>Breaking the chain reaction:</b> dry chemical powder stopped the chain of reactions.'}[f.id];
@@ -301,12 +301,12 @@ CH.push({id:'stages',name:'Stages of fire',build(){
   // manual call point on wall
   const mcp=mesh(new THREE.BoxGeometry(.18,.18,.06),M(0xd21f15,{roughness:.4}),-2.93,1.4,.9);mcp.rotation.y=Math.PI/2;s.add(mcp);s.add(mesh(new THREE.BoxGeometry(.01,.11,.11),M(0xf5f5f5),-2.9,1.4,.9));
   const fire=new Fire(ctx,new THREE.Vector3(-.6,.62,-.6),{r:.22,h:.75,I:0,T:0,smoke:0});ctx.fires.push(fire);
-  const DD=[{n:'Ionization detector',x:-2,o:smokeDetector('ion')},{n:'Photoelectric detector',x:-.7,o:smokeDetector('photo')},{n:'Infrared detector',x:.6,o:flameDetector()},{n:'Heat detector',x:1.9,o:smokeDetector('heat')}];
+  const DD=[{n:'Ionization detector',x:-2,o:smokeDetector('ion')},{n:'Photoelectric detector',x:-.7,o:smokeDetector('photo')},{n:'Infrared flame detector',x:.6,o:flameDetector()},{n:'Heat detector',x:1.9,o:smokeDetector('heat')}];
   const dets=DD.map(d=>{d.o.position.set(d.x,3.2,.4);d.o.scale.setScalar(1.15);s.add(d.o);d.led=d.o.userData.led;d.tg=tag(ctx,d.o,d.n,new THREE.Vector3(0,-.45,0));return d});
   const room=new THREE.PointLight(0xff3a10,0,12,1.2);room.position.set(0,1.6,0);s.add(room);
   const info=[{t:'Incipient stage',d:'Tiny combustion particles the eye can’t see. No smoke, no flame.',k:'Detected by: ionization detector'},
-    {t:'Smoke stage',d:'Particles grow into visible smoke, with no flame or noticeable heat.',k:'Detected by: photoelectric detector'},
-    {t:'Flame stage',d:'The fire reaches ignition: visible flame, more smoke, and heat you can feel.',k:'Detected by: infrared detector'},
+    {t:'Smoldering stage',d:'Particles grow into visible smoke, with no flame or noticeable heat.',k:'Detected by: photoelectric detector'},
+    {t:'Flame stage',d:'The fire reaches ignition: visible flame, more smoke, and heat you can feel.',k:'Detected by: infrared flame detector'},
     {t:'Heat stage',d:'High heat, flame, smoke and toxic gases, developing within seconds.',k:'Detected by: heat detector'}];
   let stage=0,auto=true,clock=0;
   function set(n){stage=n;fire.T=[0,0,.7,2.1][n];fire.smoke=[0,0,.35,.9][n];
@@ -351,7 +351,7 @@ CH.push({id:'spread',name:'Fire spread',build(){
     if(m==='h'){[-1.6,1.6].forEach((x,i)=>{const st=stack();st.position.set(x,0,0);s.add(st);items.push({o:st,fp:new THREE.Vector3(x,.98,0),at:i?5.5:0,rad:!i,r:.4,h:1.1})})}
     if(m==='c'){for(let i=0;i<5;i++){const b=cardboardBox(.6,.55,.55);b.position.set(-1.2+i*.6,0,0);b.rotation.y=(i%2)*.04;s.add(b);items.push({o:b,fp:new THREE.Vector3(-1.2+i*.6,.58,0),at:i*1.9,r:.26,h:.85})}}
     document.querySelectorAll('[data-act^="m:"]').forEach(b=>b.classList.toggle('on',b.dataset.act==='m:'+m));
-    $('#o3').innerHTML={v:'<b>Vertical spread:</b> hot gases and sparks rise, igniting the boxes on the shelves above the fire.',h:'<b>Horizontal spread:</b> radiant heat warms the other goods until they ignite, without the flames touching them.',c:'<b>Direct contact:</b> each burning box ignites the box touching it.'}[m]}
+    $('#o3').innerHTML={v:'<b>Vertical spread:</b> hot gases and sparks rise (convection), igniting the boxes on the shelves above the fire.',h:'<b>Horizontal spread:</b> radiant heat warms the other goods until they ignite, without the flames touching them.',c:'<b>Direct contact:</b> each burning box ignites the box touching it.'}[m]}
   const self={ctx,cam:[3.6,2.8,5.2],target:[0,1.2,0],orbit:true,hint:'Pick a type of spread and watch',
    panel:()=>`<div class="kick">Lesson 1 · Fire and its causes</div><h2>How does fire spread?</h2>
    <p class="lead">Every fire starts small. The real danger is its ability to spread. See the three ways in a warehouse.</p>
@@ -369,17 +369,17 @@ CH.push({id:'spread',name:'Fire spread',build(){
   return self}});
 
 // 4. Classes
-const AG=[{id:'water',n:'Water'},{id:'foam',n:'Foam'},{id:'co2',n:'Carbon dioxide'},{id:'pow',n:'Dry chemical powder'},{id:'dpow',n:'Special dry powder'},{id:'blank',n:'Fire blanket'}];
+const AG=[{id:'water',n:'Water'},{id:'foam',n:'Foam'},{id:'co2',n:'Carbon dioxide'},{id:'pow',n:'Dry chemical powder'},{id:'dpow',n:'Class D dry powder'},{id:'blank',n:'Fire blanket'},{id:'wet',n:'Wet chemical (Class K)'}];
 CH.push({id:'classes',name:'Fire classes',build(){
   const ctx=makeCtx({fogFar:30});const s=ctx.scene;
-  const C=[{k:'A',n:'Solids',d:'Wood, paper, cloth, plastic, rubber',c:'#22a35a',ok:['water','foam','pow']},
-    {k:'B',n:'Liquids and gases',d:'Petrol, oils, greases, acetylene',c:'#d9342b',ok:['foam','pow','co2']},
-    {k:'C',n:'Electrical equipment',d:'Transformers, breakers, cables, batteries',c:'#2f7fd1',ok:['co2','pow']},
-    {k:'D',n:'Metals',d:'Aluminum, magnesium, sodium, potassium',c:'#e9b80f',ok:['dpow']},
-    {k:'K',n:'Cooking oils',d:'Kitchen oils and fats',c:'#9b59b6',ok:['blank','pow']}];
+  const C=[{k:'A',n:'Ordinary combustibles',d:'Wood, paper, cloth, plastic, rubber',c:'#22a35a',ok:['water','foam','pow']},
+    {k:'B',n:'Flammable liquids and gases',d:'Petrol, oils, greases, acetylene',c:'#d9342b',ok:['foam','pow','co2']},
+    {k:'C',n:'Energized electrical equipment',d:'Transformers, breakers, cables, batteries',c:'#2f7fd1',ok:['co2','pow']},
+    {k:'D',n:'Combustible metals',d:'Aluminum, magnesium, sodium, potassium',c:'#e9b80f',ok:['dpow']},
+    {k:'K',n:'Cooking oils and fats',d:'Kitchen oils and fats',c:'#9b59b6',ok:['wet','blank']}];
   const bad={water:{B:'Water spreads the burning liquid!',C:'Electric shock hazard! Water conducts electricity.',D:'Water reacts violently with metals!',K:'Water on cooking oil causes a flame burst!'},
     foam:{C:'Foam conducts electricity: shock hazard!',D:'Foam contains water and intensifies the reaction!',K:'Not the best choice for cooking oils.'},co2:{A:'CO₂ is weak against deep-seated fires in solids.',D:'Not suitable for reactive metals!',K:'Not the best choice for cooking oils.'},
-    pow:{D:'Metals need special dry powder only.'},dpow:{A:'Special powder is for metals only.',B:'Special powder is for metals only.',C:'Special powder is for metals only.',K:'Special powder is for metals only.'},blank:{A:'The blanket is for small kitchen fires.',B:'Not enough for liquid fires.',C:'Cut the power and use CO₂ or powder.',D:'Metals need special dry powder.'}};
+    pow:{D:'Metals need special dry powder only.',K:'Powder may knock the flames down but doesn’t cool the oil, so it reignites. The approved agent for kitchens: wet chemical (Class K).'},dpow:{A:'Special powder is for metals only.',B:'Special powder is for metals only.',C:'Special powder is for metals only.',K:'Special powder is for metals only.'},blank:{A:'The blanket is for small kitchen fires.',B:'Not enough for liquid fires.',C:'Cut the power and use CO₂ or powder.',D:'Metals need special dry powder.'}};
   const objs=[];
   C.forEach((c,i)=>{const a=(i-2)*.62;const x=Math.sin(a)*3.6,z=-Math.cos(a)*3.6+2.6;const g=new THREE.Group();g.position.set(x,0,z);g.rotation.y=-a;s.add(g);
     const ped=mesh(new THREE.CylinderGeometry(.72,.8,.4,48),M(0x2a211d,{roughness:.55,metalness:.2}));ped.position.y=.2;g.add(ped);
@@ -422,7 +422,7 @@ CH.push({id:'classes',name:'Fire classes',build(){
      else{o.f.T=2.2;setTimeout(()=>{if(o.f.T>1)o.f.T=1},1800);const m=(bad[ag]&&bad[ag][o.c.k])||'Not the right agent.';$('#o4').innerHTML=`<b style="color:var(--alarm)">Wrong.</b> ${m}`;toast(m,'bad')}}},
    update(dt,t){objs.forEach(o=>{o.sg.rotation.y=Math.atan2(camera.position.x-o.g.position.x,camera.position.z-o.g.position.z)-o.g.rotation.y;o.sg.position.y=2.15+Math.sin(t*1.5+o.g.position.x)*.05;
        if(o.g.userData.spark&&o.f.I>.1&&Math.random()<dt*6)for(let i=0;i<8;i++)ctx.add.spawn(o.wp.x,o.wp.y,o.wp.z,R(-1.5,1.5),R(.5,2.5),R(-1.5,1.5),R(.3,.7),.03,4)});
-     if(spray&&spray.t<1.8){spray.t+=dt;const o=objs[sel],src=new THREE.Vector3(0,1.8,7);const dir=o.wp.clone().sub(src);const ty={water:2,foam:6,co2:3,pow:3,dpow:3,blank:-1}[spray.ag];
+     if(spray&&spray.t<1.8){spray.t+=dt;const o=objs[sel],src=new THREE.Vector3(0,1.8,7);const dir=o.wp.clone().sub(src);const ty={water:2,foam:6,co2:3,pow:3,dpow:3,wet:6,blank:-1}[spray.ag];
        if(ty>=0)for(let i=0;i<14;i++){const v=dir.clone().multiplyScalar(R(.85,1.05)/(ty===2?.85:.9));(ty===3||ty===6?ctx.norm:ctx.add).spawn(src.x,src.y,src.z,v.x+R(-.3,.3),v.y+(ty===2?4:1)+R(-.3,.3),v.z+R(-.3,.3),.95,ty===2?.05:.22,ty)}}
      if(this.focus){controls.target.lerp(new THREE.Vector3(this.focus.x*.5,1,this.focus.z*.5),Math.min(1,dt*2))}}};
   return self}});
@@ -433,7 +433,7 @@ const TYPES=[{id:'WATER',n:'Water extinguisher',band:null,cls:['A'],pr:'Cooling'
   {id:'POWDER',n:'Dry chemical powder extinguisher',band:0x2d6fd6,cls:['A','B','C'],pr:'Smothering and chain inhibition',use:'Same method as the CO₂ extinguisher, sweeping side to side.',pro:'Fast knockdown · non-conductive · most common',con:'Blocks visibility · doesn’t cool · fire may reignite'}];
 const PARTS=[{id:'lever',n:'Operating lever',d:'The moving lever above the carrying handle. Squeeze it to discharge the extinguisher.'},{id:'pin',n:'Safety pin',d:'Locks the lever to prevent accidental discharge. First step: pull it.'},
   {id:'handle',n:'Carrying handle',d:'The fixed handle you hold the extinguisher by.'},{id:'gauge',n:'Pressure gauge',d:'Shows readiness: the needle must be in the green. CO₂ extinguishers have no gauge; they’re checked by weight.'},
-  {id:'hose',n:'Discharge hose',d:'Carries the agent to the nozzle. Small extinguishers may have no hose.'},{id:'body',n:'Cylinder',d:'The metal cylinder that holds the extinguishing agent.'},{id:'tag',n:'Inspection tag',d:'Records the periodic inspection date. Inspect regularly and check the pin and the gauge.'}];
+  {id:'hose',n:'Discharge hose',d:'Carries the agent to the nozzle. Small extinguishers may have no hose.'},{id:'body',n:'Cylinder',d:'The metal cylinder that holds the extinguishing agent.'},{id:'tag',n:'Inspection tag',d:'Records the annual maintenance date. Inspect the extinguisher visually every month: pin and seal in place, gauge in the green.'}];
 const CO2A={lever:[0,2.55,.55],pin:[.55,2.28,.1],handle:[-.15,1.98,.75],hose:[-.56,1.4,.02],body:[.44,.9,.2],gauge:null,tag:null};
 function makeExt(type,scaleReal){const T=TYPES.find(x=>x.id===type);if(type!=='CO2'&&EXT_SRC){const e=realExt(T.band);e.scale.setScalar(scaleReal);e.userData.real=true;return e}
   const e=extinguisher(type);e.userData.real=false;return e}
@@ -564,8 +564,8 @@ CH.push({id:'pass',name:'PASS training yard',build(){
       ok:{CO2:'Excellent choice: CO₂ doesn’t conduct electricity and leaves no residue',POWDER:'Suitable: powder is non-conductive, but leaves residue on equipment'},
       bad:{WATER:'Electric shock hazard! Water conducts electricity',FOAM:'Electric shock hazard! Foam contains water and conducts electricity'},flare:'WATER FOAM',zap:true},
    K:{n:'Cooking oil in a kitchen',c:'K',col:'#9b59b6',g:gK,t:tagK,y:.94,sx:.55,sz:.3,bx:1.02,bz:.5,r:.22,
-      brief:'The frying pan caught fire in the site kitchen. Cooking oils = <b>Class K fire</b>.<br><span style="color:var(--mut)">The fire blanket isn’t on the rack; choose from the extinguishers.</span>',
-      ok:{POWDER:'Suitable: powder smothers the flames. Then turn off the source and cover the pan, because the oil stays hot'},
+      brief:'The frying pan caught fire in the site kitchen. Cooking oils = <b>Class K fire</b>.<br><span style="color:var(--mut)">There’s no Class K extinguisher or fire blanket on the rack; pick the best of what’s available.</span>',
+      ok:{POWDER:'Best of what’s here: powder knocks the flames down but doesn’t cool the oil. Turn off the heat, cover the pan and keep watching it. The approved choice for commercial kitchens is a Class K extinguisher'},
       bad:{WATER:'No! Water on hot oil flashes to steam and throws burning oil',FOAM:'Ordinary foam can’t handle cooking-oil heat and the fire comes back',CO2:'CO₂ pushes the burning oil and splashes it, and the hot oil reignites'},flare:'WATER CO2'}};
   let scn='B',SC=SCN.B;
   // patches
@@ -640,7 +640,7 @@ CH.push({id:'pass',name:'PASS training yard',build(){
     if(phase==='pick')h+=`<div class="kick">Fire type</div><div class="btns">${Object.entries(SCN).map(([k,v])=>`<button data-act="s:${k}" class="${k===scn?'on':''}"><span class="cls" style="background:${v.col};width:22px;height:22px;font-size:12px;margin-right:8px">${v.c}</span>${v.n}</button>`).join('')}</div><div class="btns one">${btn('s:R','🎲 Random scenario')}</div>
       <div class="out"><b>Report:</b> ${SC.brief}<br>Pick the right extinguisher from the rack.</div><div class="btns">${OPT.map(o=>btn('x:'+o.id,o.n)).join('')}</div>`;
     if(phase==='approach')h+=`<div class="out">Check the windsock (the orange cone): the wind blows toward where it points.<br><b>Choose your approach point</b> from the circles around the fire.</div><div class="btns">${MK.map(m=>btn('m:'+m.id,m.n)).join('')}</div>`;
-    if(phase==='distance')h+=`<div class="out">Move toward the fire. The green line on the ground is the <b>safe distance (about 2.5 m)</b>.</div>
+    if(phase==='distance')h+=`<div class="out">Move toward the fire. The green line on the ground is the <b>safe distance (about 2–2.5 m / 6–8 ft)</b>.</div>
       <div class="row2"><span>Distance from the fire</span><span id="dd" style="font-size:20px;color:var(--fg)">${D.toFixed(1)} m</span></div>
       <div class="btns">${btn('d:-','Step forward ↑')}${btn('d:+','Step back ↓')}</div><div class="btns one">${btn('d:ok','Hold here and start','primary')}</div>`;
     if(phase==='pass')h+=`<div class="steps">${['P','A','S','S'].map((l,i)=>`<div class="step ${i<step?'done':i===step?'now':''}"><i>${l}</i><span>${['Pull','Aim','Squeeze','Sweep'][i]}</span></div>`).join('')}</div>
@@ -765,7 +765,7 @@ CH.push({id:'sprinkler',name:'Automatic sprinklers',build(){
    <div class="btns">${btn('w:wet','Wet system')}${btn('w:dry','Dry system')}${btn('w:pre','Pre-action')}${btn('go','Start a fire','primary')}</div>
    <div class="out" id="o7"></div><div class="out" id="o7b" style="min-height:0">Ready.</div>
    <div class="kick">Look up close</div><div class="btns">${btn('z:head','Sprinkler head')}${btn('z:valve','Control valve')}${btn('z:all','Whole scene')}</div>
-   <ul class="facts"><li>Components: <b>water supply, pipe network, control valve, sprinkler heads</b>.</li><li>The control valve stays <b>fully open and locked with a safety lock</b>.</li><li>Pipes are painted red; heads are never painted.</li><li>Not suitable for materials that react with water, or for electrical and computer rooms.</li></ul>`,
+   <ul class="facts"><li>Components: <b>water supply, pipe network, control valve, sprinkler heads</b>.</li><li>The control valve stays <b>fully open and locked with a safety lock</b>.</li><li>Pipes are usually identified in red; heads are never painted, and a painted head must be replaced.</li><li>Not used with water-reactive materials. Computer rooms are often protected by a pre-action system or a clean agent.</li></ul>`,
    init(){setMode('wet')},
    act(a){if(a.startsWith('w:'))setMode(a.slice(2));if(a==='go'){setMode(mode);clock=0;fire.T=1.3;$('#o7b').textContent='A fire started under the second head…'}
      if(a==='z:head')flyTo([.5,3,1.2],[-.3,3.45,0]);if(a==='z:valve')flyTo([-1.9,1.6,1.3],[-3.2,1.25,-.2]);if(a==='z:all')flyTo([3.8,2.4,6.4],[0,1.9,0])},
@@ -792,12 +792,12 @@ const QZ=[
  {q:'The last step of PASS:',a:['Pull the pin','Sweep side to side','Aim the nozzle'],r:1},
  {q:'Where do you aim the agent?',a:['At the base of the flames','At the top of the flames','At the smoke'],r:0},
  {q:'Where should the wind be while you fight the fire?',a:['In your face','at your back','From the side'],r:1},
- {q:'The approximate safe distance when using an extinguisher:',a:['Half a meter','About 2.5 m','Ten meters'],r:1},
+ {q:'The approximate safe distance when using an extinguisher:',a:['Half a meter','About 2–2.5 m (6–8 ft)','Ten meters'],r:1},
  {q:'In which stage does the fire develop within seconds?',a:['Incipient','Smoke','Heat'],r:2},
  {q:'The detector that responds to the incipient stage (invisible particles):',a:['Ionization detector','Heat detector','Flame detector'],r:0},
  {q:'The photoelectric detector responds to:',a:['Visible smoke','Heat only','Ultraviolet rays'],r:0},
  {q:'An extinguisher with no pressure gauge, checked by weight:',a:['Powder','Carbon dioxide','Water'],r:1},
- {q:'Metal fires such as magnesium are put out with:',a:['Special dry powder','Water','Foam'],r:0},
+ {q:'Metal fires such as magnesium are put out with:',a:['Special dry powder (Class D)','Water','Foam'],r:0},
  {q:'A fire in wood and paper is class:',a:['A','B','C'],r:0},
  {q:'A fire in petrol and oils is class:',a:['A','B','D'],r:1},
  {q:'A cooking-oil fire in a kitchen is class:',a:['C','D','K'],r:2},
@@ -807,13 +807,13 @@ const QZ=[
  {q:'When extinguishing a liquid in a tank with foam:',a:['Aim it straight at the liquid surface','Aim it at the inner wall above the liquid','Spray water afterwards'],r:1},
  {q:'Horizontal fire spread happens through:',a:['Radiant heat','Contact only','Cold air'],r:0},
  {q:'Vertical fire spread happens because:',a:['Hot gases rise upward','Fire moves downward','Smoke is heavy'],r:0},
- {q:'The oxygen content of air is about:',a:['5%','19–21%','50%'],r:1},
+ {q:'The oxygen content of air is about:',a:['5%','About 21%','50%'],r:1},
  {q:'Smoke from petroleum fires is usually:',a:['White','Black','Blue'],r:1},
  {q:'In a sprinkler system, which head opens?',a:['All heads together','Only the head exposed to heat','The head nearest the valve'],r:1},
  {q:'A dry sprinkler system is used in:',a:['Cold places where water can freeze','Kitchens','Computer rooms'],r:0},
  {q:'The control valve in a sprinkler system is:',a:['Always closed','fully open and locked with a safety lock','Half open'],r:1},
- {q:'Before offloading fuel from a tanker you must:',a:['Discharge static electricity by grounding','Start the engine','Open all valves'],r:0},
- {q:'How often at minimum should we run a fire drill?',a:['Once a year','Once every 5 years','Not required'],r:0},
+ {q:'Before offloading fuel from a tanker you must:',a:['Bond and ground to discharge static electricity','Start the engine','Open all valves'],r:0},
+ {q:'How often, at minimum, must an extinguisher be visually inspected?',a:['Monthly','Once every 5 years','Not required'],r:0},
  {q:'If the fire is large:',a:['Use more than one extinguisher and more than one person','Try on your own','Turn your back on the fire'],r:0},
  {q:'After extinguishing:',a:['Back away carefully the way you came','Turn around and walk away fast','Leave the area unwatched'],r:0},
  {q:'Carbon dioxide is heavier than air by:',a:['About one and a half times','Ten times','Lighter than air'],r:0}];

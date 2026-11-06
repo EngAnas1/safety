@@ -826,4 +826,25 @@ resize();open(location.hash.slice(1)||'tetra');
 const clk=new THREE.Clock();let T=0;
 renderer.setAnimationLoop(()=>{const dt=Math.min(clk.getDelta(),.05);T+=dt;if(!cur)return;
   cur.ctx.fires.forEach(f=>f.update(dt,T));cur.update(dt,T);cur.ctx.add.update(dt);cur.ctx.norm.update(dt);
-  if(cur.orbit)controls.update();rpass.scene=cur.ctx.scene;composer.render();labels.render(cur.ctx.scene,camera)});
+  if(cur.orbit)controls.update();rpass.scene=cur.ctx.scene;composer.render();labels.render(cur.ctx.scene,camera);declutter()});
+
+/* Keep 3D labels from sitting on top of each other: after CSS2DRenderer places
+   them, push overlapping tags apart (mostly vertically) and ease the offset so
+   they glide instead of jumping. Also keeps every tag inside the stage. */
+function declutter(){
+  const host=$('#labels');const tags=[...host.children].filter(t=>t.style.display!=='none'&&t.offsetWidth);
+  if(!tags.length)return;
+  const H=host.getBoundingClientRect(),G=6;
+  const R=tags.map(t=>{const r=t.getBoundingClientRect();return{t,x:r.left,y:r.top,w:r.width,h:r.height,dx:0,dy:0}});
+  for(let it=0;it<20;it++){let moved=false;
+    for(let i=0;i<R.length;i++)for(let j=i+1;j<R.length;j++){const a=R[i],b=R[j];
+      const ox=Math.min(a.x+a.dx+a.w,b.x+b.dx+b.w)-Math.max(a.x+a.dx,b.x+b.dx)+G,oy=Math.min(a.y+a.dy+a.h,b.y+b.dy+b.h)-Math.max(a.y+a.dy,b.y+b.dy)+G;
+      if(ox<=0||oy<=0)continue;moved=true;
+      if(oy<=ox*1.6){const s=(a.y+a.dy+a.h/2)<=(b.y+b.dy+b.h/2)?-1:1;a.dy+=s*oy/2;b.dy-=s*oy/2}
+      else{const s=(a.x+a.dx+a.w/2)<=(b.x+b.dx+b.w/2)?-1:1;a.dx+=s*ox/2;b.dx-=s*ox/2}}
+    R.forEach(r=>{r.dx=Math.max(H.left+4-r.x,Math.min(H.right-4-r.w-r.x,r.dx));r.dy=Math.max(H.top+4-r.y,Math.min(H.bottom-4-r.h-r.y,r.dy))});
+    if(!moved)break}
+  R.forEach(r=>{
+    const t=r.t;t._dx=(t._dx||0)+(r.dx-(t._dx||0))*.6;t._dy=(t._dy||0)+(r.dy-(t._dy||0))*.6;
+    if(Math.abs(t._dx)>.3||Math.abs(t._dy)>.3)t.style.transform+=` translate(${t._dx.toFixed(1)}px,${t._dy.toFixed(1)}px)`;});
+}

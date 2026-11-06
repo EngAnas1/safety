@@ -55,19 +55,56 @@ function player(src, poster, u){
     <button class="fsb" type="button" aria-label="fullscreen">⛶</button>`;
 }
 
-/* Wire the protection on every player after each render */
+/* Wire the protection on every player after each render.
+   Fullscreen always wraps the whole player so the watermark stays on top.
+   iPhone Safari cannot put a page element in fullscreen (only the bare <video>,
+   which hides anything drawn over it), so there we use an in-page fullscreen
+   instead, and any attempt to open the native iOS player is redirected to it. */
+let pfsOn = null;
+function pseudoFS(pl, on){
+  const v = pl.querySelector("video"), fs = pl.querySelector(".fsb");
+  if(on && !pfsOn){
+    const ph = document.createComment("player"); pl.before(ph); pl._ph = ph;
+    document.body.appendChild(pl);              /* escape transformed ancestors */
+    pl.classList.add("pfs"); document.documentElement.classList.add("pfs-lock");
+    pfsOn = pl; if(fs) fs.textContent = "✕";
+    try{ history.pushState({pfs:1}, ""); }catch(e){}
+  } else if(!on && pfsOn === pl){
+    const playing = v && !v.paused;
+    pl.classList.remove("pfs"); document.documentElement.classList.remove("pfs-lock");
+    if(pl._ph){ pl._ph.replaceWith(pl); pl._ph = null; }
+    pfsOn = null; if(fs) fs.textContent = "⛶";
+    if(playing) v.play().catch(() => {});
+    if(history.state && history.state.pfs) history.back();
+  }
+}
+window.addEventListener("popstate", () => { if(pfsOn) pseudoFS(pfsOn, false); });
+document.addEventListener("keydown", e => { if(e.key === "Escape" && pfsOn) pseudoFS(pfsOn, false); });
 function protectVideos(){
   document.querySelectorAll(".player").forEach(pl => {
     ["contextmenu", "dragstart"].forEach(ev => pl.addEventListener(ev, e => e.preventDefault()));
     const fs = pl.querySelector(".fsb"), v = pl.querySelector("video");
     if(!fs || !v) return;
-    if(!pl.requestFullscreen && !pl.webkitRequestFullscreen){ fs.hidden = true; return; }
+    const native = !!(pl.requestFullscreen || pl.webkitRequestFullscreen);
     fs.addEventListener("click", () => {
       const doc = document;
+      if(pfsOn === pl){ pseudoFS(pl, false); return; }
       if(doc.fullscreenElement || doc.webkitFullscreenElement){ (doc.exitFullscreen || doc.webkitExitFullscreen).call(doc); return; }
-      (pl.requestFullscreen || pl.webkitRequestFullscreen).call(pl);
+      if(native){
+        const r = (pl.requestFullscreen || pl.webkitRequestFullscreen).call(pl);
+        if(r && r.catch) r.catch(() => pseudoFS(pl, true));
+      } else pseudoFS(pl, true);
     });
     v.addEventListener("dblclick", e => { e.preventDefault(); fs.click(); });
+    /* iOS native player (its own fullscreen button, or auto-fullscreen): leave it and use ours */
+    v.addEventListener("webkitbeginfullscreen", () => {
+      const playing = !v.paused;
+      setTimeout(() => {
+        try{ v.webkitExitFullscreen(); }catch(e){}
+        pseudoFS(pl, true);
+        if(playing) v.play().catch(() => {});
+      }, 0);
+    });
   });
 }
 
@@ -427,7 +464,9 @@ function setLang(l){
   if(!isLang(l)) l = "ar";
   lang = l;
   store.set("lang", l);
-  document.getElementById("picker").hidden = true;
+  const pk = document.getElementById("picker");
+  if(MOTION && !pk.hidden){ pk.classList.add("leaving"); setTimeout(() => { pk.hidden = true; pk.classList.remove("leaving"); }, 520); }
+  else pk.hidden = true;
   const url = new URL(location.href); url.searchParams.set("lang", l);
   history.replaceState(null, "", url);
   render();
@@ -435,11 +474,8 @@ function setLang(l){
 }
 
 function showPicker(){
-  const t = workshop || topic;
-  document.getElementById("pAr").textContent = t.ar.title;
-  document.getElementById("pEn").textContent = t.en.title;
-  document.getElementById("pUr").textContent = t.ur.title;
-  document.getElementById("picker").hidden = false;
+  const pk = document.getElementById("picker");
+  pk.classList.remove("leaving"); pk.hidden = false;
 }
 
 document.querySelectorAll("#picker [data-lang]").forEach(b => b.onclick = () => setLang(b.dataset.lang));

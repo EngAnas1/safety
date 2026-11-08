@@ -14,8 +14,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zain:wght@400;700;800;900&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="img/logo.webp">
-<script src="content.js?v=202611061736"></script>
-<script src="quiz.js?v=202611061736"></script>
+<script src="content.js?v=202611081644"></script>
+<script src="quiz.js?v=202611081644"></script>
 <style>
 /* =====================================================================
    الألوان — مأخوذة من المقطع والرسمة. غيّرها هنا فقط
@@ -154,6 +154,18 @@ body.ur .mcard h3{font-weight:700;line-height:1.9;font-size:1.15rem}
 .creator h3{font-size:clamp(2rem,5vw,3.4rem);line-height:1.1;margin:6px 0 14px}
 body.ur .creator h3{line-height:1.8}
 .creator p{color:var(--muted);font-size:1.1rem;max-width:30ch}
+.creator .contact{margin-top:26px;padding-top:22px;border-top:1px solid var(--line);display:grid;gap:12px;justify-items:start}
+.creator .contact .ch{font-weight:800;color:var(--teal);font-size:.95rem}
+.creator .contact .cnum{font-family:"Zain",sans-serif;font-weight:900;font-size:clamp(1.7rem,4.6vw,2.4rem);letter-spacing:.04em;color:var(--text);text-decoration:none;line-height:1.1}
+.creator .contact .cnum:hover{color:var(--lime)}
+.creator .cbtns{display:flex;flex-wrap:wrap;gap:10px}
+.creator .cb{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:14px;font-weight:800;text-decoration:none;transition:transform .45s var(--spring),background .2s,border-color .2s}
+.creator .cb svg{width:20px;height:20px;flex:none}
+.creator .cb.wa{background:#25D366;color:#06260F}
+.creator .cb.wa:hover{background:#3BE57A}
+.creator .cb.call{background:transparent;color:var(--text);border:1.5px solid var(--line)}
+.creator .cb.call:hover{border-color:var(--lime);color:var(--lime)}
+.creator .cb:active{transform:scale(.94)}
 .creator .stripe{margin-top:22px;width:140px;border-radius:3px}
 
 footer{padding:30px 0 44px;color:var(--muted);font-size:.85rem;text-align:center}
@@ -683,8 +695,8 @@ nav.tabs[style*="--n:3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
 
 <main id="app"></main>
 
-<script src="workshops.js?v=202611061736"></script>
-<script src="sections.js?v=202611061736"></script>
-<script src="app.js?v=202611061736"></script>
+<script src="workshops.js?v=202611081644"></script>
+<script src="sections.js?v=202611081644"></script>
+<script src="app.js?v=202611081644"></script>
 </body>
 </html>

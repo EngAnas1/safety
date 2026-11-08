@@ -113,6 +113,21 @@ const tabsHTML = () => TOPICS.length > 1 ? `<nav class="tabs" style="--n:${TOPIC
 const titleWords = t => t.split(" ").map((w, i) => `<span class="w" style="animation-delay:${.15 + i*.12}s">${esc(w)}</span>`).join(" ");
 const meterHTML = u => `<div class="meter"><span class="ml">${u.best}</span><div class="bar"><i id="meterBar"></i></div><b id="meterTxt"></b></div>`;
 const frameHTML = (src, poster, u) => `<div class="frame" id="watch"><div class="player">${player(src, poster, u)}</div><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i></div>`;
+/* Contact: WhatsApp + call, number shown left-to-right. Only digits reach the links. */
+const WA_ICON = `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.3-.4.8-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2Z"/></svg>`;
+const PHONE_ICON = `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2Z"/></svg>`;
+const contactHTML = () => {
+  const n = String(CONFIG.ownerIntl || "").replace(/\D/g, ""), c = CONFIG.contact?.[lang];
+  if(!n || !c) return "";
+  return `<div class="contact">
+            <span class="ch">${esc(c.h)}</span>
+            <a class="cnum" href="tel:+${n}" dir="ltr">${esc(CONFIG.ownerPhone || "+" + n)}</a>
+            <div class="cbtns">
+              <a class="cb wa" href="https://wa.me/${n}?text=${encodeURIComponent(c.msg)}" target="_blank" rel="noopener noreferrer">${WA_ICON}<span>${esc(c.wa)}</span></a>
+              <a class="cb call" href="tel:+${n}">${PHONE_ICON}<span>${esc(c.call)}</span></a>
+            </div>
+          </div>`;
+};
 const creatorHTML = u => `
     <section class="sec">
       <div class="creator">
@@ -121,6 +136,7 @@ const creatorHTML = u => `
           <small>${u.by}</small>
           <h3 class="display">${esc(CONFIG.ownerName[lang])}</h3>
           <p>${esc(CONFIG.ownerLine?.[lang])}</p>
+          ${contactHTML()}
         </div>
       </div>
     </section>`;
@@ -287,16 +303,7 @@ function renderTopic(u){
     <article class="wart">${blocksHTML(SECTION_TEXT[topic.id]?.[lang], u)}</article>
     ${sourcesHTML(SECTION_SOURCES[topic.id], u)}
 
-    <section class="sec">
-      <div class="creator">
-        <div class="cart"><img src="img/me.webp" alt="${esc(CONFIG.ownerName[lang])}" loading="lazy"></div>
-        <div class="txt">
-          <small>${u.by}</small>
-          <h3 class="display">${esc(CONFIG.ownerName[lang])}</h3>
-          <p>${esc(CONFIG.ownerLine?.[lang])}</p>
-        </div>
-      </div>
-    </section>
+    ${creatorHTML(u)}
   </div>
   <footer>${esc(CONFIG.siteTag?.[lang] || "")}</footer>`;
 }

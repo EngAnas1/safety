@@ -169,6 +169,10 @@ const icHTML = ic => String(ic).startsWith("ic:") ? `<span class="wic"><img src=
 function blocksHTML(blocks, u){
   return (blocks || []).map(b => {
     switch(b.type){
+      /* Long workshops: an index of lessons, and a heading that opens each lesson */
+      case "index": { const parts = blocks.filter(x => x.type === "part");
+        return `<nav class="windex" id="lessons"><h2>${esc(b.h)}</h2><ol>${parts.map(x => `<li><a href="#${esc(x.id)}"><span>${esc(String(x.n))}</span><b>${esc(x.h)}</b></a></li>`).join("")}</ol></nav>`; }
+      case "part": return `<section class="wpart" id="${esc(b.id)}"><span class="pk">${esc(b.k)}</span><h2 class="display">${esc(b.h)}</h2>${b.p ? `<p>${esc(b.p)}</p>` : ""}${b.top ? `<a class="ptop" href="#lessons">↑ ${esc(b.top)}</a>` : ""}</section>`;
       case "lead": return `<div class="wlead">${b.p.map(p => `<p>${esc(p)}</p>`).join("")}</div>`;
       case "tiles": return `<section class="wsec"><h2>${esc(b.h)}</h2><div class="wtiles ${b.cols || ""}">${b.items.map(([ic, h, d]) => `<div class="wtile">${icHTML(ic)}<b>${esc(h)}</b><small>${esc(d)}</small></div>`).join("")}</div></section>`;
       case "chain": return `<section class="wsec"><h2>${esc(b.h)}</h2><ol class="wchain">${b.items.map(([ic, h, d]) => `<li>${icHTML(ic)}<div><b>${esc(h)}</b><small>${esc(d)}</small></div></li>`).join("")}</ol>${b.end ? `<p class="wend">${esc(b.end)}</p>` : ""}</section>`;

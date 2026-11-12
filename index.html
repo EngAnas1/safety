@@ -14,8 +14,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zain:wght@400;700;800;900&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="img/logo.webp">
-<script src="content.js?v=202611120503"></script>
-<script src="quiz.js?v=202611120503"></script>
+<script src="content.js?v=202611120710"></script>
+<script src="quiz.js?v=202611120710"></script>
 <style>
 /* =====================================================================
    الألوان — مأخوذة من المقطع والرسمة. غيّرها هنا فقط
@@ -402,6 +402,20 @@ body.ur .wtile small{line-height:2}
 .wcheck li{display:flex;gap:12px;align-items:center;padding:14px 16px;border-radius:16px;background:linear-gradient(100deg,rgba(215,255,60,.12),var(--dusk) 70%);border:1px solid rgba(215,255,60,.35);font-weight:700}
 .wok{width:32px;height:32px;border-radius:10px;background:var(--lime);display:grid;place-items:center;flex-shrink:0}
 .wok img{width:20px;height:20px;filter:brightness(0)}
+.windex{margin:28px 0 8px;padding:20px;border-radius:22px;background:var(--dusk);border:1.5px solid var(--line)}
+.windex h2{margin-bottom:12px}
+.windex ol{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.windex a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:14px;background:rgba(155,176,224,.06);color:var(--text);text-decoration:none;transition:background .2s}
+.windex a:hover{background:rgba(215,255,60,.12)}
+.windex a span{flex:none;width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-weight:900;background:var(--lime);color:var(--night)}
+.windex a b{font-weight:800;line-height:1.4}
+@media (min-width:760px){.windex ol{grid-template-columns:1fr 1fr}}
+.wpart{margin:56px 0 6px;padding-top:26px;border-top:2px solid var(--lime);scroll-margin-top:80px}
+.wpart .pk{display:inline-block;font-weight:900;font-size:.85rem;color:var(--night);background:var(--lime);border-radius:999px;padding:3px 12px}
+.wpart h2{font-size:clamp(1.7rem,6vw,2.6rem);line-height:1.2;margin:10px 0 6px}
+.wpart p{color:var(--muted);max-width:60ch}
+.wpart .ptop{display:inline-block;margin-top:10px;font-size:.85rem;font-weight:700;color:var(--teal);text-decoration:none}
+.wpart .ptop:hover{color:var(--lime)}
 .wclose{margin:34px 0 0;text-align:center;font-size:clamp(1.5rem,5vw,2.4rem);line-height:1.35}
 body.ur .wclose{line-height:2}
 
@@ -696,9 +710,9 @@ nav.tabs[style*="--n:3"]{grid-template-columns:repeat(3,minmax(0,1fr))}
 
 <main id="app"></main>
 
-<script src="workshops.js?v=202611120503"></script>
-<script src="ws-isolation.js?v=202611120503"></script>
-<script src="sections.js?v=202611120503"></script>
-<script src="app.js?v=202611120503"></script>
+<script src="workshops.js?v=202611120710"></script>
+<script src="ws-isolation.js?v=202611120710"></script>
+<script src="sections.js?v=202611120710"></script>
+<script src="app.js?v=202611120710"></script>
 </body>
 </html>

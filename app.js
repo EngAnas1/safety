@@ -192,13 +192,14 @@ function renderWorkshopList(u){
   document.title = c.title;
   return heroHTML(u, c.title, c.intro) + `
   <div class="wrap">
-    <div class="wgrid">${WORKSHOPS.map(w => { const t = w[lang], n = Math.min(QUIZ_SIZE, (QUIZ[w.id] || []).length), b = bestScore({id: w.id});
-      return `<a class="wcard" href="${link("ws", w.id)}">
-        <div class="wimg">${w.poster[lang] ? `<img src="${esc(w.poster[lang])}" alt="" loading="lazy"><span class="wplay">▶</span>` : `<span class="wph"><img src="${esc(w.icon)}" alt=""></span>`}</div>
+    <div class="wgrid">${WORKSHOPS.map(w => { const own = !w.only || w.only === lang, t = own ? w[lang] : w[w.only], n = Math.min(QUIZ_SIZE, (QUIZ[w.id] || []).length), b = bestScore({id: w.id});
+      return `<a class="wcard" href="${own ? link("ws", w.id) : `?t=ws&w=${encodeURIComponent(w.id)}&lang=${w.only}`}">
+        <div class="wimg">${w.poster[lang] && own ? `<img src="${esc(w.poster[lang])}" alt="" loading="lazy"><span class="wplay">▶</span>` : `<span class="wph"><img src="${esc(w.icon)}" alt=""></span>`}</div>
         <div class="wbody">
           <span class="kick">${u.wsKick}</span>
-          <h3>${esc(t.title)}</h3>
-          <p>${esc(t.sub)}</p>
+          ${own ? "" : `<span class="wonly">${u.arOnly}</span>`}
+          <h3 ${own ? "" : `dir="rtl" lang="${w.only}"`}>${esc(t.title)}</h3>
+          <p ${own ? "" : `dir="rtl" lang="${w.only}"`}>${esc(t.sub)}</p>
           <div class="wmeta"><span>🎬 ${u.wsVideo}</span><span>🎯 ${fmt(u.wsQs, {n: (QUIZ[w.id] || []).length})}</span>${n ? `<span>${u.best}: ${b}/${n}</span>` : ""}</div>
           <span class="btn">${u.wsOpen}</span>
         </div>
@@ -469,8 +470,9 @@ function render(){
 
 function setLang(l){
   if(!isLang(l)) l = "ar";
+  if(workshop?.only) l = workshop.only; else store.set("lang", l);
   lang = l;
-  store.set("lang", l);
+  document.getElementById("langBtn").hidden = !!workshop?.only;
   const pk = document.getElementById("picker");
   if(MOTION && !pk.hidden){ pk.classList.add("leaving"); setTimeout(() => { pk.hidden = true; pk.classList.remove("leaving"); }, 520); }
   else pk.hidden = true;
@@ -516,5 +518,5 @@ if(MOTION){
 /* Start: a QR scan opens with no ?lang=, so the visitor always picks a language first.
    After that, ?lang= in the URL keeps the choice on reload and in-page links. */
 const start = params.get("lang");
-if(isLang(start)) setLang(start); else { lang = "ar"; render(); showPicker(); }
+if(workshop?.only || isLang(start)) setLang(start); else { lang = "ar"; render(); showPicker(); }
 

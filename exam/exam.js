@@ -17,7 +17,7 @@ const store = {
 };
 
 const N_THEORY = 30, N_PERMITS = 5, MINUTES = 60, PASS = 90;
-const SEEN_KEY = "pac_seen_v2", RUN_KEY = "pac_run_v2";
+const SEEN_KEY = "pac_seen_v2", RUN_KEY = "pac_run_v3";
 
 const U = {
   ar: {
@@ -27,7 +27,7 @@ const U = {
     note: "اختبار اللجنة الفعلي يُقدَّم باللغتين العربية والإنجليزية فقط.",
     permitHead: "تصريح دخول الاختبار", serial: "رقم", name: "اسم المتقدم", namePh: "اختياري — يظهر على النتيجة فقط",
     role: "الفئة المتقدَّم لها", roles: { iss: "مصدر — جهد متوسط", issl: "مصدر — جهد منخفض", rec: "مستلم" },
-    roleForm: { iss: "يعبّئ تصريح MV PTW", issl: "يعبّئ تصريح LV PTW", rec: "يعبّئ تصريح LV PTW" },
+    roleForm: { iss: "MV PTW أو LOA مع التصاريح الثانوية", issl: "LV PTW أو LOA مع التصاريح الثانوية", rec: "LV PTW أو LOA مع التصاريح الثانوية" },
     parts: [["30 سؤالًا نظريًا", "تُسحب من بنك فيه {n} سؤالًا، ولا تتكرر عليك حتى تنتهي منها"], ["5 حالات تصاريح", "اختر الوثيقة أو الوثائق المطلوبة لكل عمل"], ["الجزء العملي", "تعبئة تصريح العمل الرسمي من بيانات حالة، وترتيب البرنامج التشغيلي"]],
     rules: "المدة 60 دقيقة · درجة النجاح 90% (البند 6.2.3)",
     fresh: "لم يظهر لك بعد: {n} سؤالًا", reset: "إعادة ضبط الأسئلة",
@@ -51,7 +51,7 @@ const U = {
     lock: { red: "قفل أحمر", yellow: "قفل أصفر", blue: "قفل أزرق" },
     studyTitle: "بنك الأسئلة والمصادر", studyLead: "كل سؤال مع إجابته الصحيحة ونص المصدر الذي يثبتها. ابحث بكلمة أو اختر المصدر.",
     search: "ابحث في الأسئلة", allDocs: "كل المصادر", more: "عرض المزيد", back: "رجوع", count: "{n} سؤالًا",
-    practicalItems: "بنود التصريح", formRule: "القاعدة",
+    practicalItems: "بنود التصريح", mainDoc: "الوثيقة الأساسية", secondary: "تصريح ثانوي", formRule: "القاعدة",
     org: { sec: "الشركة", con: "مقاول" }
   },
   en: {
@@ -61,7 +61,7 @@ const U = {
     note: "The actual committee exam is offered in Arabic and English only.",
     permitHead: "Exam entry permit", serial: "No.", name: "Candidate name", namePh: "Optional — shown on the result only",
     role: "Applying for", roles: { iss: "Issuer — Medium Voltage", issl: "Issuer — Low Voltage", rec: "Receiver" },
-    roleForm: { iss: "Fills an MV PTW", issl: "Fills an LV PTW", rec: "Fills an LV PTW" },
+    roleForm: { iss: "MV PTW or LOA, with secondary permits", issl: "LV PTW or LOA, with secondary permits", rec: "LV PTW or LOA, with secondary permits" },
     parts: [["30 theory questions", "Drawn from a bank of {n}; they don't repeat until you've seen them all"], ["5 permit cases", "Choose the document(s) each job needs"], ["Practical", "Fill in the official work permit from a case, and order the switching program"]],
     rules: "60 minutes · pass mark 90% (clause 6.2.3)",
     fresh: "Not seen yet: {n} questions", reset: "Reset question history",
@@ -85,7 +85,7 @@ const U = {
     lock: { red: "Red lock", yellow: "Yellow lock", blue: "Blue lock" },
     studyTitle: "Question bank & sources", studyLead: "Every question with its correct answer and the source text that proves it. Search a word or pick a source.",
     search: "Search the questions", allDocs: "All sources", more: "Show more", back: "Back", count: "{n} questions",
-    practicalItems: "Permit items", formRule: "Rule",
+    practicalItems: "Permit items", mainDoc: "Main document", secondary: "Secondary permit", formRule: "Rule",
     org: { sec: "SEC", con: "Contractor" }
   }
 };
@@ -118,113 +118,157 @@ const freshCount = () => { const s = new Set((store.get(SEEN_KEY, {}).theory) ||
 
 /* ---------- practical case generator ---------- */
 const NAMES = [["فهد العتيبي", "Fahad Alotaibi"], ["سعد الغامدي", "Saad Alghamdi"], ["ماجد الحربي", "Majed Alharbi"], ["خالد الشهري", "Khalid Alshehri"], ["عبدالله الزهراني", "Abdullah Alzahrani"], ["محمد القحطاني", "Mohammed Alqahtani"], ["ناصر المالكي", "Nasser Almalki"], ["تركي الجهني", "Turki Aljuhani"], ["عمر باوزير", "Omar Bawazir"], ["ياسر السلمي", "Yasser Alsulami"], ["بندر الدوسري", "Bandar Aldosari"], ["حسن العمري", "Hassan Alamri"]];
-const AREAS = [["الروضة", "Al-Rawdah"], ["الصفا", "Al-Safa"], ["المروة", "Al-Marwah"], ["النعيم", "Al-Naeem"], ["الزهراء", "Al-Zahra"], ["السلامة", "Al-Salamah"], ["البوادي", "Al-Bawadi"], ["الفيصلية", "Al-Faisaliyah"], ["الربوة", "Al-Rabwah"], ["النسيم", "Al-Naseem"]];
 const num = (a, b) => a + rnd(b - a + 1);
 const four = () => String(num(1000, 9899));
 function genCase(role) {
-  const mv = role === "iss";
-  const ppl = shuffle(NAMES), area = pick(AREAS);
-  const iss = { n: ppl[0], id: String(num(100000, 999899)), org: mv ? "sec" : pick(["sec", "con"]) };
+  const kind = role === "iss" ? pick(["mv", "mv", "loa"]) : pick(["lv", "lv", "loa"]);
+  const ppl = shuffle(NAMES);
+  const iss = { n: ppl[0], id: String(num(100000, 999899)), org: kind === "mv" || role === "iss" ? "sec" : pick(["sec", "con"]) };
   const rec = { n: ppl[1], id: String(num(100000, 999899)), org: pick(["sec", "con"]) };
   const cw = { n: ppl[2], id: String(num(100000, 999899)) };
   const off = { n: ppl[3], dept: pick([["الصيانة", "Maintenance"], ["الإنشاءات", "Construction"], ["التشغيل", "Operation"]]) };
-  const ptw = String(num(100000, 999899)), sp = `SP-${mv ? "MV" : "LV"}-2026-${four()}`, ref = `933-${num(1000000, 9899999)}`;
-  const days = mv ? pick([3, 7, 10, 12]) : pick([2, 4, 5, 9]);
+  const ptw = String(num(100, 9899)), wo = String(num(260000000, 269999999));
+  const sp = kind === "loa" ? "" : `SP-${kind === "mv" ? "MV" : "LV"}-2026-${four()}`, ref = `933-${num(1000000, 9899999)}`;
   let job;
-  if (mv) {
+  if (kind === "mv") {
     const a = `RMU-${four()}`, b = `RMU-${four()}`, ss = `S/S-${four()}`, nb = `RMU-${four()}`;
     job = pick([
-      { ar: `استبدال مفتاح الفرع (T-OFF) التالف في ${a} بمحطة التوزيع ${ss}، ويتطلب رافعة لرفع المفتاح.`, en: `Replace the faulty T-OFF switch in ${a} at substation ${ss}; a crane is needed to lift it.`,
-        loc: ss, pts: [`L1 · ${a}`, `L1 · ${b}`], codes: [a, b], dis: nb, cme: true, sec: ["LOP"] },
-      { ar: `إصلاح وصلة كابل جهد متوسط تالفة بين ${a} و ${b}، والوصلة داخل حفرية يلزم فتحها.`, en: `Repair a damaged MV cable joint between ${a} and ${b}; the joint is in an excavation that must be opened.`,
-        loc: `${a} – ${b}`, pts: [`L2 · ${a}`, `L1 · ${b}`], codes: [a, b], dis: nb, cme: true, sec: ["EXC"] },
-      { ar: `استبدال محول التوزيع في المحطة ${ss} المغذاة من مفتاح الفرع في ${a}، ويُرفع المحول بالرافعة.`, en: `Replace the distribution transformer at ${ss}, fed from the T-OFF in ${a}; the transformer is lifted by crane.`,
-        loc: ss, pts: [`T-OFF · ${a}`], codes: [a], dis: nb, cme: true, sec: ["LOP"] }
+      { ar: `استبدال مفتاح الفرع (T-OFF) التالف في ${a} بمحطة التوزيع ${ss}، ويتطلب رافعة لرفع المفتاح.`, en: `Replace the faulty T-OFF switch in ${a} at substation ${ss}; a crane is needed to lift it.`, loc: ss, pts: [`L1 · ${a}`, `L1 · ${b}`], codes: [a, b], dis: nb, cme: true, sec: ["LOP"] },
+      { ar: `إصلاح وصلة كابل جهد متوسط تالفة بين ${a} و ${b}، والوصلة داخل حفرية يلزم فتحها.`, en: `Repair a damaged MV cable joint between ${a} and ${b}; the joint is in an excavation that must be opened.`, loc: `${a} – ${b}`, pts: [`L2 · ${a}`, `L1 · ${b}`], codes: [a, b], dis: nb, cme: true, sec: ["EXC"] },
+      { ar: `استبدال محول التوزيع في المحطة ${ss} المغذاة من مفتاح الفرع في ${a}، ويُرفع المحول بالرافعة.`, en: `Replace the distribution transformer at ${ss}, fed from the T-OFF in ${a}; the transformer is lifted by crane.`, loc: ss, pts: [`T-OFF · ${a}`], codes: [a], dis: nb, cme: true, sec: ["LOP"] }
     ]);
-    job.disTxt = { ar: `ملاحظة: الوحدة المجاورة ${job.dis} تبقى في الخدمة ومشحونة.`, en: `Note: the neighbouring unit ${job.dis} stays in service and energized.` };
-  } else {
+    job.disTxt = { ar: `الوحدة المجاورة ${job.dis} تبقى في الخدمة ومشحونة.`, en: `The neighbouring unit ${job.dis} stays in service and energized.` };
+  } else if (kind === "lv") {
     const mp = `MP-${four()}`, nmp = `MP-${four()}`, ss = `S/S-${four()}`, cb = `LV-CB${num(1, 8)}`, pmt = `PMT-${four()}`, fu = num(1, 6);
     job = pick([
-      { ar: `استبدال كابل خدمة أرضي تالف بين الكبينة ${mp} وعداد المشترك، والعمل يتطلب حفرًا. للمشترك مولد احتياطي.`, en: `Replace a damaged underground service cable between pillar ${mp} and the customer's meter; digging is needed. The customer has a backup generator.`,
-        loc: mp, pts: [`Fuse ${fu} · ${mp}`, `Meter CB · customer`], codes: [mp, "CB"], dis: nmp, sec: ["EXC"] },
-      { ar: `استبدال قاعدة مصهرات تالفة في الكبينة ${mp} المغذاة من القاطع ${cb} في لوحة الجهد المنخفض بالمحطة ${ss}.`, en: `Replace a damaged fuse base in pillar ${mp}, fed from breaker ${cb} in the LV panel of ${ss}.`,
-        loc: `${mp} / ${ss}`, pts: [`${cb} · ${ss}`], codes: [cb], dis: nmp, sec: [] },
-      { ar: `استبدال موصلات خط هوائي جهد منخفض بين عمودين، مغذى من صندوق خدمة المحول ${pmt} (المصهر رقم ${fu})، والعمل من سلة رافعة.`, en: `Replace LV overhead conductors between two poles, fed from transformer ${pmt} service box (fuse ${fu}); work from a bucket truck.`,
-        loc: pmt, pts: [`Fuse ${fu} · ${pmt}`], codes: [pmt], dis: `PMT-${four()}`, sec: ["WAH"] },
-      { ar: `استبدال كبينة توزيع جهد منخفض ${mp} بأخرى جديدة ورفعها بالرافعة، والكبينة مغذاة من القاطع ${cb} بالمحطة ${ss}.`, en: `Replace LV pillar ${mp} with a new one lifted by crane; it is fed from breaker ${cb} at ${ss}.`,
-        loc: `${mp} / ${ss}`, pts: [`${cb} · ${ss}`], codes: [cb], dis: nmp, sec: ["LOP"] }
+      { ar: `استبدال كابل خدمة أرضي تالف بين الكبينة ${mp} وعداد المشترك، والعمل يتطلب حفرًا. للمشترك مولد احتياطي.`, en: `Replace a damaged underground service cable between pillar ${mp} and the customer's meter; digging is needed. The customer has a backup generator.`, loc: mp, pts: [`Fuse ${fu} · ${mp}`, `Meter CB · customer`], codes: [mp, "CB"], dis: nmp, sec: ["EXC"] },
+      { ar: `استبدال قاعدة مصهرات تالفة في الكبينة ${mp} المغذاة من القاطع ${cb} في لوحة الجهد المنخفض بالمحطة ${ss}.`, en: `Replace a damaged fuse base in pillar ${mp}, fed from breaker ${cb} in the LV panel of ${ss}.`, loc: `${mp} / ${ss}`, pts: [`${cb} · ${ss}`], codes: [cb], dis: nmp, sec: [] },
+      { ar: `استبدال موصلات خط هوائي جهد منخفض بين عمودين، مغذى من صندوق خدمة المحول ${pmt} (المصهر رقم ${fu})، والعمل من سلة رافعة.`, en: `Replace LV overhead conductors between two poles, fed from transformer ${pmt} service box (fuse ${fu}); work from a bucket truck.`, loc: pmt, pts: [`Fuse ${fu} · ${pmt}`], codes: [pmt], dis: `PMT-${four()}`, sec: ["WAH"] },
+      { ar: `استبدال كبينة توزيع جهد منخفض ${mp} بأخرى جديدة ورفعها بالرافعة، والكبينة مغذاة من القاطع ${cb} بالمحطة ${ss}.`, en: `Replace LV pillar ${mp} with a new one lifted by crane; it is fed from breaker ${cb} at ${ss}.`, loc: `${mp} / ${ss}`, pts: [`${cb} · ${ss}`], codes: [cb], dis: nmp, sec: ["LOP"] }
     ]);
     job.cme = false;
-    job.disTxt = { ar: `ملاحظة: الكبينة المجاورة ${job.dis} تبقى في الخدمة ومشحونة.`, en: `Note: the neighbouring item ${job.dis} stays in service and energized.` };
+    job.disTxt = { ar: `العنصر المجاور ${job.dis} يبقى في الخدمة ومشحونًا.`, en: `The neighbouring item ${job.dis} stays in service and energized.` };
+  } else {
+    const nb = role === "iss" ? `RMU-${four()}` : `MP-${four()}`, area = `${role === "iss" ? "MV" : "LV"}-PRJ-${four()}`;
+    job = pick([
+      { ar: `مشروع جديد (أمر عمل ${wo}): حفر وتمديد كابل ${role === "iss" ? "جهد متوسط" : "جهد منخفض"} جديد غير موصول بالشبكة، بمحاذاة كابلات قائمة مشحونة تتبع ${nb}، ورفع بكرات الكابل بالرافعة.`, en: `New project (work order ${wo}): dig and lay a new ${role === "iss" ? "MV" : "LV"} cable, not connected to the network, alongside existing live cables of ${nb}; cable drums lifted by crane.`, sec: ["EXC", "LOP"] },
+      { ar: `مشروع جديد (أمر عمل ${wo}): زرع أعمدة ${role === "iss" ? "جهد متوسط" : "جهد منخفض"} جديدة غير موصولة بالشبكة، بالحفر ورفع الأعمدة بالرافعة، قرب شبكة قائمة مشحونة تتبع ${nb}.`, en: `New project (work order ${wo}): plant new ${role === "iss" ? "MV" : "LV"} poles, not connected to the network, by digging and lifting the poles with a crane, near a live network of ${nb}.`, sec: ["EXC", "LOP"] },
+      { ar: `غسيل العوازل والخطوط الهوائية المشحونة التابعة لـ ${nb} من سلة رافعة، دون أي عزل.`, en: `Washing the insulators and energized overhead lines of ${nb} from a bucket truck, with no isolation.`, sec: ["WAH"] }
+    ]);
+    Object.assign(job, { loc: area, pts: [], codes: [], dis: nb, cme: false, loa: true,
+      disTxt: { ar: `لا يوجد عزل لأي معدة. المعدة ${nb} تبقى مشحونة.`, en: `No equipment is isolated. ${nb} stays energized.` } });
   }
   const n = job.pts.length;
   const red = Array.from({ length: n }, () => `R-${four()}`), yel = Array.from({ length: n }, () => `Y-${four()}`), blue = `B-${four()}`;
-  return { form: mv ? "mv" : "lv", iss, rec, cw, off, ptw, sp, ref, days, job, red, yel, blue };
+  const secNo = {}; for (const s of job.sec) secNo[s] = String(num(10000, 98999));
+  const exc = { depth: pick([1.0, 1.2, 1.8, 2.0]), water: false, gov: true };
+  const forms = [kind, ...job.sec.map(s => s.toLowerCase())];
+  return { v: 3, kind, form: kind, forms, iss, rec, cw, off, ptw, sp, ref, wo, job, red, yel, blue, secNo, exc };
 }
 const pname = p => p.n[L === "ar" ? 0 : 1];
 
 function briefHTML(c) {
-  const x = u(), ar = L === "ar";
+  const x = u(), ar = L === "ar", loa = c.kind === "loa";
   const locks = shuffle([...c.red.map(v => [v, "red"]), ...c.yel.map(v => [v, "yellow"]), [c.blue, "blue"]]);
   const row = (k, v) => `<div class="br"><dt>${esc(k)}</dt><dd>${v}</dd></div>`;
+  const sec = c.job.sec.map(s => `<b dir="ltr">${s} ${esc(c.secNo[s])}</b>`).join(ar ? "، " : ", ");
   return `<dl class="brief">
     ${row(ar ? "العمل" : "Job", esc(c.job[L]))}
-    ${row(ar ? "نقاط العزل في البرنامج" : "Isolation points (program)", c.job.pts.map(p => `<b dir="ltr">${esc(p)}</b>`).join(ar ? " و " : " and "))}
-    ${row("", esc(c.job.disTxt[L]))}
-    ${row(ar ? "مفتاح تأريض رئيسي" : "Main earth switch", c.job.cme ? (ar ? "متوفر في المعدة (يوضع بتوجيه مهندس التحكم)" : "Fitted (applied on the control engineer's instruction)") : (ar ? "لا يوجد" : "None"))}
-    ${row(ar ? "رقم البرنامج التشغيلي" : "Switching program", `<b dir="ltr">${esc(c.sp)}</b>`)}
-    ${c.form === "lv" ? row(ar ? "رقم البلاغ (933)" : "Call ref. (933)", `<b dir="ltr">${esc(c.ref)}</b>`) : ""}
-    ${row(ar ? "رقم التصريح" : "Permit No.", `<b dir="ltr">${esc(c.ptw)}</b>`)}
+    ${loa ? "" : row(ar ? "نقاط العزل في البرنامج" : "Isolation points (program)", c.job.pts.map(p => `<b dir="ltr">${esc(p)}</b>`).join(ar ? " و " : " and "))}
+    ${row(ar ? "ملاحظة" : "Note", esc(c.job.disTxt[L]))}
+    ${loa ? "" : row(ar ? "مفتاح تأريض رئيسي" : "Main earth switch", c.job.cme ? (ar ? "متوفر في المعدة (يوضع بتوجيه مهندس التحكم)" : "Fitted (applied on the control engineer's instruction)") : (ar ? "لا يوجد" : "None"))}
+    ${loa ? "" : row(ar ? "رقم البرنامج التشغيلي" : "Switching program", `<b dir="ltr">${esc(c.sp)}</b>`)}
+    ${c.kind === "lv" ? row(ar ? "رقم البلاغ (933)" : "Call ref. (933)", `<b dir="ltr">${esc(c.ref)}</b>`) : ""}
+    ${row(ar ? "رقم الوثيقة الأساسية" : "Main permit No.", `<b dir="ltr">${esc(c.ptw)}</b>`)}
+    ${c.job.sec.length ? row(ar ? "أرقام التصاريح الثانوية" : "Secondary permit Nos.", sec) : ""}
+    ${c.job.sec.includes("EXC") ? row(ar ? "بيانات الحفر" : "Excavation data", esc(ar ? `العمق ${c.exc.depth} م، لا توجد مياه، الخدمات الأرضية الموجودة: كابلات كهرباء فقط، والحفر في شارع عام وصدر له تصريح حفر حكومي.` : `Depth ${c.exc.depth} m, no water, existing services: electric cables only; the dig is in a public street and a government excavation permit was issued.`)) : ""}
+    ${c.job.sec.includes("WAH") ? row(ar ? "بيانات العمل على المرتفعات" : "Work-at-height data", esc(ar ? "العمل من سلة رافعة (Bucket truck) لها شهادة فحص سارية، ولا تُستخدم سقالات." : "Work from a bucket truck with a valid examination certificate; no scaffolding is used.")) : ""}
     ${row(ar ? "المصدر" : "Issuer", `${esc(pname(c.iss))} — <span dir="ltr">${esc(c.iss.id)}</span> (${esc(x.org[c.iss.org])})`)}
     ${row(ar ? "المستلم" : "Receiver", `${esc(pname(c.rec))} — <span dir="ltr">${esc(c.rec.id)}</span> (${esc(x.org[c.rec.org])})`)}
     ${row(ar ? "عامل مشارك" : "Competent worker", `${esc(pname(c.cw))} — <span dir="ltr">${esc(c.cw.id)}</span>`)}
     ${row(ar ? "مسؤول الجهة المعنية" : "Concerned official", `${esc(pname(c.off))} (${esc(c.off.dept[ar ? 0 : 1])})`)}
-    ${row(ar ? "أقفال الفريق" : "Team locks", locks.map(([v, col]) => `<span class="lk ${col}" dir="ltr">${esc(v)}</span>`).join(" "))}
-    ${row(ar ? "المدة المتوقعة" : "Expected duration", esc(ar ? `${c.days} أيام` : `${c.days} days`))}
-    ${row(ar ? "بعد انتهاء العمل" : "After the work", esc(ar ? "اكتمل العمل بنجاح، وسُحب العاملون، وأُزيلت الأدوات والأرضي المتنقل. أكمل جزء الإغلاق وجزء إعادة التشغيل في النموذج." : "The work was completed, workers withdrawn, tools and portable earths removed. Complete the closing and energization parts of the form."))}
+    ${loa ? "" : row(ar ? "أقفال الفريق" : "Team locks", locks.map(([v, col]) => `<span class="lk ${col}" dir="ltr">${esc(v)}</span>`).join(" "))}
+    ${row(ar ? "بعد انتهاء العمل" : "After the work", esc(ar ? "اكتمل العمل وسُحب العاملون وأُزيلت الأدوات. أكمل في كل نموذج أجزاء الإغلاق والجاهزية." : "The work is complete, workers withdrawn and tools removed. Complete the closing and readiness parts of every form."))}
   </dl>`;
 }
 
-/* ---------- grading of the filled permit ---------- */
+/* ---------- grading ---------- */
 const norm = s => String(s || "").toLowerCase().replace(/[ً-ٰٟ]/g, "").replace(/[أإآ]/g, "ا").replace(/ة/g, "ه").replace(/ى/g, "ي").replace(/[\s\-_.،,·:/]+/g, "");
 const has = (v, code) => norm(v).includes(norm(code));
 const nameOk = (v, p) => { const n = norm(v); return p.n.some(full => { const t = full.split(" "); return n.includes(norm(t[0])) && n.includes(norm(t[t.length - 1])); }); };
 const setEq = (a, b) => a.length === b.length && a.every(x => b.some(y => norm(y) === norm(x)));
+const naOk = v => !norm(v) || /^(na|n\/?a|لايوجد|لاينطبق|لا)$/.test(norm(v));
 function gradeForm(c, F) {
   const v = k => F[k] || "", on = k => F[k] === true;
-  const mv = c.form === "mv", ar = L === "ar";
+  const kind = c.kind, mv = kind === "mv", loa = kind === "loa", ar = L === "ar";
   const items = [];
   const add = (key, ok, ar_, en_, rule, src) => items.push({ key, ok, label: ar ? ar_ : en_, rule, src });
   const iso = v("iso1") + " " + v("iso2");
   if (!mv) add("org", on(c.iss.org === "sec" ? "issSEC" : "issCON") && !on(c.iss.org === "sec" ? "issCON" : "issSEC"), "جهة المصدر (شركة / مقاول)", "Issuer party (SEC / contractor)", ar ? `المصدر من ${U.ar.org[c.iss.org]}.` : `The Issuer is ${U.en.org[c.iss.org]}.`, [["DH", "5.4"]]);
   if (mv) add("sp", has(v("sp"), c.sp), "رقم البرنامج التشغيلي", "Switching program No.", ar ? `يُكتب ${c.sp} في جزء الإصدار قبل العزل.` : `Write ${c.sp} in the issue part before isolation.`, [["DH", "7.8.8"]]);
-  else add("ref", has(v("ref"), c.ref), "الرقم المرجعي (933)", "Reference no (933)", ar ? `رقم البلاغ ${c.ref}.` : `Call reference ${c.ref}.`, []);
-  add("ptw", has(v("ptw"), c.ptw), "رقم التصريح", "PTW No.", c.ptw, []);
-  add("loc", c.job.codes.some(k => has(v("loc"), k)) || has(v("loc"), c.job.loc.split(" ")[0]), "الموقع / المحطة", "Location / substation", c.job.loc, []);
+  else if (!loa) add("ref", has(v("ref"), c.ref), "الرقم المرجعي (933)", "Reference no (933)", ar ? `رقم البلاغ ${c.ref}.` : `Call reference ${c.ref}.`, []);
+  add("ptw", has(v("ptw"), c.ptw), "رقم التصريح", "Permit No.", c.ptw, []);
+  add("loc", loa ? norm(v("loc")).length >= 3 : c.job.codes.some(k => has(v("loc"), k)) || has(v("loc"), c.job.loc.split(" ")[0]), "الموقع / المحطة", "Location / substation", loa ? (ar ? "يُكتب موقع المشروع." : "Write the project location.") : c.job.loc, []);
   add("desc", norm(v("desc")).length >= 6, "وصف العمل", "Description of work", ar ? "يُكتب وصف واضح للعمل." : "A clear description of the work.", [["DH", "8.1.7"]]);
-  add("iso", c.job.codes.every(k => has(iso, k)) && !has(iso, c.job.dis), "نقاط العزل بوضوح", "Clearly isolated points", (ar ? "النقاط: " : "Points: ") + c.job.pts.join(" + ") + (ar ? ` — دون ${c.job.dis} لأنها ليست نقطة عزل.` : ` — not ${c.job.dis}, which is not an isolation point.`), [["DH", "7.8.10"]]);
-  const putKeys = mv ? ["putLock", "putHold", "putTape", "putCME", "putEarth"] : ["putSigns", "putHold", "putTape", "putLock", "putEarth"];
-  const putWant = { putLock: true, putHold: true, putTape: true, putSigns: true, putCME: !!c.job.cme, putEarth: false };
-  add("put", putKeys.every(k => on(k) === putWant[k]), "خانات «تم وضع» عند الإصدار", "'Has been put' at issue",
-    ar ? `تُعلَّم الأقفال وبطاقات التوقيف والأشرطة${mv ? "" : " والبطاقات التحذيرية"}${c.job.cme ? " والأرضي الرئيسي (يوضع قبل الإصدار)" : ""}. الأرضي الإضافي المتنقل لا يُعلَّم لأنه يوضع بعد إصدار الوثيقة.`
-       : `Tick locks, hold tags, tape${mv ? "" : ", warning signs"}${c.job.cme ? " and the circuit main earth (applied before issue)" : ""}. Not the additional portable earth: it goes on after the document is issued.`, [["DH", "8.2.7.3"], ["DH", "8.1.13"]]);
-  const filled = ks => ks.map(k => v(k).trim()).filter(Boolean);
-  add("slI", setEq(filled(["slI1", "slI2", "slI3"]), c.red), "أرقام أقفال المصدر", "Issuer lock numbers", (ar ? "الأقفال الحمراء للمصدر: " : "Red locks are the Issuer's: ") + c.red.join(", "), [["CS", "lock"]]);
-  add("slR", setEq(filled(["slR1", "slR2", "slR3"]), c.yel), "أرقام أقفال المستلم", "Receiver lock numbers", (ar ? "الأقفال الصفراء للمستلم: " : "Yellow locks are the Receiver's: ") + c.yel.join(", ") + (ar ? ` — والأزرق ${c.blue} للعامل المشارك لا يُكتب هنا.` : ` — blue ${c.blue} belongs to the competent worker.`), [["CS", "lock"]]);
+  if (loa) add("iso", naOk(v("iso1")) && naOk(v("iso2")) && !has(iso, c.job.dis), "نقاط العزل", "Isolation points", ar ? "لا يوجد عزل تحت هذه الوثيقة، فتُترك أو يُكتب NA. ولا تُكتب المعدة المشحونة على أنها نقطة عزل." : "No isolation under this document: leave blank or write NA. Never list the live equipment as an isolation point.", [["DH", "8.3.3.2.2"], ["DH", "8.3.3.4"]]);
+  else add("iso", c.job.codes.every(k => has(iso, k)) && !has(iso, c.job.dis), "نقاط العزل بوضوح", "Clearly isolated points", (ar ? "النقاط: " : "Points: ") + c.job.pts.join(" + ") + (ar ? ` — دون ${c.job.dis} لأنها ليست نقطة عزل.` : ` — not ${c.job.dis}, which is not an isolation point.`), [["DH", "7.8.10"]]);
+  const putKeys = mv || loa ? ["putLock", "putHold", "putTape", "putCME", "putEarth"] : ["putSigns", "putHold", "putTape", "putLock", "putEarth"];
+  const putWant = loa ? { putTape: true } : { putLock: true, putHold: true, putTape: true, putSigns: true, putCME: !!c.job.cme };
+  add("put", putKeys.every(k => on(k) === !!putWant[k]), "خانات «تم وضع» عند الإصدار", "'Has been put' at issue",
+    loa ? (ar ? "يُعلَّم الشريط التحذيري فقط لتحديد منطقة العمل. لا أقفال ولا بطاقات توقيف ولا أرضي لأنه لا يوجد عزل." : "Tick only the warning tape that marks the work area. No locks, hold tags or earths: nothing is isolated.")
+      : ar ? `تُعلَّم الأقفال وبطاقات التوقيف والأشرطة${mv ? "" : " والبطاقات التحذيرية"}${c.job.cme ? " والأرضي الرئيسي (يوضع قبل الإصدار)" : ""}. الأرضي الإضافي المتنقل لا يُعلَّم لأنه يوضع بعد إصدار الوثيقة.`
+      : `Tick locks, hold tags, tape${mv ? "" : ", warning signs"}${c.job.cme ? " and the circuit main earth (applied before issue)" : ""}. Not the additional portable earth: it goes on after the document is issued.`,
+    loa ? [["DH", "8.3.3.4"], ["DH", "8.1.9"]] : [["DH", "8.2.7.3"], ["DH", "8.1.13"]]);
+  const filled = ks => ks.map(k => v(k).trim()).filter(x => x && !naOk(x));
+  if (loa) add("sl", !filled(["slI1", "slI2", "slI3", "slR1", "slR2", "slR3"]).length, "أرقام أقفال السلامة", "Safety lock numbers", ar ? "لا عزل، فلا أقفال ولا أرقام (NA)." : "No isolation, so no locks or lock numbers (NA).", [["DH", "8.3.3.4"]]);
+  else {
+    add("slI", setEq(filled(["slI1", "slI2", "slI3"]), c.red), "أرقام أقفال المصدر", "Issuer lock numbers", (ar ? "الأقفال الحمراء للمصدر: " : "Red locks are the Issuer's: ") + c.red.join(", "), [["CS", "lock"]]);
+    add("slR", setEq(filled(["slR1", "slR2", "slR3"]), c.yel), "أرقام أقفال المستلم", "Receiver lock numbers", (ar ? "الأقفال الصفراء للمستلم: " : "Yellow locks are the Receiver's: ") + c.yel.join(", ") + (ar ? ` — والأزرق ${c.blue} للعامل المشارك لا يُكتب هنا.` : ` — blue ${c.blue} belongs to the competent worker.`), [["CS", "lock"]]);
+  }
   add("issP", nameOk(v("issName"), c.iss) && has(v("issId"), c.iss.id), "اسم المصدر ورقمه الوظيفي", "Issuer name and ID", `${pname(c.iss)} — ${c.iss.id}`, []);
   add("off", nameOk(v("off"), c.off), "مسؤول الجهة المعنية", "Concerned official", pname(c.off), []);
   add("issSig", on("issSig"), "توقيع المصدر", "Issuer signature", ar ? "لا يكتمل الإصدار دون توقيع المصدر." : "Issue is incomplete without the Issuer's signature.", []);
   add("recOrg", on(c.rec.org === "sec" ? "recSEC" : "recCON") && !on(c.rec.org === "sec" ? "recCON" : "recSEC"), "جهة المستلم (شركة / مقاول)", "Receiver party (SEC / contractor)", ar ? `المستلم من ${U.ar.org[c.rec.org]}.` : `The Receiver is ${U.en.org[c.rec.org]}.`, []);
-  add("cf", on("cf1") && on("cf2") && on("cf3"), "تأكيدات المستلم مع المصدر", "Receiver confirmations", ar ? "تُعلَّم الثلاث: نقاط العزل، والتأريض، والأقفال والبطاقات." : "Tick all three: isolation points, earthing, locks and tags.", [["DH", "7.10.8"]]);
+  if (loa) add("cf", !on("cf1") && !on("cf2") && !on("cf3"), "تأكيدات العزل والتأريض", "Isolation and earthing confirmations", ar ? "لا عزل ولا تأريض ولا أقفال، فلا تُعلَّم (NA)." : "Nothing isolated, earthed or locked, so leave them unticked (NA).", [["DH", "8.3.3.4"]]);
+  else add("cf", on("cf1") && on("cf2") && on("cf3"), "تأكيدات المستلم مع المصدر", "Receiver confirmations", ar ? "تُعلَّم الثلاث: نقاط العزل، والتأريض، والأقفال والبطاقات." : "Tick all three: isolation points, earthing, locks and tags.", [["DH", "7.10.8"]]);
   const secW = c.job.sec;
   add("sec", ["EXC", "WAH", "LOP"].every(p => on("sec" + p) === secW.includes(p)), "التصاريح الثانوية المرتبطة", "Associated secondary permits", secW.length ? secW.join(" + ") : (ar ? "لا يوجد تصريح ثانوي لهذا العمل." : "No secondary permit for this job."), [["DH", "8.3.5.1"]]);
-  add("cm", ["cm1", "cm2", "cm3", "cm4", "cm5"].every(on), "التزامات المستلم الخمسة", "The Receiver's five commitments", ar ? "تُعلَّم جميعها." : "Tick all of them.", []);
+  const cms = loa ? ["cm1", "cm2", "cm3", "cm4"] : ["cm1", "cm2", "cm3", "cm4", "cm5"];
+  add("cm", cms.every(on), loa ? "التزامات المستلم الأربعة" : "التزامات المستلم الخمسة", loa ? "The Receiver's four commitments" : "The Receiver's five commitments", ar ? "تُعلَّم جميعها." : "Tick all of them.", []);
   add("recP", nameOk(v("recName"), c.rec) && has(v("recId"), c.rec.id), "اسم المستلم ورقمه الوظيفي", "Receiver name and ID", `${pname(c.rec)} — ${c.rec.id}` + (ar ? ` (وليس العامل المشارك ${pname(c.cw)})` : ` (not the competent worker ${pname(c.cw)})`), [["DH", "8.1.3"]]);
   add("recSig", on("recSig"), "توقيع المستلم", "Receiver signature", ar ? "توقيع المستلم يعني قبوله الكامل لشروط التصريح." : "The Receiver's signature means full acceptance of the permit's conditions.", [["CS", "sign"]]);
-  add("close", on("closed") && !on("cancel"), "الإغلاق (وليس الإلغاء)", "Closing (not cancelling)", ar ? "العمل اكتمل، فيُعلَّم الإغلاق مع جاهزية المعدة، لا الإلغاء." : "The work is complete, so tick closing with equipment ready — not cancel.", [["DH", "13.1"]]);
-  add("dc", on("dc1") && on("dc2") && on("dc3"), "إقرارات المستلم عند الإغلاق", "Receiver's closing declarations", ar ? "سحب العاملين، وإزالة الأدوات والتأريض الإضافي، وإغلاق التصاريح الثانوية." : "Workers withdrawn, tools and additional earthing removed, secondary permits closed.", [["DH", "11"]]);
+  add("close", on("closed") && !on("cancel"), "الإغلاق (وليس الإلغاء)", "Closing (not cancelling)", ar ? "العمل اكتمل، فيُعلَّم الإغلاق لا الإلغاء." : "The work is complete, so tick closing — not cancel.", [["DH", "13.1"]]);
+  add("dc", on("dc1") && on("dc2") && on("dc3"), "إقرارات المستلم عند الإغلاق", "Receiver's closing declarations", ar ? "سحب العاملين، وإزالة الأدوات، وإغلاق التصاريح الثانوية." : "Workers withdrawn, tools removed, secondary permits closed.", [["DH", "11"]]);
   add("clP", nameOk(v("clName"), c.rec) && has(v("clId"), c.rec.id) && on("clSig"), "اسم ورقم وتوقيع المستلم في الإغلاق", "Receiver name, ID and signature at closing", ar ? "يغلق الوثيقة مستلمها نفسه." : "The document is closed by its own Receiver.", [["DH", "8.1.5.6"]]);
-  add("fP", nameOk(v("fName"), c.iss) && has(v("fId"), c.iss.id) && on("fSig") && nameOk(v("fOff"), c.off), "جزء المصدر للإعادة للتشغيل", "Issuer's energization part", ar ? "يتحقق المصدر من الإغلاق ويبلغ مسؤول الجهة المعنية بجاهزية المعدة ويوقّع." : "The Issuer verifies the closing, informs the concerned official the equipment is ready, and signs.", [["DH", "11.3"]]);
+  add("fP", nameOk(v("fName"), c.iss) && has(v("fId"), c.iss.id) && on("fSig") && nameOk(v("fOff"), c.off), "جزء المصدر الأخير", "Issuer's final part", ar ? "يتحقق المصدر من الإغلاق ويبلغ مسؤول الجهة المعنية بجاهزية المعدة ويوقّع." : "The Issuer verifies the closing, informs the concerned official the equipment is ready, and signs.", [["DH", "11.3"]]);
+  return items;
+}
+/* secondary permits: issued by the main Issuer, received by the main Receiver (8.3.5.2-3 / 8.3.6.2-3 / 8.3.7.2-3) */
+const CK_WANT = {
+  lop: c => Array(13).fill(true),
+  wah: c => [true, true, true, true, true, true, false, false, false, false, true, true],
+  exc: c => { const d = c.exc.depth >= 1.5; return [true, null, d, true, true, true, true, true, c.exc.gov, true, c.exc.water, d, true]; }
+};
+const SEC_CL = { exc: "8.3.6", lop: "8.3.7", wah: "8.3.5" };
+function gradeSec(c, f, F) {
+  const v = k => F[k] || "", on = k => F[k] === true, ar = L === "ar", P = f.toUpperCase();
+  const items = [], add = (key, ok, ar_, en_, rule, src) => items.push({ key: f + key, ok, label: `${P} · ${ar ? ar_ : en_}`, rule, src });
+  const cl = SEC_CL[f];
+  add("no", has(v("no"), c.secNo[P]), "رقم التصريح الثانوي", "Secondary permit No.", c.secNo[P], []);
+  add("main", has(v("main"), c.ptw), "رقم الوثيقة الأساسية المرتبطة", "Associated main permit No.", ar ? `رقم الوثيقة الأساسية ${c.ptw}.` : `The main permit No. ${c.ptw}.`, [["DH", cl + ".1"]]);
+  const tWant = { mv: "tMV", lv: "tLV", loa: "tLOA" }[c.kind];
+  add("type", ["tMV", "tLV", "tLOA", "tSFT"].every(k => on(k) === (k === tWant)), "نوع الوثيقة الأساسية", "Type of the main permit", { mv: "MV PTW", lv: "LV PTW", loa: "LOA" }[c.kind], [["DH", cl + ".1"]]);
+  if (f === "exc") add("sv", on("svElec") && !on("svWater") && !on("svComm") && !on("svSew"), "الخدمات الأرضية الموجودة", "Existing services", ar ? "كابلات كهرباء فقط حسب بيانات الحفر." : "Electric cables only, per the excavation data.", []);
+  else add("work", norm(v("work")).length >= 6, "العمل المراد تنفيذه", "Work to be done", ar ? "يُكتب العمل." : "Describe the work.", []);
+  add("iss", nameOk(v("issName"), c.iss) && has(v("issId"), c.iss.id) && on("issSig"), "المصدر: الاسم والرقم والتوقيع", "Issuer: name, ID and signature", ar ? `يصدر الوثيقة الثانوية مصدر الوثيقة الأساسية: ${pname(c.iss)}.` : `The secondary permit is issued by the main Issuer: ${pname(c.iss)}.`, [["DH", cl + ".2"]]);
+  add("recOrg", on(c.rec.org === "sec" ? "recSEC" : "recCON") && !on(c.rec.org === "sec" ? "recCON" : "recSEC") && nameOk(v("recData"), c.rec), "بيانات المستلم وجهته", "Receiver data and party", ar ? `يستلمها مستلم الوثيقة الأساسية: ${pname(c.rec)}.` : `It is received by the main Receiver: ${pname(c.rec)}.`, [["DH", cl + ".3"]]);
+  const want = CK_WANT[f](c), ok = want.every((w, i) => w === null || on("ck" + (i + 1)) === w);
+  const lab = FORM_MAP[f].lab, na = want.map((w, i) => w === false ? lab["ck" + (i + 1)][L] : null).filter(Boolean);
+  add("ck", ok, "قائمة المتطلبات", "Requirements checklist",
+    (ar ? "تُعلَّم المتطلبات المنطبقة فقط. " : "Tick only the requirements that apply. ") + (na.length ? (ar ? "لا تنطبق هنا (NA): " : "Not applicable here (NA): ") + na.join("؛ ") : (ar ? "كلها تنطبق على هذا العمل." : "All apply to this job.")), []);
+  add("rec", nameOk(v("recName"), c.rec) && has(v("recId"), c.rec.id) && on("recSig"), "التزام المستلم: الاسم والرقم والتوقيع", "Receiver commitment: name, ID, signature", pname(c.rec), []);
+  add("rd", nameOk(v("rdName"), c.rec) && has(v("rdId"), c.rec.id) && on("rdSig"), "جاهزية الموقع (المستلم)", "Work-site readiness (Receiver)", ar ? "يقرّ المستلم بإزالة الأدوات وإخلاء الموقع." : "The Receiver confirms tools removed and site cleared.", []);
+  add("cl", nameOk(v("clName"), c.iss) && has(v("clId"), c.iss.id) && on("clSig"), "الإغلاق (المصدر)", "Closing (Issuer)", ar ? "يُغلق التصريح الثانوي مصدره." : "The secondary permit is closed by its Issuer.", []);
   return items;
 }
 const FORM_SRC = {
@@ -242,9 +286,9 @@ function newSession(name, role) {
   const order = {};
   for (const q of theory) order[q.id] = q.t === "tf" ? [0, 1] : keepOrder(q) ? [...q.ar.o.keys()] : shuffle([...q.ar.o.keys()]);
   return {
-    v: 2, name, role, theory: theory.map(q => q.id), order, tAns: {}, flags: {},
+    v: 3, name, role, theory: theory.map(q => q.id), order, tAns: {}, flags: {},
     permits: drawFresh(EXAM_PERMITS, N_PERMITS, "permits").map(p => p.id), pAns: {},
-    c: genCase(role), F: {},
+    c: genCase(role), F: {}, tab: 0,
     sp: { iso: { order: shuffle([...SP_STEPS.iso.ar.keys()]), pick: [] }, ret: { order: shuffle([...SP_STEPS.ret.ar.keys()]), pick: [] } },
     sec: 0, qi: 0, t0: Date.now(), end: Date.now() + MINUTES * 60000, done: false
   };
@@ -294,7 +338,7 @@ function render() {
 
 function renderIntro() {
   const x = u(), run = store.sget(RUN_KEY), serial = String(num(100000, 999999));
-  const valid = run && run.v === 2 && !run.done && run.end > Date.now();
+  const valid = run && run.v === 3 && !run.done && run.end > Date.now();
   app.innerHTML = head(false) + `<main class="intro">
     <section class="cover">
       <h1>${esc(x.title)}</h1>
@@ -401,81 +445,93 @@ function secPermits() {
   $("#go").onclick = () => { S.sec = 2; save(); renderExam(); scrollTo(0, 0); };
 }
 
-/* ---------- the permit form ---------- */
+/* ---------- the permit forms (main + secondary) ---------- */
 const PT_W = 595.32, PT_H = 841.92;
 const PAIRS = { issSEC: "issCON", issCON: "issSEC", recSEC: "recCON", recCON: "recSEC", closed: "cancel", cancel: "closed" };
 let zoom = 1;
-function sigName(k) { const c = S.c; return ["recSig", "clSig"].includes(k) ? pname(c.rec) : pname(c.iss); }
-function fieldHTML([k, t, x, y, w, h]) {
-  const F = S.F, st = `left:${(x / PT_W * 100).toFixed(3)}%;top:${(y / PT_H * 100).toFixed(3)}%;width:${(w / PT_W * 100).toFixed(3)}%;height:${(h / PT_H * 100).toFixed(3)}%`;
-  const lab = esc(FORM_LABEL[k][L]);
+const curF = () => S.c.forms[S.tab || 0];
+const FV = f => (S.F[f] = S.F[f] || {});
+const labOf = (f, k) => ((FORM_MAP[f].lab || {})[k] || FORM_LABEL[k])[L];
+function sigName(f, k) {
+  const main = f === S.c.kind, c = S.c;
+  const rec = ["recSig", "rdSig"].includes(k) || (k === "clSig" && main);
+  return pname(rec ? c.rec : c.iss);
+}
+function fieldHTML(f, [k, t, x, y, w, h]) {
+  const F = FV(f), st = `left:${(x / PT_W * 100).toFixed(3)}%;top:${(y / PT_H * 100).toFixed(3)}%;width:${(w / PT_W * 100).toFixed(3)}%;height:${(h / PT_H * 100).toFixed(3)}%`;
+  const lab = esc(labOf(f, k));
   if (t === "c") return `<button type="button" class="fx fc ${F[k] ? "on" : ""}" data-k="${k}" style="${st}" role="checkbox" aria-checked="${!!F[k]}" aria-label="${lab}"></button>`;
-  if (t === "s") return `<button type="button" class="fx fs ${F[k] ? "on" : ""}" data-k="${k}" style="${st}" aria-label="${lab}">${F[k] ? `<span lang="${L}">${esc(sigName(k))}</span>` : ""}</button>`;
+  if (t === "s") return `<button type="button" class="fx fs ${F[k] ? "on" : ""}" data-k="${k}" style="${st}" aria-label="${lab}">${F[k] ? `<span lang="${L}">${esc(sigName(f, k))}</span>` : ""}</button>`;
   const v = F[k] || "";
   return `<button type="button" class="fx ft ${v ? "on" : ""}" data-k="${k}" style="${st}" aria-label="${lab}${v ? ": " + esc(v) : ""}"><span dir="auto">${esc(v)}</span></button>`;
 }
+const cntTxt = f => { const fm = FORM_MAP[f]; return `${fm.f.filter(x => FV(f)[x[0]]).length} / ${fm.f.length} ${u().filled}`; };
+function formPane() {
+  const f = curF(), fm = FORM_MAP[f], x = u(), t = S.tab || 0;
+  return `<div class="ftabs" role="tablist">${S.c.forms.map((g, i) => `<button type="button" role="tab" class="ftab ${i === t ? "on" : ""}" aria-selected="${i === t}" data-t="${i}"><b dir="ltr">${FORM_MAP[g].name}</b><small>${esc(i ? x.secondary : x.mainDoc)}</small></button>`).join("")}</div>
+    <div class="ftools"><p class="hint">${esc(x.tapHint)}</p>
+      <div class="zm"><span class="cnt" id="cnt">${cntTxt(f)}</span>
+      <button type="button" class="btn sm" id="zo" aria-label="${esc(x.zoomOut)}">−</button><button type="button" class="btn sm" id="zi" aria-label="${esc(x.zoomIn)}">+</button></div></div>
+    <div class="pscroll" id="pscroll"><div class="pf" id="pf" style="width:${zoom * 100}%" dir="ltr">
+      <img src="${fm.img}" alt="${fm.name}" width="1240" height="1753" draggable="false">
+      ${fm.f.map(r => fieldHTML(f, r)).join("")}
+    </div></div>`;
+}
+function bindForm() {
+  $("#zi").onclick = () => setZoom(Math.min(3, zoom + .5));
+  $("#zo").onclick = () => setZoom(Math.max(1, zoom - .5));
+  $("#pf").onclick = e => { const b = e.target.closest(".fx"); if (b) tapField(b.dataset.k); };
+  $$(".ftab").forEach(b => b.onclick = () => { S.tab = +b.dataset.t; save(); $("#fpane").innerHTML = formPane(); bindForm(); });
+}
 function secPractical() {
-  const x = u(), c = S.c, fm = FORM_MAP[c.form];
-  const total = fm.f.length, done = fm.f.filter(f => S.F[f[0]]).length;
+  const x = u(), c = S.c;
   $("#sec").innerHTML = `<div class="prac">
     <section class="card">
-      <div class="formhead"><h2 class="sh">${esc(x.formTitle)}</h2><span class="ftag ${c.form}" dir="ltr">${c.form === "mv" ? "MV" : "LV"} PTW</span></div>
+      <div class="formhead"><h2 class="sh">${esc(x.formTitle)}</h2><span class="ftag" dir="ltr">${c.forms.map(f => FORM_MAP[f].name).join(" + ")}</span></div>
       <details class="bd" open><summary>${esc(x.brief)}</summary>${briefHTML(c)}</details>
     </section>
-    <section class="card formcard">
-      <div class="ftools"><p class="hint">${esc(x.tapHint)}</p>
-        <div class="zm"><span class="cnt" id="cnt">${done} / ${total} ${esc(x.filled)}</span>
-        <button type="button" class="btn sm" id="zo" aria-label="${esc(x.zoomOut)}">−</button><button type="button" class="btn sm" id="zi" aria-label="${esc(x.zoomIn)}">+</button></div></div>
-      <div class="pscroll" id="pscroll"><div class="pf" id="pf" style="width:${zoom * 100}%" dir="ltr">
-        <img src="${fm.img}" alt="${c.form === "mv" ? "MV" : "LV"} PERMIT TO WORK" width="1240" height="1754" draggable="false">
-        ${fm.f.map(fieldHTML).join("")}
-      </div></div>
-    </section>
+    <section class="card formcard" id="fpane">${formPane()}</section>
     <section class="card"><h2 class="sh">${esc(x.spTitle)}</h2><p class="hint">${esc(x.spHint)}</p>
       ${["iso", "ret"].map(spBlock).join("")}
       <div class="qnav end"><button type="button" class="btn primary big" id="fin">${esc(x.finish)}</button></div>
     </section></div>`;
-  $("#zi").onclick = () => setZoom(Math.min(3, zoom + .5));
-  $("#zo").onclick = () => setZoom(Math.max(1, zoom - .5));
-  $("#pf").onclick = e => { const b = e.target.closest(".fx"); if (b) tapField(b.dataset.k); };
-  bindSP();
+  bindForm(); bindSP();
   $("#fin").onclick = askSubmit;
 }
 function setZoom(z) { zoom = z; const pf = $("#pf"); if (pf) pf.style.width = z * 100 + "%"; }
 function refreshField(k) {
-  const f = FORM_MAP[S.c.form].f.find(f => f[0] === k), el = $(`.fx[data-k="${k}"]`);
-  if (el) el.outerHTML = fieldHTML(f);
-  const fm = FORM_MAP[S.c.form], cnt = $("#cnt");
-  if (cnt) cnt.textContent = `${fm.f.filter(f => S.F[f[0]]).length} / ${fm.f.length} ${u().filled}`;
+  const f = curF(), r = FORM_MAP[f].f.find(r => r[0] === k), el = $(`.fx[data-k="${k}"]`);
+  if (el) el.outerHTML = fieldHTML(f, r);
+  const cnt = $("#cnt"); if (cnt) cnt.textContent = cntTxt(f);
 }
 function tapField(k) {
-  const f = FORM_MAP[S.c.form].f.find(f => f[0] === k); if (!f) return;
-  if (f[1] === "c") {
-    S.F[k] = !S.F[k];
-    if (S.F[k] && PAIRS[k] && S.F[PAIRS[k]]) { S.F[PAIRS[k]] = false; refreshField(PAIRS[k]); }
+  const f = curF(), F = FV(f), r = FORM_MAP[f].f.find(r => r[0] === k); if (!r) return;
+  if (r[1] === "c") {
+    F[k] = !F[k];
+    if (F[k] && PAIRS[k] && F[PAIRS[k]]) { F[PAIRS[k]] = false; refreshField(PAIRS[k]); }
     save(); refreshField(k); return;
   }
-  if (f[1] === "s") { S.F[k] = !S.F[k]; save(); refreshField(k); return; }
+  if (r[1] === "s") { F[k] = !F[k]; save(); refreshField(k); return; }
   openSheet(k);
 }
 function openSheet(k) {
-  const x = u(), texts = FORM_MAP[S.c.form].f.filter(f => f[1] === "t").map(f => f[0]);
+  const x = u(), f = curF(), F = FV(f), texts = FORM_MAP[f].f.filter(r => r[1] === "t").map(r => r[0]);
   const i = texts.indexOf(k), nextK = texts[i + 1];
   closeSheet();
   const d = document.createElement("div");
   d.className = "sheet"; d.setAttribute("role", "dialog"); d.setAttribute("aria-modal", "true"); d.setAttribute("aria-labelledby", "shl");
-  d.innerHTML = `<div class="sbox"><label id="shl" for="shi">${esc(FORM_LABEL[k][L])}</label>
-    <input id="shi" maxlength="80" autocomplete="off" dir="auto" value="${esc(S.F[k] || "")}">
+  d.innerHTML = `<div class="sbox"><label id="shl" for="shi">${esc(labOf(f, k))}</label>
+    <input id="shi" maxlength="80" autocomplete="off" dir="auto" value="${esc(F[k] || "")}">
     <div class="row"><button type="button" class="btn" id="shc">${esc(x.clear)}</button><span class="grow"></span>
     <button type="button" class="btn" id="shx">${esc(x.close)}</button>${nextK ? `<button type="button" class="btn primary" id="shn">${esc(x.nextField)}</button>` : `<button type="button" class="btn primary" id="shs">${esc(x.save)}</button>`}</div></div>`;
   document.body.appendChild(d);
   const inp = $("#shi"); inp.focus(); inp.select();
-  const commit = () => { const v = inp.value.replace(/[\u0000-\u001f]/g, "").trim().slice(0, 80); if (v) S.F[k] = v; else delete S.F[k]; save(); refreshField(k); };
+  const commit = () => { const v = inp.value.replace(/[\u0000-\u001f]/g, "").trim().slice(0, 80); if (v) F[k] = v; else delete F[k]; save(); refreshField(k); };
   $("#shc").onclick = () => { inp.value = ""; inp.focus(); };
   $("#shx").onclick = () => { commit(); closeSheet(); };
   const n = $("#shn"); if (n) n.onclick = () => { commit(); openSheet(nextK); scrollToField(nextK); };
-  const s = $("#shs"); if (s) s.onclick = () => { commit(); closeSheet(); };
-  inp.onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); (n || s).click(); } if (e.key === "Escape") { commit(); closeSheet(); } };
+  const sv = $("#shs"); if (sv) sv.onclick = () => { commit(); closeSheet(); };
+  inp.onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); (n || sv).click(); } if (e.key === "Escape") { commit(); closeSheet(); } };
   d.onclick = e => { if (e.target === d) { commit(); closeSheet(); } };
   scrollToField(k);
 }
@@ -524,7 +580,7 @@ const sameSet = (a, b) => a.length === b.length && [...a].sort().join("|") === [
 function score() {
   const th = S.theory.map(id => { const q = TH(id); return { q, ok: S.tAns[id] === q.a }; });
   const pm = S.permits.map(id => { const p = PM(id); return { p, ok: sameSet(S.pAns[id] || [], p.a) }; });
-  const ff = gradeForm(S.c, S.F);
+  const ff = [...gradeForm(S.c, FV(S.c.kind)), ...S.c.forms.slice(1).flatMap(f => gradeSec(S.c, f, FV(f)))];
   const spOk = k => S.sp[k].pick.reduce((s, v, i) => s + (v === i ? 1 : 0), 0);
   const spTot = SP_STEPS.iso.ar.length + SP_STEPS.ret.ar.length;
   const thE = th.filter(z => z.ok).length, pmE = pm.filter(z => z.ok).length;
@@ -578,7 +634,7 @@ function renderResult() {
       <div class="seg" role="group"><button type="button" class="${onlyWrong ? "on" : ""}" id="ow" aria-pressed="${onlyWrong}">${esc(x.onlyWrong)}</button><button type="button" class="${onlyWrong ? "" : "on"}" id="al" aria-pressed="${!onlyWrong}">${esc(x.all)}</button></div></div>
       <h3 class="rh">${esc(x.theory)}</h3><ul class="rvl">${thList || empty}</ul>
       <h3 class="rh">${esc(x.permits)}</h3><ul class="rvl">${pmList || empty}</ul>
-      <h3 class="rh">${esc(x.practical)} — ${S.c.form === "mv" ? "MV" : "LV"} PTW</h3><ul class="rvl">${ffList + spList || empty}</ul>
+      <h3 class="rh">${esc(x.practical)} — <span dir="ltr">${S.c.forms.map(f => FORM_MAP[f].name).join(" + ")}</span></h3><ul class="rvl">${ffList + spList || empty}</ul>
     </section>
     <p class="disc">${esc(x.disc)}</p></main>`;
   bindLang();

@@ -25,6 +25,8 @@ const U = {
     title: "اختبار التأهيل لوثائق السلامة",
     lead: "نظري، واختيار التصاريح، وتعبئة تصريح العمل الأصلي بنفسك، ثم درجة نهائية ومراجعة لكل خطأ مع نص المصدر.",
     note: "اختبار اللجنة الفعلي يُقدَّم باللغتين العربية والإنجليزية فقط.",
+    kicker: "المصدر والمستلم · وثائق السلامة", guideBtn: "اقرأ دليل الاختبار", howSim: "كيف تعمل هذه المحاكاة",
+    stats: [["40", "سؤالًا نظريًا"], ["90%", "درجة النجاح"], ["60", "دقيقة"], ["{n}", "سؤالًا في البنك"]],
     permitHead: "تصريح دخول الاختبار", serial: "رقم", name: "اسم المتقدم", namePh: "اختياري — يظهر على النتيجة فقط",
     role: "الفئة المتقدَّم لها", roles: { iss: "مصدر — جهد متوسط", issl: "مصدر — جهد منخفض", rec: "مستلم" },
     roleForm: { iss: "MV PTW أو LOA مع التصاريح الثانوية", issl: "LV PTW أو LOA مع التصاريح الثانوية", rec: "LV PTW أو LOA مع التصاريح الثانوية" },
@@ -59,6 +61,8 @@ const U = {
     title: "Safety Documents Authorization Exam",
     lead: "Theory, permit selection, and filling in the official work permit yourself, then a final score and a review of every mistake with the source text.",
     note: "The actual committee exam is offered in Arabic and English only.",
+    kicker: "Issuer & Receiver · Safety documents", guideBtn: "Read the exam guide", howSim: "How this simulation works",
+    stats: [["40", "theory questions"], ["90%", "pass mark"], ["60", "minutes"], ["{n}", "questions in the bank"]],
     permitHead: "Exam entry permit", serial: "No.", name: "Candidate name", namePh: "Optional — shown on the result only",
     role: "Applying for", roles: { iss: "Issuer — Medium Voltage", issl: "Issuer — Low Voltage", rec: "Receiver" },
     roleForm: { iss: "MV PTW or LOA, with secondary permits", issl: "LV PTW or LOA, with secondary permits", rec: "LV PTW or LOA, with secondary permits" },
@@ -306,9 +310,9 @@ function setLang(l) {
 }
 function head(timer) {
   return `<header class="bar"><div class="bwrap">
-    <a class="brand" href="./?lang=${L}"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span><span>${esc(u().brand)}</span></a>
+    <a class="brand" href="./?lang=${L}"><span class="m" aria-hidden="true">⛑️</span><span>${esc(u().brand)}</span></a>
     ${timer ? `<div class="timer" id="timer" role="timer">--:--</div>` : `<button class="lbtn" id="lbtn" type="button" lang="${L === "ar" ? "en" : "ar"}">${esc(u().other)}</button>`}
-  </div>${timer ? `<div class="tbar"><i id="tfill"></i></div>` : ""}</header>`;
+  </div>${timer ? `<div class="tbar"><i id="tfill"></i></div>` : `<div class="stripe"></div>`}</header>`;
 }
 function bindLang() { const b = $("#lbtn"); if (b) b.onclick = () => setLang(L === "ar" ? "en" : "ar"); }
 const lockSVG = (c, sm) => {
@@ -329,6 +333,115 @@ function srcHTML(list) {
   }).join("")}</div>`;
 }
 
+/* ---------- exam guide (shown before the exam) ---------- */
+const SW = c => `<i class="sw" style="background:${c}"></i>`;
+const GUIDE = {
+  ar: [
+    { h: "كيف يبدو اختبار اللجنة", items: [
+      "<b>40 سؤالًا نظريًا</b>: اختيار من متعدد وصح أو خطأ، وكل سؤال مكتوب بالعربية والإنجليزية معًا.",
+      "أسئلة صح أو خطأ تظهر بثلاثة خيارات: <b>صح، خطأ، وخيار فارغ «-»</b>. لا تختر الفارغ، اختر إجابتك.",
+      "بعد النظري تنتقل إلى <b>الجزء العملي</b>، وقد يشمل اختيار وثائق السلامة المطلوبة لأعمال محددة وكتابة التصاريح.",
+      "الاختبار إلكتروني بعدّاد وقت وتحت <b>مراقبة مباشرة</b>.",
+      "درجة النجاح <b>90%</b>.<small>الإجراء DHSEM 01-002 — البند 6.2.3</small>"
+    ] },
+    { h: "من يصدر ماذا", must: [
+      "<b>الجهد المتوسط لا يصدر وثائقه إلا موظف السعودية للطاقة المعمَّد.</b> موظف المقاول يُعمَّد مصدرًا على الجهد المنخفض فقط.<small>البندان 5.4 و5.3</small>",
+      "<b>طلب العزل والتأريض (IER) لا يتعامل به إلا موظفو السعودية للطاقة:</b> يُصدر ويُستلم بين مراكز التحكم للجهات التشغيلية، وليس من الوثائق المصرّح للمقاول بإصدارها.<small>البنود 8.3.4.2 و5.3 و5.8</small>"
+    ], items: [
+      "<b>مصدر السعودية للطاقة:</b> جميع وثائق السلامة على الجهد المتوسط والمنخفض.<small>البند 5.4</small>",
+      "<b>مصدر المقاول (منخفض فقط):</b> <bdi>LV PTW · LOA · SFT</bdi>، ومعها الثانوية <bdi>EXC · WAH · LOP</bdi>.<small>البند 5.3</small>",
+      "<b>المستلم:</b> موظف السعودية للطاقة أو المقاول، على الجهد المتوسط والمنخفض.<small>البند 5.5</small>",
+      "عزل معدات الجهد المتوسط تحت وثيقة <bdi>LOA</bdi> لموظفي الشركة المعمَّدين فقط.<small>البند 8.3.3.3</small>"
+    ] },
+    { h: "شروط بطاقة مصدر المقاول (جهد منخفض)", items: [
+      "دبلوم كهرباء، وخبرة لا تقل عن 3 سنوات في تشغيل الشبكات أو الأعمال الكهربائية.<small>البند 6.2.1</small>",
+      "اجتياز الدورات بنسبة لا تقل عن 90%: التعريف بالسلامة، وقواعد سلامة التوزيع والعزل الآمن والمناورة، والإسعافات الأولية.<small>البند 6.2.2</small>",
+      "اجتياز اختبار لجنة التأهيل بنسبة لا تقل عن 90%.<small>البند 6.2.3</small>",
+      "صلاحية التعميد سنتان ثم يُجدَّد، ويُسحب عند خطأ مناورة غير آمن أو مخالفة سلامة.<small>كتاب CSCC04 — الدرس 4</small>"
+    ] },
+    { h: "أكثر ما تكرر في اختبار اللجنة", items: [
+      "ألوان الأقفال والبطاقات التحذيرية.",
+      "التأريض: 4 قضبان لعمود الجهد المتوسط، و4 أمتار بين أرضي المتوسط والمنخفض، وقيم المقاومة.",
+      "المفتاح الشامل ممنوع، وجهاز الأقفال المتعدد، وضياع مفتاح القفل.",
+      "مدد الوثائق ومن يوافق على تمديدها.",
+      "<bdi>IER · LOA · WAH · LOP</bdi>، والأماكن المحصورة، والعصي العازلة."
+    ] },
+    { h: "مرجع سريع", ref: [
+      ["أقفال السلامة", `${SW("#E5363F")}المصدر · ${SW("#F6D200")}المستلم · ${SW("#3D8BFF")}العامل المشارك`],
+      ["بطاقة التوقيف", `${SW("#E5363F")}حمراء`],
+      ["بطاقة الحدود", `${SW("repeating-linear-gradient(45deg,#E5363F 0 4px,#fff 4px 8px)")}أحمر وأبيض`],
+      ["بطاقة التنبيه", `${SW("#F6D200")}صفراء`],
+      ["بطاقة الاختبار", `${SW("#2E8B8B")}خضراء مزرقّة`],
+      ["بطاقة التأريض", `${SW("#6B8E23")}خضراء`],
+      ["مقاومة التأريض", "المحطات ومانعات الصواعق 5 Ω · الكبائن 10 Ω · الأعمدة 20 Ω"],
+      ["مدد الوثائق", "الحد الأقصى 120 يومًا · <bdi>SFT</bdi> يوم واحد"],
+      ["الموافقة على مدة PTW", "حتى 14 يومًا رئيس القسم · 15 إلى 60 مدير الدائرة · 61 إلى 120 مدير الإدارة"]
+    ] }
+  ],
+  en: [
+    { h: "What the committee exam looks like", items: [
+      "<b>40 theory questions</b>: multiple choice and true/false, each written in Arabic and English together.",
+      "True/false questions show three options: <b>True, False and a blank “-”</b>. Don't pick the blank; choose your answer.",
+      "After the theory you move to the <b>practical part</b>, which may include choosing the safety documents for given jobs and writing permits.",
+      "The exam is online, timed and <b>live-proctored</b>.",
+      "Pass mark <b>90%</b>.<small>Procedure DHSEM 01-002 — clause 6.2.3</small>"
+    ] },
+    { h: "Who issues what", must: [
+      "<b>Medium-voltage documents are issued only by an authorized Saudi Electricity (SE) employee.</b> A contractor employee can be authorized as an Issuer on low voltage only.<small>Clauses 5.4 and 5.3</small>",
+      "<b>The Isolation and Earthing Request (IER) is handled only by SE employees:</b> it is issued and received between the control centers of the operating entities, and it is not one of the documents a contractor may issue.<small>Clauses 8.3.4.2, 5.3 and 5.8</small>"
+    ], items: [
+      "<b>SE Issuer:</b> all safety documents on MV and LV.<small>Clause 5.4</small>",
+      "<b>Contractor Issuer (LV only):</b> LV PTW, LOA and SFT, with the secondary EXC, WAH and LOP.<small>Clause 5.3</small>",
+      "<b>Receiver:</b> SE or contractor employee, on MV and LV.<small>Clause 5.5</small>",
+      "Isolating MV equipment under an LOA is for authorized SE employees only.<small>Clause 8.3.3.3</small>"
+    ] },
+    { h: "Contractor LV Issuer card requirements", items: [
+      "Electrical diploma and at least 3 years of experience in network operation or electrical work.<small>Clause 6.2.1</small>",
+      "Pass the courses with at least 90%: OHS induction, Distribution Safety Rules & Safe Isolation & Switching, and First Aid.<small>Clause 6.2.2</small>",
+      "Pass the authorization committee exam with at least 90%.<small>Clause 6.2.3</small>",
+      "Authorization is valid for 2 years, then renewed; it is withdrawn after an unsafe switching error or a safety violation.<small>CSCC04 — Lesson 4</small>"
+    ] },
+    { h: "What came up most in the committee exam", items: [
+      "Lock and warning-tag colours.",
+      "Grounding: 4 rods for an MV pole, 4 m between MV and LV grounds, and the resistance values.",
+      "The master key is forbidden, the multi-lock device, and a lost lock key.",
+      "Document durations and who approves extensions.",
+      "IER, LOA, WAH, LOP, confined spaces and hot sticks."
+    ] },
+    { h: "Quick reference", ref: [
+      ["Safety locks", `${SW("#E5363F")}Issuer · ${SW("#F6D200")}Receiver · ${SW("#3D8BFF")}Competent worker`],
+      ["Hold tag", `${SW("#E5363F")}Red`],
+      ["Boundary tag", `${SW("repeating-linear-gradient(45deg,#E5363F 0 4px,#fff 4px 8px)")}Red & white`],
+      ["Caution tag", `${SW("#F6D200")}Yellow`],
+      ["Test tag", `${SW("#2E8B8B")}Teal`],
+      ["Ground tag", `${SW("#6B8E23")}Green`],
+      ["Ground resistance", "Substations & surge arresters 5 Ω · Pillars 10 Ω · Poles 20 Ω"],
+      ["Durations", "Max 120 days · SFT one day"],
+      ["PTW duration approval", "Up to 14 days Section Head · 15–60 Division Manager · 61–120 Department Manager"]
+    ] }
+  ]
+};
+function guideHTML() {
+  return GUIDE[L].map((g, i) => `<section class="card gsec rev"><h2><span class="n">${i + 1}</span>${esc(g.h)}</h2>
+    ${g.must ? g.must.map(m => `<div class="must">${m}</div>`).join("") : ""}
+    ${g.items ? `<ul>${g.items.map(t => `<li>${t}</li>`).join("")}</ul>` : ""}
+    ${g.ref ? `<div class="qref">${g.ref.map(([k, v]) => `<div><b>${esc(k)}</b><span>${v}</span></div>`).join("")}</div>` : ""}
+  </section>`).join("");
+}
+/* motion: same reveal-on-scroll as the main site */
+const MOTION = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+if (MOTION) document.documentElement.classList.add("motion");
+let revObs = null;
+function reveal() {
+  if (!MOTION) return;
+  if (revObs) revObs.disconnect();
+  revObs = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); revObs.unobserve(e.target); } }), { threshold: .12, rootMargin: "0px 0px -6% 0px" }) : null;
+  $$(".rev").forEach(el => revObs ? revObs.observe(el) : el.classList.add("in"));
+}
+/* hero art: gentle parallax while scrolling, like the main site's hero */
+if (MOTION) { let tk = false; addEventListener("scroll", () => { if (tk) return; tk = true; requestAnimationFrame(() => { const a = $(".hero .art"); if (a && scrollY < innerHeight * 1.2) a.style.setProperty("--py", (scrollY * .28).toFixed(1)); tk = false; }); }, { passive: true }); }
+const words = t => t.split(" ").map((w, i) => `<span class="w" style="--i:${i}">${esc(w)}</span>`).join(" ");
+
 /* ---------- screens ---------- */
 function render() {
   if (view === "study") return renderStudy();
@@ -340,16 +453,24 @@ function render() {
 function renderIntro() {
   const x = u(), run = store.sget(RUN_KEY), serial = String(num(100000, 999999));
   const valid = run && run.v === 3 && !run.done && run.end > Date.now();
-  app.innerHTML = head(false) + `<main class="intro">
-    <section class="cover">
-      <h1>${esc(x.title)}</h1>
+  app.innerHTML = head(false) + `<section class="hero"><div class="pbg" aria-hidden="true"><picture class="art"><source media="(max-width:700px)" srcset="hero-tall.webp" width="960" height="1200"><img src="hero-${L === "ar" ? "rtl" : "ltr"}.webp" alt="" width="1920" height="1008" fetchpriority="high"></picture><i class="shade"></i><i class="glow g1"></i><i class="glow g2"></i><i class="grain"></i></div>
+    <div class="hin"><div class="vf" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <span class="tag">${esc(x.kicker)}</span>
+      <h1>${words(x.title)}</h1>
       <p class="lead">${esc(x.lead)}</p>
-      <p class="note">${esc(x.note)}</p>
-      <ol class="parts">${x.parts.map(([h, p]) => `<li><b>${esc(h)}</b><span>${esc(fmt(p, { n: EXAM_THEORY.length }))}</span></li>`).join("")}</ol>
-      <p class="rules">${esc(x.rules)}</p>
-    </section>
-    <form class="entry" id="cand" novalidate>
-      <div class="eh"><span>${esc(x.permitHead)}</span><span dir="ltr">${esc(x.serial)} ${serial}</span></div>
+      <p class="note"><span aria-hidden="true">⚠️</span><span>${esc(x.note)}</span></p>
+      <div class="hcta"><a class="btn primary" href="#cand">${esc(x.start)}</a><a class="btn" href="#guide">${esc(x.guideBtn)}</a></div>
+      <div class="hstats">${x.stats.map(([n, t]) => `<span><b>${esc(String(n).replace("{n}", EXAM_THEORY.length))}</b>${esc(t)}</span>`).join("")}</div>
+    </div></section>
+  <main class="intro">
+    <div class="guide" id="guide">${guideHTML()}
+      <section class="card gsec rev"><h2><span class="n">${GUIDE[L].length + 1}</span>${esc(x.howSim)}</h2>
+        <ol class="parts">${x.parts.map(([h, p]) => `<li><b>${esc(h)}</b><span>${esc(fmt(p, { n: EXAM_THEORY.length }))}</span></li>`).join("")}</ol>
+        <p class="hint" style="margin-top:12px">${esc(x.rules)}</p></section>
+    </div>
+    <div class="side">
+    <form class="entry rev" id="cand" novalidate>
+      <div class="eh"><span>${esc(x.permitHead)}</span><span>${esc(x.serial)} ${serial}</span></div>
       ${valid ? `<div class="resume"><p>${esc(x.resume)}</p><div class="row"><button class="btn primary" type="button" id="res">${esc(x.resumeBtn)}</button><button class="btn" type="button" id="dis">${esc(x.discard)}</button></div></div>` : ""}
       <label class="fld"><span>${esc(x.name)}</span><input id="nm" maxlength="60" autocomplete="off" placeholder="${esc(x.namePh)}"></label>
       <fieldset class="fld"><legend>${esc(x.role)}</legend>
@@ -358,10 +479,11 @@ function renderIntro() {
       <button class="btn primary big" type="submit">${esc(x.start)}</button>
       <div class="ef"><span>${esc(fmt(x.fresh, { n: freshCount() }))}</span><button type="button" class="link" id="rst">${esc(x.reset)}</button></div>
     </form>
-    <button class="studyb" type="button" id="study"><span>${esc(x.study)}</span><small>${esc(fmt(x.count, { n: EXAM_THEORY.length + EXAM_PERMITS.length }))}</small></button>
+    <button class="studyb rev" type="button" id="study"><span>${esc(x.study)}</span><small>${esc(fmt(x.count, { n: EXAM_THEORY.length + EXAM_PERMITS.length }))}</small></button>
+    </div>
     <p class="disc">${esc(x.disc)}</p>
   </main>`;
-  bindLang();
+  bindLang(); reveal();
   $("#study").onclick = () => { view = "study"; render(); scrollTo(0, 0); };
   $("#rst").onclick = () => { store.set(SEEN_KEY, {}); renderIntro(); };
   if (valid) {
@@ -618,7 +740,7 @@ function renderResult() {
       S.sp[k].pick.length ? `<ol class="mini">${S.sp[k].pick.map(i => `<li>${esc(t[i])}</li>`).join("")}</ol>` : `<i>${esc(x.none)}</i>`,
       `<ol class="mini">${t.map(s => `<li>${esc(s)}</li>`).join("")}</ol>`, [{ d: "DH", loc: L === "ar" ? "الملحق 12" : "Appendix 13", x: L === "ar" ? "البرنامج التشغيلي لأعمال المقاول على الجهد المنخفض (النموذج الرسمي) — ترتيب خطوات العزل ثم خطوات إعادة الخدمة كما هي في النموذج." : "LV switching program for contractor work (official form) — isolation steps, then return-to-service steps, in the form's order." }]);
   }).join("");
-  const date = new Date(S.t1).toLocaleString(L === "ar" ? "ar-SA-u-nu-latn-ca-gregory" : "en-GB", { dateStyle: "medium", timeStyle: "short" });
+  const dt = new Date(S.t1), p2 = n => String(n).padStart(2, "0"), date = `${p2(dt.getDate())}/${p2(dt.getMonth() + 1)}/${dt.getFullYear()} — ${p2(dt.getHours())}:${p2(dt.getMinutes())}`;
   const empty = `<li class="rv ok"><span class="rk">✓</span><div class="rb"><p class="rq">${esc(L === "ar" ? "لا أخطاء في هذا الجزء" : "No mistakes in this part")}</p></div></li>`;
   app.innerHTML = head(false) + `<main class="res">
     <section class="card sheetc ${pass ? "pass" : "fail"}">
@@ -631,14 +753,14 @@ function renderResult() {
       <p class="meta">${esc(x.total)}: <b dir="ltr">${r.earned} / ${r.total}</b> — ${esc(x.time)}: <b dir="ltr">${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, "0")}</b></p>
       <div class="row acts"><button type="button" class="btn primary" id="again">${esc(x.again)}</button><button type="button" class="btn" id="prt">${esc(x.print)}</button><a class="btn" href="../?lang=${L}">${esc(x.home)}</a></div>
     </section>
-    <section class="card"><div class="sphead"><h2 class="sh">${esc(x.review)}</h2>
+    <section class="card rev"><div class="sphead"><h2 class="sh">${esc(x.review)}</h2>
       <div class="seg" role="group"><button type="button" class="${onlyWrong ? "on" : ""}" id="ow" aria-pressed="${onlyWrong}">${esc(x.onlyWrong)}</button><button type="button" class="${onlyWrong ? "" : "on"}" id="al" aria-pressed="${!onlyWrong}">${esc(x.all)}</button></div></div>
       <h3 class="rh">${esc(x.theory)}</h3><ul class="rvl">${thList || empty}</ul>
       <h3 class="rh">${esc(x.permits)}</h3><ul class="rvl">${pmList || empty}</ul>
       <h3 class="rh">${esc(x.practical)} — <span dir="ltr">${S.c.forms.map(f => FORM_MAP[f].name).join(" + ")}</span></h3><ul class="rvl">${ffList + spList || empty}</ul>
     </section>
     <p class="disc">${esc(x.disc)}</p></main>`;
-  bindLang();
+  bindLang(); reveal();
   $("#again").onclick = () => { S = null; render(); scrollTo(0, 0); };
   $("#prt").onclick = () => print();
   $("#ow").onclick = () => { onlyWrong = true; renderResult(); };

@@ -16,7 +16,7 @@ const store = {
   sset(k, v) { try { v == null ? sessionStorage.removeItem(k) : sessionStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
 };
 
-const N_THEORY = 30, N_PERMITS = 5, MINUTES = 60, PASS = 90;
+const N_THEORY = 40, N_PERMITS = 5, MINUTES = 60, PASS = 90;
 const SEEN_KEY = "pac_seen_v2", RUN_KEY = "pac_run_v3";
 
 const U = {
@@ -28,7 +28,7 @@ const U = {
     permitHead: "تصريح دخول الاختبار", serial: "رقم", name: "اسم المتقدم", namePh: "اختياري — يظهر على النتيجة فقط",
     role: "الفئة المتقدَّم لها", roles: { iss: "مصدر — جهد متوسط", issl: "مصدر — جهد منخفض", rec: "مستلم" },
     roleForm: { iss: "MV PTW أو LOA مع التصاريح الثانوية", issl: "LV PTW أو LOA مع التصاريح الثانوية", rec: "LV PTW أو LOA مع التصاريح الثانوية" },
-    parts: [["30 سؤالًا نظريًا", "تُسحب من بنك فيه {n} سؤالًا، ولا تتكرر عليك حتى تنتهي منها"], ["5 حالات تصاريح", "اختر الوثيقة أو الوثائق المطلوبة لكل عمل"], ["الجزء العملي", "تعبئة تصريح العمل الرسمي من بيانات حالة، وترتيب البرنامج التشغيلي"]],
+    parts: [["40 سؤالًا نظريًا", "تُسحب من بنك فيه {n} سؤالًا، ولا تتكرر عليك حتى تنتهي منها"], ["5 حالات تصاريح", "اختر الوثيقة أو الوثائق المطلوبة لكل عمل"], ["الجزء العملي", "تعبئة تصريح العمل الرسمي من بيانات حالة، وترتيب البرنامج التشغيلي"]],
     rules: "المدة 60 دقيقة · درجة النجاح 90% (البند 6.2.3)",
     fresh: "لم يظهر لك بعد: {n} سؤالًا", reset: "إعادة ضبط الأسئلة",
     start: "ابدأ الاختبار", study: "تصفّح بنك الأسئلة والمصادر", resume: "لديك اختبار لم يكتمل", resumeBtn: "أكمل الاختبار", discard: "ابدأ من جديد",
@@ -62,7 +62,7 @@ const U = {
     permitHead: "Exam entry permit", serial: "No.", name: "Candidate name", namePh: "Optional — shown on the result only",
     role: "Applying for", roles: { iss: "Issuer — Medium Voltage", issl: "Issuer — Low Voltage", rec: "Receiver" },
     roleForm: { iss: "MV PTW or LOA, with secondary permits", issl: "LV PTW or LOA, with secondary permits", rec: "LV PTW or LOA, with secondary permits" },
-    parts: [["30 theory questions", "Drawn from a bank of {n}; they don't repeat until you've seen them all"], ["5 permit cases", "Choose the document(s) each job needs"], ["Practical", "Fill in the official work permit from a case, and order the switching program"]],
+    parts: [["40 theory questions", "Drawn from a bank of {n}; they don't repeat until you've seen them all"], ["5 permit cases", "Choose the document(s) each job needs"], ["Practical", "Fill in the official work permit from a case, and order the switching program"]],
     rules: "60 minutes · pass mark 90% (clause 6.2.3)",
     fresh: "Not seen yet: {n} questions", reset: "Reset question history",
     start: "Start the exam", study: "Browse the question bank & sources", resume: "You have an unfinished exam", resumeBtn: "Continue", discard: "Start over",
@@ -319,11 +319,12 @@ const lockSVG = (c, sm) => {
     <rect x="14" y="62" width="92" height="18" rx="9" fill="#fff" opacity=".18"/>
     <circle cx="60" cy="98" r="9" fill="#14181F" opacity=".7"/><rect x="56" y="102" width="8" height="18" rx="3" fill="#14181F" opacity=".7"/></svg>`;
 };
+const realB = q => /^r\d/.test(q.id) ? `<span class="realb">${L === "ar" ? "ورد في اختبار اللجنة" : "Seen in the committee exam"}</span>` : "";
 function srcHTML(list) {
   if (!list || !list.length) return "";
   return `<div class="srcs">${list.map(s => {
     const d = EXAM_DOCS[s.d] || {}, lang = d.lang === "en" ? "en" : d.lang === "ar" ? "ar" : (/[؀-ۿ]/.test(s.x) ? "ar" : "en");
-    return `<figure class="src"><figcaption><b>${esc(d[L] || s.d)}</b>${s.loc ? `<span dir="ltr">${esc(L === "ar" && s.d === "DH" ? "البند " + s.loc : s.loc)}</span>` : ""}</figcaption>
+    return `<figure class="src"><figcaption><b>${esc(d[L] || s.d)}</b>${s.loc ? `<span dir="ltr">${esc(L === "ar" && s.d === "DH" && /^\d/.test(s.loc) ? "البند " + s.loc : s.loc)}</span>` : ""}${/^https:\/\/www\.osha\.gov\//.test(d.url || "") ? `<a href="${esc(d.url)}" target="_blank" rel="noopener noreferrer">${L === "ar" ? "فتح المصدر" : "Open source"}</a>` : ""}</figcaption>
       <blockquote lang="${lang}" dir="${lang === "ar" ? "rtl" : "ltr"}">${esc(s.x)}</blockquote></figure>`;
   }).join("")}</div>`;
 }
@@ -608,7 +609,7 @@ function renderResult() {
       <span class="rk" aria-hidden="true">${ok ? "✓" : "✕"}</span><div class="rb"><p class="rq">${esc(q)}</p>${extra}
       ${ok || yours == null ? "" : `<p class="ry"><b>${esc(x.your)}:</b> ${yours}</p>`}<p class="rc"><b>${esc(x.correct)}:</b> ${right}</p>
       ${srcHTML(src)}</div></li>`;
-  const thList = r.th.map(({ q, ok }) => { const o = qOpts(q); return item(ok, q[L].q, ansTxt(o, S.tAns[q.id]), esc(o[q.a]), q.src, q.t === "lock" ? `<div class="lockbox sm">${lockSVG(q.color, 1)}</div>` : ""); }).join("");
+  const thList = r.th.map(({ q, ok }) => { const o = qOpts(q); return item(ok, q[L].q, ansTxt(o, S.tAns[q.id]), esc(o[q.a]), q.src, realB(q) + (q.t === "lock" ? `<div class="lockbox sm">${lockSVG(q.color, 1)}</div>` : "")); }).join("");
   const pmList = r.pm.map(({ p, ok }) => item(ok, p[L], (S.pAns[p.id] || []).length ? `<span dir="ltr">${esc(S.pAns[p.id].join(" + "))}</span>` : `<i>${esc(x.none)}</i>`, `<span dir="ltr">${esc(p.a.join(" + "))}</span>`, p.src)).join("");
   const ffList = r.ff.map(z => item(z.ok, z.label, null, esc(z.rule), resolveSrc(z.src))).join("");
   const spList = ["iso", "ret"].map(k => {
@@ -674,7 +675,7 @@ function fillStudy() {
   $("#scount").textContent = fmt(x.count, { n: list.length });
   $("#slist").innerHTML = list.slice(0, slimit).map(({ q, k }) => {
     const ans = k === "t" ? esc(qOpts(q)[q.a]) : `<span dir="ltr">${esc(q.a.join(" + "))}</span>`;
-    return `<li class="sitem"><p class="rq">${esc(k === "t" ? q[L].q : q[L])}</p>${q.t === "lock" ? `<div class="lockbox sm">${lockSVG(q.color, 1)}</div>` : ""}
+    return `<li class="sitem"><p class="rq">${esc(k === "t" ? q[L].q : q[L])}</p>${realB(q)}${q.t === "lock" ? `<div class="lockbox sm">${lockSVG(q.color, 1)}</div>` : ""}
       <p class="rc"><b>${esc(x.correct)}:</b> ${ans}</p>${srcHTML(q.src)}</li>`;
   }).join("");
   $("#smore").hidden = list.length <= slimit;

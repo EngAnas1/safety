@@ -11,9 +11,13 @@ const baseInput = document.getElementById("base");
 baseInput.value = location.href.replace(/[?#].*$/, "").replace(/qr\.html$/, "");
 
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+/* Extra QR card: the committee exam simulation (Arabic/English only) */
+const EXAM_CARD = { id: "exam", path: "exam/", ar: { title: "محاكاة اختبار لجنة التأهيل" }, en: { title: "Authorization Exam Simulation" }, ur: { title: "(عربی / انگریزی)" } };
+const CARDS = [...TOPICS, EXAM_CARD];
 function topicURL(t){
   let b = baseInput.value.trim();
   if(b && !b.endsWith("/") && !/\.html$/.test(b)) b += "/";
+  if(t.path) return b + t.path;
   return t === TOPICS[0] ? b : b + "?t=" + t.id;
 }
 
@@ -22,11 +26,11 @@ function draw(){
   document.getElementById("warn").hidden = /^https?:\/\//.test(v) && !/localhost|127\.0\.0\.1/.test(v);
   /* qr.html?t=risk prints that section's card on its own, full page */
   const only = new URLSearchParams(location.search).get("t");
-  const list = TOPICS.filter(t => !only || t.id === only);
+  const list = CARDS.filter(t => !only || t.id === only);
   document.getElementById("sheet").innerHTML = list.map(t => `
     <article class="card">
       <div class="head">
-        <img class="em" src="img/t-${t.id}.webp?v=202611041544" alt="">
+        ${t.path ? `<span class="em xem">PAC</span>` : `<img class="em" src="img/t-${t.id}.webp?v=202611041544" alt="">`}
         <div class="titles">${CONFIG.siteTag?.ar ? `<span class="tag">${esc(CONFIG.siteTag.ar)}</span>` : ""}<span class="ar">${esc(t.ar.title)}</span><span class="en">${esc(t.en.title)}</span><span class="ur">${esc(t.ur.title)}</span></div>
       </div>
       <div class="qr" id="qr-${t.id}">${qrSVG(topicURL(t))}</div>

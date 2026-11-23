@@ -3,6 +3,11 @@
    التخزين المحلي: الأسئلة التي ظهرت (لا تتكرر)، ونتائجك السابقة، والاختبار الجاري عند تحديث الصفحة. */
 (() => {
 "use strict";
+/* الحماية من التأطير (Clickjacking): الصفحة لا تعمل داخل إطار موقع آخر */
+if (window.top !== window.self) {
+  try { window.top.location.replace(window.location.href); } catch (e) { document.documentElement.textContent = ""; }
+  return;
+}
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -170,7 +175,8 @@ const FIXED = /جميع|كلاهما|لا شيء|All of|All answers|Both|None of
 const keepOrder = q => q.t === "tf" || q.t === "lock" || q.ar.o.some(o => FIXED.test(o));
 const qOpts = q => q.t === "tf" ? TF[L] : q[L].o;
 function drawFresh(pool, n, key) {
-  const seen = store.get(SEEN_KEY, {}), s = new Set(seen[key] || []);
+  let seen = store.get(SEEN_KEY, {}); if (!seen || typeof seen !== "object" || Array.isArray(seen)) seen = {};
+  const s = new Set(Array.isArray(seen[key]) ? seen[key] : []);
   const fresh = shuffle(pool.filter(q => !s.has(q.id)));
   let out = fresh.slice(0, n);
   if (fresh.length <= n) { out = out.concat(shuffle(pool.filter(q => s.has(q.id))).slice(0, n - out.length)); seen[key] = out.map(q => q.id); }
@@ -178,7 +184,7 @@ function drawFresh(pool, n, key) {
   store.set(SEEN_KEY, seen);
   return out;
 }
-const seenCount = () => { const s = new Set((store.get(SEEN_KEY, {}).theory) || []); return EXAM_THEORY.filter(q => s.has(q.id)).length; };
+const seenCount = () => { const st = store.get(SEEN_KEY, {}), s = new Set(Array.isArray(st && st.theory) ? st.theory : []); return EXAM_THEORY.filter(q => s.has(q.id)).length; };
 
 /* ---------- practical case generator (follows the permit filling guide) ---------- */
 const NAMES = [["فهد العتيبي", "Fahad Alotaibi"], ["سعد الغامدي", "Saad Alghamdi"], ["ماجد الحربي", "Majed Alharbi"], ["خالد الشهري", "Khalid Alshehri"], ["عبدالله الزهراني", "Abdullah Alzahrani"], ["محمد القحطاني", "Mohammed Alqahtani"], ["ناصر المالكي", "Nasser Almalki"], ["تركي الجهني", "Turki Aljuhani"], ["عمر باوزير", "Omar Bawazir"], ["ياسر السلمي", "Yasser Alsulami"], ["بندر الدوسري", "Bandar Aldosari"], ["حسن العمري", "Hassan Alamri"]];
@@ -397,7 +403,7 @@ const ring = (pct, big, sub) => {
     <div class="c"><b>${esc(big)}</b><small>${esc(sub)}</small></div></div>`;
 };
 const animRings = () => requestAnimationFrame(() => setTimeout(() => $$(".ring .fg").forEach(c => c.style.strokeDashoffset = c.dataset.off), 60));
-const hist = () => store.get(HIST_KEY, []);
+const hist = () => { const h = store.get(HIST_KEY, []); return Array.isArray(h) ? h.map(z => ({ t: +(z && z.t) || 0, pct: Math.max(0, Math.min(100, +(z && z.pct) || 0)) })).filter(z => z.t > 0).slice(-20) : []; };
 
 /* ---------- routing ---------- */
 const VIEWS = ["home", "learn", "bank", "sources", "exam"];
@@ -410,7 +416,13 @@ function parseHash() {
 function go(v, a = "") { const h = "#" + v + (a ? "/" + a : ""); if (location.hash !== h) location.hash = h; else render(); }
 window.addEventListener("hashchange", () => {
   const h = location.hash;
-  if (/^#src\//.test(h)) { const [, d, p, yy] = h.slice(1).split("/"); const [a, b] = (yy || "").split("-").map(Number); if (EXAM_DOCS[d]) openViewer({ d, p: +p, y: [a / 1e4, b / 1e4], loc: "", x: "" }, false); return; }
+  if (/^#src\//.test(h)) {
+    /* deep link from outside: accept only a known document, an integer page in range, and numeric bounds */
+    const [, d, p, yy] = h.slice(1).split("/"), pg = Number(p), [a, b] = String(yy || "").split("-").map(Number);
+    const ok = ["DH", "CS", "FG"].includes(d) && Number.isInteger(pg) && pg >= 1 && pg <= EXAM_DOCS[d].pages && [a, b].every(v => Number.isFinite(v) && v >= 0 && v <= 1e4) && a < b;
+    if (ok) openViewer({ d, p: pg, y: [a / 1e4, b / 1e4], loc: "", x: "" }, false);
+    return;
+  }
   if (ignoreHash) { ignoreHash = false; return; }
   const nr = parseHash();
   if ($(".viewer")) { closeViewer(false); if (nr.v === route.v && nr.a === route.a) return; }
@@ -476,7 +488,7 @@ function renderGate() {
     <div class="langs rise" style="--d:3"><button type="button" class="lang" data-l="ar" lang="ar"><b>العربية</b><small>ابدأ باللغة العربية</small></button><button type="button" class="lang" data-l="en" lang="en"><b>English</b><small>Continue in English</small></button></div>
     <div class="four rise" style="--d:4" role="note">${LEARN_4.map(([c, d, t]) => `<p lang="${c}" dir="${d}"><b>${c}</b><span>${esc(t)}</span></p>`).join("")}</div>
     <p class="gdisc rise" style="--d:5">${esc(A.disc)}<br><span lang="en" dir="ltr">${esc(E.disc)}</span></p>
-    <div class="rise" style="--d:6">${credit(A, "gate")}</div>
+    <div class="rise" style="--d:6">${credit(A, "cg")}</div>
     <p class="gfoot rise" style="--d:6">${esc(A.gateF)} · <span lang="en">${esc(E.gateF)}</span></p>
   </div></section>`;
   $$(".lang").forEach(b => b.onclick = () => { setLang(b.dataset.l); route = parseHash(); render(); scrollTo(0, 0); });
@@ -514,7 +526,7 @@ function renderLearn() {
     return bindShell();
   }
   const i = LEARN.indexOf(l), nx = LEARN[i + 1];
-  const srcOf = f => f.q ? (QID[f.q] || {}).src?.[0] : f.fg ? FG(f.fg[0], f.fg[1], f.fg[2], f.ar, f.en) : null;
+  const srcOf = f => f.q ? ((QID[f.q] || {}).src || [])[0] : f.fg ? FG(f.fg[0], f.fg[1], f.fg[2], f.ar, f.en) : null;
   app.innerHTML = shell(topbar(`${l.ic} ${l[L].t}`, l[L].d, `<a class="pill sm" href="#learn">${esc(x.lessonBack)}</a>`) + `
     <section class="card rev">
       ${(l.must || []).map(m => `<div class="must">${esc(m[L])}<br>${chip(srcOf(m))}</div>`).join("")}
@@ -574,7 +586,7 @@ function renderSources() {
 
 function renderEntry() {
   const x = u(), run = store.sget(RUN_KEY);
-  const valid = run && run.v === 4 && !run.done && run.end > Date.now();
+  const valid = okRun(run);
   app.innerHTML = shell(topbar(x.examT, x.examS) + `
     <div class="grid two">
       <form class="card rev" id="cand" novalidate>
@@ -592,6 +604,8 @@ function renderEntry() {
         <div class="must" style="margin-top:12px">${esc(x.pracNote)}</div></section>
     </div>${foot()}`, { nav: "exam" });
   bindShell();
+  const markRole = () => $$(".role").forEach(l => l.classList.toggle("on", $("input", l).checked));
+  $$(".role input").forEach(i => i.onchange = markRole); markRole();
   $("#rst").onclick = () => { store.set(SEEN_KEY, {}); renderEntry(); };
   if (valid) {
     $("#res").onclick = () => { S = run; if (S.lang && S.lang !== L) setLang(S.lang); startTimer(); render(); scrollTo(0, 0); };
@@ -861,10 +875,13 @@ function renderResult() {
 
 /* ---------- boot ---------- */
 window.addEventListener("beforeunload", () => save());
+const okRun = r => { try { return !!(r && r.v === 4 && !r.done && r.end > Date.now() && Array.isArray(r.theory) && r.theory.every(TH) && Array.isArray(r.permits) && r.permits.every(PM) && r.c && FORM_MAP[r.c.kind] && Array.isArray(r.c.forms) && r.c.forms.every(f => FORM_MAP[f]) && ["iss", "issl", "rec"].includes(r.role) && r.F && typeof r.F === "object" && typeof r.name === "string"); } catch (e) { return false; } };
 const run = store.sget(RUN_KEY);
+if (!okRun(run)) store.sset(RUN_KEY, null);
+if (L !== "ar" && L !== "en") L = null;
 if (L) setLang(L);
 route = parseHash();
-if (run && run.v === 4 && !run.done && run.end > Date.now() && L) { S = run; if (S.lang && S.lang !== L) setLang(S.lang); startTimer(); }
+if (okRun(run) && L) { S = run; if (S.lang && S.lang !== L) setLang(S.lang); startTimer(); }
 render();
 if (/^#src\//.test(location.hash) && L) dispatchEvent(new HashChangeEvent("hashchange"));
 })();

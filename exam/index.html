@@ -264,9 +264,10 @@ bdi{unicode-bidi:isolate}
 .dep{position:absolute;border-radius:50%;border:1.5px solid transparent;cursor:pointer}
 .dep:hover{border-color:rgba(255,59,59,.45)}
 .dep.on{border-color:#D10E1A;box-shadow:0 0 0 1px rgba(209,14,26,.25)}
-.sheet{position:fixed;top:0;right:0;bottom:0;left:0;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.45)}
-.sbox{width:min(640px,100%);padding:16px 16px calc(16px + env(safe-area-inset-bottom));border-radius:20px 20px 0 0;background:#15171D;border:1px solid var(--line2);display:grid;gap:10px}
-.motion .sbox{animation:up .35s var(--smooth)}
+.sheet{position:fixed;top:0;right:0;bottom:0;left:0;inset:0;overscroll-behavior:contain;z-index:50;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.45)}
+.sbox{width:min(640px,100%);padding:14px 16px max(14px,env(safe-area-inset-bottom));border-radius:20px 20px 0 0;background:#15171D;border:1px solid var(--line2);display:grid;gap:10px}
+.motion .sbox{animation:fadeUp .2s ease-out}
+@keyframes fadeUp{from{opacity:.6}}
 @keyframes up{from{transform:translateY(40px);opacity:0}}
 .sbox label{font-weight:800}
 .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.grow{flex:1}
@@ -394,9 +395,9 @@ bdi{unicode-bidi:isolate}
 <div class="amb" aria-hidden="true"><img src="hero-ltr.webp" alt="" width="1920" height="1008"></div>
 <div id="app"></div>
 <noscript><p style="padding:24px">تحتاج هذه الصفحة إلى تفعيل JavaScript. / This page needs JavaScript.</p></noscript>
-<script src="exam-data.js?v=202611241100"></script>
-<script src="exam-forms.js?v=202611241100"></script>
-<script src="exam-learn.js?v=202611241100"></script>
-<script src="exam.js?v=202611241100"></script>
+<script src="exam-data.js?v=202611241200"></script>
+<script src="exam-forms.js?v=202611241200"></script>
+<script src="exam-learn.js?v=202611241200"></script>
+<script src="exam.js?v=202611241200"></script>
 </body>
 </html>

@@ -746,7 +746,7 @@ function bindForm() {
     const b = e.target.closest(".fx"); if (b) tapField(b.dataset.k);
   };
   if (L === "ar" && zoom > 1) { const sc = $("#pscroll"); sc.scrollLeft = sc.scrollWidth; }
-  $$(".ftab").forEach(b => b.onclick = () => { S.tab = +b.dataset.t; save(); $("#fpane").innerHTML = formPane(); bindForm(); });
+  $$(".ftab").forEach(b => b.onclick = () => { commitSheet(); closeSheet(); S.tab = +b.dataset.t; save(); $("#fpane").innerHTML = formPane(); bindForm(); });
 }
 function secPractical() {
   const x = u(), c = S.c;
@@ -776,37 +776,70 @@ function tapField(k) {
   if (r[1] === "s") { F[k] = !F[k]; if (!F[k]) delete F[k]; save(); refreshField(k); return; }
   openSheet(k);
 }
+/* text-field sheet: created once and reused, so the phone keyboard stays open from one field to the next.
+   It is pinned to the *visible* area (visualViewport), so on iPhone it always sits right above the keyboard. */
+let sheetK = null;
+function fitSheet() {
+  const d = $(".sheet"), vv = window.visualViewport; if (!d) return;
+  if (vv) { d.style.top = vv.offsetTop + "px"; d.style.height = vv.height + "px"; d.style.bottom = "auto"; }
+}
 function openSheet(k) {
   const x = u(), f = curF(), F = FV(f), texts = FMAP(f).filter(r => r[1] === "t").map(r => r[0]);
   const nextK = texts[texts.indexOf(k) + 1];
-  closeSheet();
-  const d = document.createElement("div");
-  d.className = "sheet"; d.setAttribute("role", "dialog"); d.setAttribute("aria-modal", "true"); d.setAttribute("aria-labelledby", "shl");
-  d.innerHTML = `<div class="sbox"><label id="shl" for="shi">${esc(labOf(f, k))}</label>
-    <input class="inp" id="shi" maxlength="80" autocomplete="off" dir="${L === "ar" ? "rtl" : "ltr"}" lang="${L}" value="${esc(F[k] || "")}">
-    <div class="row"><button type="button" class="pill sm" id="shc">${esc(x.clear)}</button><button type="button" class="pill sm" id="shna">N/A</button><span class="grow"></span>
-    <button type="button" class="pill sm" id="shx">${esc(x.close)}</button>${nextK ? `<button type="button" class="pill red sm" id="shn">${esc(x.nextField)}</button>` : `<button type="button" class="pill red sm" id="shs">${esc(x.save)}</button>`}</div></div>`;
-  document.body.appendChild(d);
-  const inp = $("#shi"); inp.focus(); inp.select();
-  const commit = () => { const v = inp.value.replace(/[\u0000-\u001f]/g, "").trim().slice(0, 80); if (v) F[k] = v; else delete F[k]; save(); refreshField(k); };
-  $("#shc").onclick = () => { inp.value = ""; inp.focus(); };
-  $("#shna").onclick = () => { inp.value = "N/A"; inp.focus(); };
-  $("#shx").onclick = () => { commit(); closeSheet(); };
-  const n = $("#shn"); if (n) n.onclick = () => { commit(); openSheet(nextK); };
-  const sv = $("#shs"); if (sv) sv.onclick = () => { commit(); closeSheet(); };
-  inp.onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); (n || sv).click(); } if (e.key === "Escape") { commit(); closeSheet(); } };
-  d.onclick = e => { if (e.target === d) { commit(); closeSheet(); } };
-  scrollToField(k);
+  let d = $(".sheet");
+  if (!d) {
+    d = document.createElement("div");
+    d.className = "sheet"; d.setAttribute("role", "dialog"); d.setAttribute("aria-modal", "true"); d.setAttribute("aria-labelledby", "shl");
+    d.innerHTML = `<div class="sbox"><label id="shl" for="shi"></label>
+      <input class="inp" id="shi" maxlength="80" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="next" dir="${L === "ar" ? "rtl" : "ltr"}" lang="${L}">
+      <div class="row"><button type="button" class="pill sm" id="shc">${esc(x.clear)}</button><button type="button" class="pill sm" id="shna">N/A</button><span class="grow"></span>
+      <button type="button" class="pill sm" id="shx">${esc(x.close)}</button><button type="button" class="pill red sm" id="shn"></button></div></div>`;
+    document.body.appendChild(d);
+    const vv = window.visualViewport;
+    if (vv) { vv.addEventListener("resize", fitSheet); vv.addEventListener("scroll", fitSheet); }
+    const inp = $("#shi");
+    // buttons must not steal focus from the input, or the keyboard would close between fields
+    $$(".sheet button").forEach(b => b.addEventListener("pointerdown", e => e.preventDefault()));
+    $("#shc").onclick = () => { inp.value = ""; inp.focus(); };
+    $("#shna").onclick = () => { inp.value = "N/A"; inp.focus(); };
+    $("#shx").onclick = () => { commitSheet(); closeSheet(); };
+    $("#shn").onclick = () => { const nk = $("#shn").dataset.next; commitSheet(); if (nk) openSheet(nk); else closeSheet(); };
+    inp.onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); $("#shn").click(); } if (e.key === "Escape") { commitSheet(); closeSheet(); } };
+    d.onclick = e => { if (e.target === d) { commitSheet(); closeSheet(); } };
+  }
+  sheetK = k;
+  $("#shl").textContent = labOf(f, k);
+  const inp = $("#shi"), nb = $("#shn");
+  inp.value = F[k] || "";
+  nb.textContent = nextK ? x.nextField : x.save; nb.dataset.next = nextK || "";
+  inp.setAttribute("enterkeyhint", nextK ? "next" : "done");
+  inp.focus({ preventScroll: true });           // synchronous, inside the tap: iPhone opens the keyboard right away
+  try { inp.setSelectionRange(inp.value.length, inp.value.length); } catch (e) {}
+  fitSheet();
+  setTimeout(() => { fitSheet(); scrollToField(k); }, 260);
+}
+function commitSheet() {
+  if (!sheetK) return;
+  const f = curF(), F = FV(f), inp = $("#shi"); if (!inp) return;
+  const v = inp.value.replace(/[\u0000-\u001f]/g, "").trim().slice(0, 80);
+  if (v) F[sheetK] = v; else delete F[sheetK];
+  save(); refreshField(sheetK);
 }
 function scrollToField(k) {
   const el = $(`.fx[data-k="${k}"]`), sc = $("#pscroll"); if (!el || !sc) return;
   el.classList.add("cur"); setTimeout(() => el.classList.remove("cur"), 1400);
   const r = el.getBoundingClientRect(), sr = sc.getBoundingClientRect();
   if (r.top < sr.top || r.bottom > sr.top + sr.height * .55) sc.scrollTop += r.top - sr.top - sr.height * .25;
-  if (r.top < 60 || r.bottom > innerHeight * .55) scrollBy({ top: r.top - innerHeight * .25, behavior: MOTION ? "smooth" : "auto" });
+  const vh = window.visualViewport ? visualViewport.height : innerHeight, sh = ($(".sbox") || { offsetHeight: 0 }).offsetHeight;
+  if (r.top < 60 || r.bottom > vh - sh - 12) scrollBy({ top: r.top - Math.max(70, (vh - sh) * .35), behavior: "auto" });
   if (zoom > 1) sc.scrollLeft += (r.left - sr.left) - sc.clientWidth / 3;
 }
-function closeSheet() { const s = $(".sheet"); if (s) s.remove(); }
+function closeSheet() {
+  const s = $(".sheet"); if (!s) return;
+  const vv = window.visualViewport; if (vv) { vv.removeEventListener("resize", fitSheet); vv.removeEventListener("scroll", fitSheet); }
+  const i = $("#shi"); if (i) i.blur();
+  s.remove(); sheetK = null;
+}
 function spBlock(k) {
   const x = u(), st = S.sp[k], txt = SP_STEPS[k][L];
   return `<div class="spb" data-sp="${k}"><div class="sphead"><h3>${esc(k === "iso" ? x.spIso : x.spRet)}</h3><button type="button" class="pill sm" data-reset="${k}">${esc(x.resetSp)}</button></div>
@@ -844,7 +877,7 @@ function score() {
 }
 function submit(auto) {
   if (!S || S.done) return;
-  closeSheet();
+  commitSheet(); closeSheet();
   S.done = true; S.auto = auto; S.t1 = Math.min(Date.now(), S.end); clearInterval(tick);
   const r = score(); const H = hist(); H.push({ t: S.t1, pct: r.pct, role: S.role }); store.set(HIST_KEY, H.slice(-20));
   store.sset(RUN_KEY, null);

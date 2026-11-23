@@ -8,12 +8,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#07080B">
 <title>اختبار التأهيل | المصدر والمستلم</title>
-<meta name="description" content="محاكاة اختبار لجنة التأهيل لتصاريح العمل للمصدر والمستلم: دروس، ونظري، وتصاريح، وتعبئة التصريح الأصلي، وكل معلومة مع صفحتها في المصدر.">
+<meta name="description" content="اختبار تهيئة للجنة التأهيل لتصاريح العمل للمصدر والمستلم: دروس، ونظري، وتصاريح، وتعبئة التصريح الأصلي، وكل معلومة مع صفحتها في المصدر.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="اختبار التأهيل | المصدر والمستلم">
 <meta property="og:description" content="ادرس ثم اختبر نفسك كأنك أمام اللجنة. كل إجابة مع صفحتها في المصدر.">
 <meta property="og:url" content="https://enganas1.github.io/safety/exam/">
-<meta property="og:image" content="https://enganas1.github.io/safety/img/share.jpg">
+<meta property="og:image" content="https://enganas1.github.io/safety/exam/og.jpg?v=2">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="اختبار التأهيل لوثائق السلامة — للتهيئة، وكل إجابة مع مصدرها">
+<meta property="og:locale" content="ar_SA">
+<meta property="og:site_name" content="اختبار التأهيل | المصدر والمستلم">
+<meta name="twitter:image" content="https://enganas1.github.io/safety/exam/og.jpg?v=2">
+<meta name="twitter:title" content="اختبار التأهيل لوثائق السلامة">
+<meta name="twitter:description" content="ادرس ثم اختبر نفسك كأنك أمام اللجنة. كل إجابة مع صفحتها في المصدر.">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32.png">
 <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
@@ -72,7 +81,7 @@ bdi{unicode-bidi:isolate}
 
 /* ---------- app shell: sidebar + main ---------- */
 .shell{display:grid;grid-template-columns:262px 1fr;min-height:100vh;gap:0}
-.side{position:sticky;top:0;height:100vh;padding:18px 14px;display:flex;flex-direction:column;gap:6px;background:rgba(12,13,17,.62);border-inline-end:1px solid var(--line);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);z-index:5}
+.side{position:sticky;top:0;height:100vh;overflow-y:auto;padding:18px 14px;display:flex;flex-direction:column;gap:6px;background:rgba(12,13,17,.62);border-inline-end:1px solid var(--line);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);z-index:5}
 .brand{display:flex;align-items:center;gap:10px;padding:6px 8px 14px;font-weight:900;font-size:1.06rem;line-height:1.2}
 .logo{flex:0 0 38px;height:38px;border-radius:11px;display:grid;place-items:center;background:var(--redg);box-shadow:0 8px 24px -8px rgba(255,59,59,.7),inset 0 1px 0 rgba(255,255,255,.3);font-size:1.15rem}
 .brand small{display:block;color:var(--muted);font-weight:700;font-size:.72rem;letter-spacing:.02em}
@@ -327,6 +336,23 @@ bdi{unicode-bidi:isolate}
 .motion .rise{animation:rise .7s var(--smooth) both;animation-delay:calc(var(--d,0)*80ms)}
 @keyframes rise{from{opacity:0;transform:translateY(18px)}}
 
+
+/* credit + disclaimer */
+.foot{margin-top:26px;display:grid;gap:12px;justify-items:center}
+.foot .disc{max-width:720px;margin:0;padding:10px 14px;border-radius:12px;border:1px dashed rgba(255,181,71,.35);color:#E9D3AE;font-size:.86rem}
+.credit{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;padding:12px 16px;border-radius:16px;background:var(--panel);border:1px solid var(--line2);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.credit .cby{color:var(--muted);font-size:.8rem;font-weight:700}
+.credit b{font-size:1rem;font-weight:900}
+.cnum{font-weight:800;color:#FFB0A8;letter-spacing:.03em;font-size:.92rem}
+.cbtns{display:inline-flex;gap:6px}
+.cb{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:99px;font-weight:800;font-size:.82rem;transition:transform .25s var(--spring)}
+.cb:hover{transform:translateY(-1px)}
+.cb.wa{background:#1FAF5A;color:#fff}.cb.call{background:rgba(255,255,255,.08);border:1px solid var(--line2)}
+.credit.sm{display:grid;gap:4px;justify-content:stretch;padding:10px 12px;margin-top:8px;text-align:start}
+.credit.sm .cbtns{margin-top:2px}.credit.sm .cb{flex:1;justify-content:center;padding:5px 8px}
+.credit.gate{margin:16px auto 0;width:fit-content}
+.gdisc{margin:16px auto 0;max-width:620px;color:#E9D3AE;font-size:.86rem;padding:10px 14px;border-radius:12px;border:1px dashed rgba(255,181,71,.35)}
+
 /* bottom tab bar on phones */
 .tabbar{display:none}
 @media (max-width:960px){
@@ -357,9 +383,9 @@ bdi{unicode-bidi:isolate}
 <div class="amb" aria-hidden="true"><img src="hero-ltr.webp" alt="" width="1920" height="1008"></div>
 <div id="app"></div>
 <noscript><p style="padding:24px">تحتاج هذه الصفحة إلى تفعيل JavaScript. / This page needs JavaScript.</p></noscript>
-<script src="exam-data.js?v=202611240100"></script>
-<script src="exam-forms.js?v=202611240100"></script>
-<script src="exam-learn.js?v=202611240100"></script>
-<script src="exam.js?v=202611240100"></script>
+<script src="exam-data.js?v=202611240300"></script>
+<script src="exam-forms.js?v=202611240300"></script>
+<script src="exam-learn.js?v=202611240300"></script>
+<script src="exam.js?v=202611240300"></script>
 </body>
 </html>

@@ -68,7 +68,7 @@ const LEARN = [
      { ar: "قفل المصدر أحمر، والمستلم أصفر، والعامل المشارك أزرق، والقفل المتعدد وصندوق أقفال المجموعة أحمر.", en: "Issuer lock red, Receiver yellow, competent worker blue; multi-lock and group lock box red.", q: "lockR" },
      { ar: "بطاقة التوقيف (Hold) حمراء للأعمال التشغيلية كعزل المعدة.", en: "The Hold tag is red, used in operational work such as isolating equipment.", q: "r05" },
      { ar: "بطاقة الحدود (Boundary) حمراء وبيضاء لتحديد معدة مشحونة قريبة قد تُعامل خطأً على أنها معزولة.", en: "The Boundary tag is red and white, marking nearby live equipment that could be mistaken as isolated.", q: "r01" },
-     { ar: "بطاقة التنبيه (Caution) صفراء للظروف غير الطبيعية، وبطاقة الاختبار (Test) خضراء مزرقة.", en: "Caution tag yellow (abnormal conditions); Test tag teal.", q: "r03" },
+     { ar: "بطاقة التنبيه (Caution) صفراء للظروف غير الطبيعية، وبطاقة الاختبار (Test) زرقاء للاختبار والفحص.", en: "Caution tag yellow (abnormal conditions); Test tag blue (testing and inspection).", q: "r03" },
      { ar: "بطاقة التأريض (Ground) خضراء، وتُستخدم في حالات تأريض المعدة فقط.", en: "The Ground tag is green, used only when the equipment is earthed.", q: "r08" },
      { ar: "المفتاح الشامل (Master Key) ممنوع، ولا يزيد عدد مفاتيح القفل الواحد عن مفتاحين.", en: "A master key is forbidden, and one lock has no more than two keys.", q: "x_key" },
      { ar: "لا يعطي الموظف مفتاح قفله لأي شخص آخر.", en: "An employee never gives his lock key to anyone else.", q: "s61" },

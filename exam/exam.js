@@ -61,12 +61,14 @@ const U = {
     theory: "النظري", permits: "اختيار التصاريح", practical: "العملي", total: "المجموع", time: "الزمن",
     review: "مراجعة الإجابات", onlyWrong: "الأخطاء فقط", all: "الكل", your: "إجابتك", correct: "الصحيح", none: "بلا إجابة",
     open: "افتح الصفحة الأصلية", page: "صفحة", clause: "البند", again: "اختبار جديد", print: "طباعة", home: "الرئيسية",
-    disc: "محاكاة تدريبية للتهيئة فقط، ولا تغني عن اختبار اللجنة الرسمي.",
+    disc: "هذا الاختبار للتهيئة فقط، وليس شرطًا أن يكون بنفس طريقة اختبار اللجنة بالضبط. الهدف مساعدتك على فهم المعلومات واستيعابها والاستعداد.",
+    by: "إعداد وتصميم", owner: "م. أنس الزهراني", wa: "واتساب", call: "اتصال", waMsg: "السلام عليكم، وصلتك من اختبار التأهيل.",
+    pracNote: "بيانات العمل وأرقام التصاريح الظاهرة هنا للتدريب فقط، ولن تكون موجودة لك بهذا الشكل في الاختبار الفعلي.",
     lock: { red: "قفل أحمر", yellow: "قفل أصفر", blue: "قفل أزرق" },
     search: "ابحث في الأسئلة", allDocs: "كل المصادر", more: "عرض المزيد", count: "{n} سؤالًا", cited: "{n} موضعًا مستشهدًا به",
     mainDoc: "الوثيقة الأساسية", secondary: "تصريح ثانوي", org: { sec: "الشركة", con: "مقاول" },
     vClose: "إغلاق", vNote: "الجزء المظلل هو موضع المعلومة في الوثيقة الأصلية.",
-    gateK: ["SE", "ISSUER", "RECEIVER"], gateT: ["اختبار التأهيل", "لوثائق السلامة"], gateS: "اختر لغة الاختبار للمتابعة.", gateF: "محاكاة تدريبية مستقلة · لا تُرسل أي بيانات"
+    gateK: ["SE", "ISSUER", "RECEIVER"], gateT: ["اختبار التأهيل", "لوثائق السلامة"], gateS: "اختر لغة الاختبار للمتابعة.", gateF: "للتهيئة فقط · لا تُرسل أي بيانات"
   },
   en: {
     dir: "ltr", other: "العربية", brand: "Authorization Exam", brandS: "Issuer & Receiver · Safety documents",
@@ -106,12 +108,14 @@ const U = {
     theory: "Theory", permits: "Permit selection", practical: "Practical", total: "Total", time: "Time",
     review: "Answer review", onlyWrong: "Mistakes only", all: "All", your: "Your answer", correct: "Correct", none: "No answer",
     open: "Open the original page", page: "page", clause: "Clause", again: "New exam", print: "Print", home: "Overview",
-    disc: "A training simulation for preparation only; it does not replace the official committee exam.",
+    disc: "This exam is for preparation only; the committee exam may not follow exactly the same format. It is here to help you understand and absorb the information and get ready.",
+    by: "Prepared and designed by", owner: "Eng. Anas Alzahrani", wa: "WhatsApp", call: "Call", waMsg: "Hello, I found you through the authorization preparation exam.",
+    pracNote: "The job data and permit numbers shown here are for practice only; you will not get them like this in the real exam.",
     lock: { red: "Red lock", yellow: "Yellow lock", blue: "Blue lock" },
     search: "Search the questions", allDocs: "All sources", more: "Show more", count: "{n} questions", cited: "{n} cited passages",
     mainDoc: "Main document", secondary: "Secondary permit", org: { sec: "SE", con: "Contractor" },
     vClose: "Close", vNote: "The highlighted part is where the information sits in the original document.",
-    gateK: ["SE", "ISSUER", "RECEIVER"], gateT: ["Authorization Exam", "for Safety Documents"], gateS: "Choose the exam language to continue.", gateF: "Independent training simulation · no data is sent anywhere"
+    gateK: ["SE", "ISSUER", "RECEIVER"], gateT: ["Authorization Exam", "for Safety Documents"], gateS: "Choose the exam language to continue.", gateF: "For preparation only · no data is sent anywhere"
   }
 };
 const fmt = (s, o) => s.replace(/\{(\w+)\}/g, (_, k) => o[k]);
@@ -431,6 +435,7 @@ function shell(inner, opts = {}) {
       <div class="sgrow"></div>
       <div class="plan"><b>${esc(x.plan)}</b><small>${esc(fmt(x.planS, { a: seen, b: tot }))}</small><div class="pbar"><i data-w="${(seen / tot * 100).toFixed(1)}"></i></div></div>
       <div class="who"><span class="av" aria-hidden="true">👷</span><span><b>${esc(S && S.name || (L === "ar" ? "متقدم" : "Candidate"))}</b><small>${esc(S ? x.roles[S.role] : x.brandS)}</small></span>${exam ? "" : `<button type="button" class="lsw" id="lsw" lang="${L === "ar" ? "en" : "ar"}">${esc(x.other)}</button>`}</div>
+      ${credit(x, "sm")}
     </aside>
     <main class="main" id="main">${inner}</main>
     ${exam ? "" : `<nav class="tabbar" aria-label="${esc(x.brand)}">${VIEWS.map(k => `<button type="button" class="${cur === k ? "on" : ""}" data-go="${k}"><span class="ic" aria-hidden="true">${NAVI[k]}</span>${esc(x.nav[k].split(" ")[0])}</button>`).join("")}</nav>`}
@@ -443,6 +448,13 @@ function bindShell() {
   requestAnimationFrame(() => $$(".pbar i").forEach(i => i.style.width = i.dataset.w + "%"));
   reveal(); animRings();
 }
+const OWNER_TEL = "966543194250", OWNER_SHOW = "054 319 4250";
+const WA_I = `<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.3-.4.8-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2Z"/></svg>`;
+const TEL_I = `<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2Z"/></svg>`;
+const credit = (x = u(), cls = "") => `<div class="credit ${cls}"><span class="cby">${esc(x.by)}</span><b>${esc(x.owner)}</b>
+  <a class="cnum" href="tel:+${OWNER_TEL}" dir="ltr">${OWNER_SHOW}</a>
+  <span class="cbtns"><a class="cb wa" href="https://wa.me/${OWNER_TEL}?text=${encodeURIComponent(x.waMsg)}" target="_blank" rel="noopener noreferrer">${WA_I}${esc(x.wa)}</a><a class="cb call" href="tel:+${OWNER_TEL}">${TEL_I}${esc(x.call)}</a></span></div>`;
+const foot = () => `<footer class="foot"><p class="disc">${esc(u().disc)}</p>${credit()}</footer>`;
 const topbar = (t, s, right = "") => `<header class="top rise"><div><h1>${esc(t)}</h1>${s ? `<p>${esc(s)}</p>` : ""}</div><span class="tsp"></span>${right}</header>`;
 
 /* ---------- screens ---------- */
@@ -463,7 +475,9 @@ function renderGate() {
     <p class="sub rise" style="--d:2">${esc(A.gateS)} · <span lang="en">${esc(E.gateS)}</span></p>
     <div class="langs rise" style="--d:3"><button type="button" class="lang" data-l="ar" lang="ar"><b>العربية</b><small>ابدأ باللغة العربية</small></button><button type="button" class="lang" data-l="en" lang="en"><b>English</b><small>Continue in English</small></button></div>
     <div class="four rise" style="--d:4" role="note">${LEARN_4.map(([c, d, t]) => `<p lang="${c}" dir="${d}"><b>${c}</b><span>${esc(t)}</span></p>`).join("")}</div>
-    <p class="gfoot rise" style="--d:5">${esc(A.gateF)} · <span lang="en">${esc(E.gateF)}</span></p>
+    <p class="gdisc rise" style="--d:5">${esc(A.disc)}<br><span lang="en" dir="ltr">${esc(E.disc)}</span></p>
+    <div class="rise" style="--d:6">${credit(A, "gate")}</div>
+    <p class="gfoot rise" style="--d:6">${esc(A.gateF)} · <span lang="en">${esc(E.gateF)}</span></p>
   </div></section>`;
   $$(".lang").forEach(b => b.onclick = () => { setLang(b.dataset.l); route = parseHash(); render(); scrollTo(0, 0); });
 }
@@ -489,14 +503,14 @@ function renderHome() {
         ${LEARN[0].must.map(m => `<div class="must">${esc(m[L])}<br>${chip(QID[m.q].src[0])}</div>`).join("")}
         <div class="note4">${LEARN_4.map(([c, d, t]) => `<p lang="${c}" dir="${d}"><b>${c}</b><span>${esc(t)}</span></p>`).join("")}</div></section>
     </div>
-    <p class="disc">${esc(x.disc)}</p>`);
+    ${foot()}`);
   bindShell();
 }
 
 function renderLearn() {
   const x = u(), l = LEARN.find(z => z.id === route.a);
   if (!l) {
-    app.innerHTML = shell(topbar(x.learnT, x.learnS) + `<div class="grid lgrid">${LEARN.map((z, i) => `<a class="card lcard rev" style="--d:${i % 4}" href="#learn/${z.id}"><span class="n" aria-hidden="true">${z.ic}</span><b>${i + 1}. ${esc(z[L].t)}</b><small>${esc(z[L].d)}</small><span class="ct">${z.facts.length + (z.must || []).length} ${esc(x.facts)}</span></a>`).join("")}</div><p class="disc">${esc(x.disc)}</p>`);
+    app.innerHTML = shell(topbar(x.learnT, x.learnS) + `<div class="grid lgrid">${LEARN.map((z, i) => `<a class="card lcard rev" style="--d:${i % 4}" href="#learn/${z.id}"><span class="n" aria-hidden="true">${z.ic}</span><b>${i + 1}. ${esc(z[L].t)}</b><small>${esc(z[L].d)}</small><span class="ct">${z.facts.length + (z.must || []).length} ${esc(x.facts)}</span></a>`).join("")}</div>${foot()}`);
     return bindShell();
   }
   const i = LEARN.indexOf(l), nx = LEARN[i + 1];
@@ -506,7 +520,7 @@ function renderLearn() {
       ${(l.must || []).map(m => `<div class="must">${esc(m[L])}<br>${chip(srcOf(m))}</div>`).join("")}
       <ol class="facts">${l.facts.map(f => `<li class="fact"><div><p>${esc(f[L])}</p>${chip(srcOf(f))}</div></li>`).join("")}</ol>
     </section>
-    <div class="qnav">${nx ? `<a class="pill" href="#learn/${nx.id}">${esc(x.nextL)}: ${esc(nx[L].t)}</a>` : `<span></span>`}<a class="pill red" href="#exam">${esc(x.startAfter)} ▶</a></div>`, { nav: "learn" });
+    <div class="qnav">${nx ? `<a class="pill" href="#learn/${nx.id}">${esc(x.nextL)}: ${esc(nx[L].t)}</a>` : `<span></span>`}<a class="pill red" href="#exam">${esc(x.startAfter)} ▶</a></div>${foot()}`, { nav: "learn" });
   bindShell();
 }
 
@@ -517,7 +531,7 @@ function renderBank() {
     <div class="filters"><input class="inp" id="sq" type="search" placeholder="${esc(x.search)}" value="${esc(sq)}" dir="auto">
       <select class="inp" id="sdoc" style="flex:0 1 260px"><option value="">${esc(x.allDocs)}</option>${["DH", "CS"].map(k => `<option value="${k}" ${sdoc === k ? "selected" : ""}>${esc(docName(k))}</option>`).join("")}</select></div>
     <p class="hint" id="scount"></p><ol class="slist" id="slist"></ol>
-    <div class="qnav end"><button type="button" class="pill" id="smore">${esc(x.more)}</button></div>`);
+    <div class="qnav end"><button type="button" class="pill" id="smore">${esc(x.more)}</button></div>${foot()}`);
   bindShell();
   $("#sq").oninput = e => { sq = e.target.value; slimit = 25; fillBank(); };
   $("#sdoc").onchange = e => { sdoc = e.target.value; slimit = 25; fillBank(); };
@@ -554,7 +568,7 @@ function renderSources() {
     <div class="dlist">${rows.map(({ s, n }) => `<button type="button" class="drow" data-src="${regSrc(s)}"><b><bdi>${esc(locTxt(s))}</bdi></b><span dir="auto">${esc(s.x.slice(0, 150))}${s.x.length > 150 ? "…" : ""}</span><em>${esc(x.page)} ${s.p}${n > 1 ? ` · ×${n}` : ""}</em></button>`).join("")}</div></section>`;
   app.innerHTML = shell(topbar(x.srcT, x.srcS) +
     ["DH", "CS"].map(d => block(d, Object.values(groups[d] || {}).sort((a, b) => sortKey(a.s) < sortKey(b.s) ? -1 : 1))).join("") +
-    block("FG", fgList.map(f => ({ s: FG(f.fg[0], f.fg[1], f.fg[2], f.ar, f.en), n: 1 }))));
+    block("FG", fgList.map(f => ({ s: FG(f.fg[0], f.fg[1], f.fg[2], f.ar, f.en), n: 1 }))) + foot());
   bindShell();
 }
 
@@ -574,8 +588,9 @@ function renderEntry() {
       </form>
       <section class="card rev" style="--d:1"><h2>${L === "ar" ? "كيف يسير الاختبار" : "How the exam runs"}</h2>
         <ol class="facts">${x.parts.map(([h, p]) => `<li class="fact"><div><p><b>${esc(h)}</b></p><p class="hint">${esc(fmt(p, { n: EXAM_THEORY.length }))}</p></div></li>`).join("")}</ol>
-        <div class="note4" style="margin-top:12px">${LEARN_4.map(([c, d, t]) => `<p lang="${c}" dir="${d}"><b>${c}</b><span>${esc(t)}</span></p>`).join("")}</div></section>
-    </div>`, { nav: "exam" });
+        <div class="note4" style="margin-top:12px">${LEARN_4.map(([c, d, t]) => `<p lang="${c}" dir="${d}"><b>${c}</b><span>${esc(t)}</span></p>`).join("")}</div>
+        <div class="must" style="margin-top:12px">${esc(x.pracNote)}</div></section>
+    </div>${foot()}`, { nav: "exam" });
   bindShell();
   $("#rst").onclick = () => { store.set(SEEN_KEY, {}); renderEntry(); };
   if (valid) {
@@ -707,7 +722,7 @@ function secPractical() {
   const x = u(), c = S.c;
   $("#sec").innerHTML = `<div class="grid" style="gap:14px">
     <section class="card rise"><h2>${esc(x.formTitle)}<span class="tg" dir="ltr">${c.forms.map(f => FORM_MAP[f].name).join(" + ")}</span></h2>
-      <details open><summary style="cursor:pointer;font-weight:800">${esc(x.brief)}</summary>${briefHTML(c)}</details></section>
+      <div class="must">${esc(x.pracNote)}</div><details open><summary style="cursor:pointer;font-weight:800">${esc(x.brief)}</summary>${briefHTML(c)}</details></section>
     <section class="card rise" id="fpane">${formPane()}</section>
     <section class="card rise"><h2>${esc(x.spTitle)}</h2><p class="hint">${esc(x.spHint)}</p>${["iso", "ret"].map(spBlock).join("")}
       <div class="qnav end"><button type="button" class="pill red" id="fin">${esc(x.finish)}</button></div></section></div>`;
@@ -836,7 +851,7 @@ function renderResult() {
       <h3 class="rh">${esc(x.theory)}</h3><ul class="rvl">${thList || empty}</ul>
       <h3 class="rh">${esc(x.permits)}</h3><ul class="rvl">${pmList || empty}</ul>
       <h3 class="rh">${esc(x.practical)} — <span dir="ltr">${S.c.forms.map(f => FORM_MAP[f].name).join(" + ")}</span></h3><ul class="rvl">${ffList + spList || empty}</ul>
-    </section><p class="disc">${esc(x.disc)}</p>`, { nav: "exam" });
+    </section>${foot()}`, { nav: "exam" });
   bindShell();
   $("#again").onclick = () => { S = null; go("exam"); render(); scrollTo(0, 0); };
   $("#prt").onclick = () => print();

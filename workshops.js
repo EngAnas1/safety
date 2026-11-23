@@ -306,7 +306,7 @@ const WORKSHOPS = [
         { type: "lead", p: [
           "قالت العرب قديمًا: «معظم النار من مستصغر الشرر». الحريق يبقى نارًا ما دام تحت السيطرة، فإذا فقدنا السيطرة عليه صار حادثًا.",
           "في هذه الورشة تتعرف على عناصر الحريق ومراحله، وطرق إطفائه، وأنواع الحرائق وطفاياتها، والطريقة الصحيحة لاستخدام الطفاية. وفيها مختبر تفاعلي تجرّب فيه بنفسك." ] },
-        { type: "lab", h: "جرّب بنفسك في المختبر التفاعلي", p: "رباعي الحريق، ومراحل الحريق، والطفايات، وطريقة PASS… كلها بمحاكاة ثلاثية الأبعاد.", btn: "افتح مختبر مكافحة الحريق" },
+        { type: "lab", h: "جرّب بنفسك في المختبر التفاعلي", p: "رباعي الحريق، ومراحل الحريق، والطفايات، وطريقة PASS… كلها بتجربة تفاعلية ثلاثية الأبعاد.", btn: "افتح مختبر مكافحة الحريق" },
         { type: "tiles", h: "رباعي الحريق: أربعة عناصر يحتاجها الحريق", cols: "four", items: [
           ["🪵", "الوقود", "صلب مثل الخشب والورق، أو سائل مثل الزيوت والبنزين، أو غاز مثل البيوتان والميثان"],
           ["💨", "الأكسجين", "نسبته في الهواء حوالي 21٪ (20.9٪)"],
@@ -366,7 +366,7 @@ const WORKSHOPS = [
         { type: "lead", p: [
           "An old Arab saying goes: “Most fires start from a tiny spark.” Fire stays fire while it is under control; once control is lost, it becomes an incident.",
           "In this workshop you learn the elements and stages of fire, how fires are extinguished, the classes of fire and their extinguishers, and the right way to use an extinguisher. There is also an interactive lab to try it yourself." ] },
-        { type: "lab", h: "Try it yourself in the interactive lab", p: "The fire tetrahedron, fire stages, extinguishers and the PASS technique… all in 3D simulation.", btn: "Open the fire fighting lab" },
+        { type: "lab", h: "Try it yourself in the interactive lab", p: "The fire tetrahedron, fire stages, extinguishers and the PASS technique… all as an interactive 3D experience.", btn: "Open the fire fighting lab" },
         { type: "tiles", h: "The fire tetrahedron: four elements a fire needs", cols: "four", items: [
           ["🪵", "Fuel", "Solid like wood and paper, liquid like oils and gasoline, or gas like butane and methane"],
           ["💨", "Oxygen", "About 21% of the air (20.9%)"],

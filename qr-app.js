@@ -11,8 +11,8 @@ const baseInput = document.getElementById("base");
 baseInput.value = location.href.replace(/[?#].*$/, "").replace(/qr\.html$/, "");
 
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-/* Extra QR card: the committee exam simulation (Arabic/English only) */
-const EXAM_CARD = { id: "exam", path: "exam/", ar: { title: "اختبار التهيئة للجنة التأهيل" }, en: { title: "Authorization Preparation Exam" }, ur: { title: "(عربی / انگریزی)" } };
+/* Extra QR card: committee exam preparation (Arabic/English only) */
+const EXAM_CARD = { id: "exam", path: "exam/", ar: { title: "استعد لاختبار لجنة التأهيل" }, en: { title: "Get ready for the authorization exam" }, ur: { title: "(عربی / انگریزی)" } };
 const CARDS = [...TOPICS, EXAM_CARD];
 function topicURL(t){
   let b = baseInput.value.trim();

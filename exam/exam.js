@@ -388,7 +388,7 @@ let revObs = null;
 function reveal() {
   if (!MOTION) return;
   if (revObs) revObs.disconnect();
-  revObs = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); revObs.unobserve(e.target); } }), { threshold: .1 }) : null;
+  revObs = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); revObs.unobserve(e.target); } }), { threshold: 0, rootMargin: "0px 0px -40px 0px" }) : null;
   $$(".rev").forEach(el => revObs ? revObs.observe(el) : el.classList.add("in"));
 }
 const lockSVG = (c, sm) => {
@@ -435,14 +435,22 @@ function setLang(l) {
   document.documentElement.lang = l; document.documentElement.dir = U[l].dir;
   document.title = l === "ar" ? "اختبار التأهيل | المصدر والمستلم" : "Authorization Exam | Issuer & Receiver";
 }
-const SV = d => `<svg viewBox="0 0 24 24" width="27" height="27" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+/* tab-bar icons: outline when idle, filled when active (dark strokes punch details into the filled shape) */
+const SVG = d => `<svg class="tic" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+const K = "#101115";
 const TAB_IC = {
-  home: SV('<path d="M3.5 10.5 12 3.5l8.5 7V19a1.5 1.5 0 0 1-1.5 1.5h-4v-6h-6v6H5A1.5 1.5 0 0 1 3.5 19z"/>'),
-  learn: SV('<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/>'),
-  bank: SV('<rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/><path d="M8 8.5h8M8 12h8M8 15.5h5"/>'),
-  sources: SV('<path d="M14 3.5H7A2.5 2.5 0 0 0 4.5 6v12A2.5 2.5 0 0 0 7 20.5h10a2.5 2.5 0 0 0 2.5-2.5V9z"/><path d="M14 3.5V9h5.5"/><circle cx="11.5" cy="14" r="2.6"/><path d="m13.4 15.9 2.1 2.1"/>'),
-  exam: SV('<rect x="3.5" y="3.5" width="17" height="17" rx="5"/><path d="M10 8.6v6.8l5.6-3.4z"/>')
+  home: [SVG('<path d="M3.5 10.6 12 3.6l8.5 7V19a1.6 1.6 0 0 1-1.6 1.6h-4.2v-5.8h-5.4v5.8H5.1A1.6 1.6 0 0 1 3.5 19z"/>'),
+         SVG('<path fill="currentColor" d="M3.5 10.6 12 3.6l8.5 7V19a1.6 1.6 0 0 1-1.6 1.6h-4.2v-5.8h-5.4v5.8H5.1A1.6 1.6 0 0 1 3.5 19z"/>')],
+  learn: [SVG('<path d="M11.2 6.2C9.5 5 7.2 4.6 4 4.6v13.2c3 0 5.3.4 7.2 1.5z"/><path d="M12.8 6.2C14.5 5 16.8 4.6 20 4.6v13.2c-3 0-5.3.4-7.2 1.5z"/>'),
+          SVG('<path fill="currentColor" d="M11.2 6.2C9.5 5 7.2 4.6 4 4.6v13.2c3 0 5.3.4 7.2 1.5z"/><path fill="currentColor" d="M12.8 6.2C14.5 5 16.8 4.6 20 4.6v13.2c-3 0-5.3.4-7.2 1.5z"/>')],
+  bank: [SVG('<path d="M6.6 3.2h10.8a2.6 2.6 0 0 1 2.6 2.6v7.9a2.6 2.6 0 0 1-2.6 2.6H11l-4.9 4v-4h-.1A2.6 2.6 0 0 1 3.4 13.7V5.8a2.6 2.6 0 0 1 2.6-2.6z"/><path d="M10 7.9a2.1 2.1 0 1 1 3 1.9c-.6.3-1 .8-1 1.4v.3"/><circle cx="12" cy="13.6" r=".4" fill="currentColor"/>'),
+         SVG(`<path fill="currentColor" d="M6.6 3.2h10.8a2.6 2.6 0 0 1 2.6 2.6v7.9a2.6 2.6 0 0 1-2.6 2.6H11l-4.9 4v-4h-.1A2.6 2.6 0 0 1 3.4 13.7V5.8a2.6 2.6 0 0 1 2.6-2.6z"/><path stroke="${K}" stroke-width="2" d="M10 7.9a2.1 2.1 0 1 1 3 1.9c-.6.3-1 .8-1 1.4v.3"/><circle cx="12" cy="13.6" r=".9" fill="${K}" stroke="none"/>`)],
+  sources: [SVG('<path d="M13.8 3H7.6A2.6 2.6 0 0 0 5 5.6v12.8A2.6 2.6 0 0 0 7.6 21h8.8a2.6 2.6 0 0 0 2.6-2.6V8.2z"/><path d="M13.8 3v5.2H19"/><path d="M8.6 12.6h6.8M8.6 16.2h4.6"/>'),
+            SVG(`<path fill="currentColor" d="M13.8 3H7.6A2.6 2.6 0 0 0 5 5.6v12.8A2.6 2.6 0 0 0 7.6 21h8.8a2.6 2.6 0 0 0 2.6-2.6V8.2z"/><path stroke="${K}" stroke-width="1.7" d="M13.8 3.4v4.8H18.6"/><path stroke="${K}" stroke-width="2" d="M8.6 12.6h6.8M8.6 16.2h4.6"/>`)],
+  exam: [SVG('<circle cx="12" cy="13.6" r="7.4"/><path d="M9.8 2.6h4.4M12 2.6v3.6M12 13.6v-3.4M18.3 6.9l1.4-1.4"/>'),
+         SVG(`<circle cx="12" cy="13.6" r="7.6" fill="currentColor"/><path d="M9.8 2.6h4.4M12 2.6v3.4M18.3 6.9l1.4-1.4"/><path stroke="${K}" stroke-width="2.2" d="M12 13.6v-3.6"/><circle cx="12" cy="13.6" r="1.1" fill="${K}" stroke="none"/>`)]
 };
+const TAB_NAME = { ar: { home: "الرئيسية", learn: "الدروس", bank: "الأسئلة", sources: "المصادر", exam: "الاختبار" }, en: { home: "Home", learn: "Lessons", bank: "Questions", sources: "Sources", exam: "Exam" } };
 const NAVI = { home: "◧", learn: "📘", bank: "☰", sources: "📄", exam: "▶" };
 function shell(inner, opts = {}) {
   const x = u(), cur = opts.nav || route.v, seen = seenCount(), tot = EXAM_THEORY.length;
@@ -458,7 +466,7 @@ function shell(inner, opts = {}) {
       ${credit(x, "sm")}
     </aside>
     <main class="main" id="main">${inner}</main>
-    ${exam ? "" : `<nav class="tabbar" id="tabbar" aria-label="${esc(x.brand)}">${VIEWS.map(k => `<button type="button" class="${cur === k ? "on" : ""}" data-go="${k}" aria-label="${esc(x.nav[k])}" ${cur === k ? 'aria-current="page"' : ""}>${TAB_IC[k]}</button>`).join("")}</nav>`}
+    ${exam ? "" : `<nav class="tabbar" id="tabbar" aria-label="${esc(x.brand)}">${VIEWS.map(k => `<button type="button" class="${cur === k ? "on" : ""}" data-go="${k}" ${cur === k ? 'aria-current="page"' : ""}>${TAB_IC[k][cur === k ? 1 : 0]}<span class="tl">${esc(TAB_NAME[L][k])}</span></button>`).join("")}</nav>`}
   </div>`;
 }
 function bindShell() {

@@ -72,7 +72,7 @@ const U = {
     lock: { red: "قفل أحمر", yellow: "قفل أصفر", blue: "قفل أزرق" },
     search: "ابحث في الأسئلة", allDocs: "كل المصادر", more: "عرض المزيد", count: "{n} سؤالًا", cited: "{n} موضعًا مستشهدًا به",
     mainDoc: "الوثيقة الأساسية", secondary: "تصريح ثانوي", org: { sec: "الشركة", con: "مقاول" },
-    vClose: "إغلاق", vNote: "الجزء المظلل هو موضع المعلومة في الوثيقة الأصلية.",
+    vClose: "إغلاق", vNote: "الإطار الأحمر يحدد موضع المعلومة في الوثيقة الأصلية.",
     gateK: ["SE", "ISSUER", "RECEIVER"], gateT: ["اختبار التأهيل", "لوثائق السلامة"], gateS: "اختر لغة الاختبار للمتابعة.", gateF: "للتهيئة فقط · لا تُرسل أي بيانات"
   },
   en: {
@@ -119,7 +119,7 @@ const U = {
     lock: { red: "Red lock", yellow: "Yellow lock", blue: "Blue lock" },
     search: "Search the questions", allDocs: "All sources", more: "Show more", count: "{n} questions", cited: "{n} cited passages",
     mainDoc: "Main document", secondary: "Secondary permit", org: { sec: "SE", con: "Contractor" },
-    vClose: "Close", vNote: "The highlighted part is where the information sits in the original document.",
+    vClose: "Close", vNote: "The red frame marks where the information sits in the original document.",
     gateK: ["SE", "ISSUER", "RECEIVER"], gateT: ["Authorization Exam", "for Safety Documents"], gateS: "Choose the exam language to continue.", gateF: "For preparation only · no data is sent anywhere"
   }
 };

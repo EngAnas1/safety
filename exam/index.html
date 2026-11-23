@@ -362,10 +362,15 @@ bdi{unicode-bidi:isolate}
   .shell{grid-template-columns:1fr}
   .side{display:none}
   .main{padding-bottom:96px}
-  .tabbar{display:flex;position:fixed;inset-inline:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:20;justify-content:space-around;padding:7px;border-radius:20px;background:rgba(20,22,28,.82);border:1px solid var(--line2);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
-  .tabbar button{flex:1;display:grid;justify-items:center;gap:1px;padding:5px 2px;border-radius:13px;font-size:.66rem;font-weight:800;color:#AEB3BB}
-  .tabbar button .ic{font-size:1.05rem}
-  .tabbar button.on{background:var(--redg);color:#fff}
+  .tabbar{display:flex;position:fixed;left:14px;right:14px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:20;gap:4px;padding:6px;border-radius:999px;background:rgba(14,15,18,.86);border:1px solid rgba(255,255,255,.12);box-shadow:0 18px 40px -14px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.06);backdrop-filter:blur(24px) saturate(1.4);-webkit-backdrop-filter:blur(24px) saturate(1.4);transform-origin:50% 100%;transition:transform .35s var(--smooth),padding .35s var(--smooth),left .35s var(--smooth),right .35s var(--smooth)}
+  .tabbar button{flex:1;height:54px;display:grid;place-items:center;border-radius:999px;color:#F2F3F5;transition:background .25s,height .35s var(--smooth),transform .2s}
+  .tabbar button:active{transform:scale(.92)}
+  .tabbar button svg{transition:width .35s var(--smooth),height .35s var(--smooth)}
+  .tabbar button.on{background:rgba(255,255,255,.16)}
+  .tabbar button.on svg{stroke-width:2.4}
+  .tabbar.mini{left:34px;right:34px;padding:4px;transform:translateY(4px)}
+  .tabbar.mini button{height:44px}
+  .tabbar.mini button svg{width:23px;height:23px}
   .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
   .two,.qwrap{grid-template-columns:1fr}
   .pal{order:-1}.pal .grid8{grid-template-columns:repeat(10,1fr)}
@@ -386,9 +391,9 @@ bdi{unicode-bidi:isolate}
 <div class="amb" aria-hidden="true"><img src="hero-ltr.webp" alt="" width="1920" height="1008"></div>
 <div id="app"></div>
 <noscript><p style="padding:24px">تحتاج هذه الصفحة إلى تفعيل JavaScript. / This page needs JavaScript.</p></noscript>
-<script src="exam-data.js?v=202611240700"></script>
-<script src="exam-forms.js?v=202611240700"></script>
-<script src="exam-learn.js?v=202611240700"></script>
-<script src="exam.js?v=202611240700"></script>
+<script src="exam-data.js?v=202611240800"></script>
+<script src="exam-forms.js?v=202611240800"></script>
+<script src="exam-learn.js?v=202611240800"></script>
+<script src="exam.js?v=202611240800"></script>
 </body>
 </html>

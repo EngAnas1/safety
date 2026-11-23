@@ -435,6 +435,14 @@ function setLang(l) {
   document.documentElement.lang = l; document.documentElement.dir = U[l].dir;
   document.title = l === "ar" ? "اختبار التأهيل | المصدر والمستلم" : "Authorization Exam | Issuer & Receiver";
 }
+const SV = d => `<svg viewBox="0 0 24 24" width="27" height="27" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+const TAB_IC = {
+  home: SV('<path d="M3.5 10.5 12 3.5l8.5 7V19a1.5 1.5 0 0 1-1.5 1.5h-4v-6h-6v6H5A1.5 1.5 0 0 1 3.5 19z"/>'),
+  learn: SV('<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/>'),
+  bank: SV('<rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/><path d="M8 8.5h8M8 12h8M8 15.5h5"/>'),
+  sources: SV('<path d="M14 3.5H7A2.5 2.5 0 0 0 4.5 6v12A2.5 2.5 0 0 0 7 20.5h10a2.5 2.5 0 0 0 2.5-2.5V9z"/><path d="M14 3.5V9h5.5"/><circle cx="11.5" cy="14" r="2.6"/><path d="m13.4 15.9 2.1 2.1"/>'),
+  exam: SV('<rect x="3.5" y="3.5" width="17" height="17" rx="5"/><path d="M10 8.6v6.8l5.6-3.4z"/>')
+};
 const NAVI = { home: "◧", learn: "📘", bank: "☰", sources: "📄", exam: "▶" };
 function shell(inner, opts = {}) {
   const x = u(), cur = opts.nav || route.v, seen = seenCount(), tot = EXAM_THEORY.length;
@@ -450,7 +458,7 @@ function shell(inner, opts = {}) {
       ${credit(x, "sm")}
     </aside>
     <main class="main" id="main">${inner}</main>
-    ${exam ? "" : `<nav class="tabbar" aria-label="${esc(x.brand)}">${VIEWS.map(k => `<button type="button" class="${cur === k ? "on" : ""}" data-go="${k}"><span class="ic" aria-hidden="true">${NAVI[k]}</span>${esc(x.nav[k].split(" ")[0])}</button>`).join("")}</nav>`}
+    ${exam ? "" : `<nav class="tabbar" id="tabbar" aria-label="${esc(x.brand)}">${VIEWS.map(k => `<button type="button" class="${cur === k ? "on" : ""}" data-go="${k}" aria-label="${esc(x.nav[k])}" ${cur === k ? 'aria-current="page"' : ""}>${TAB_IC[k]}</button>`).join("")}</nav>`}
   </div>`;
 }
 function bindShell() {
@@ -872,6 +880,17 @@ function renderResult() {
   $("#ow").onclick = () => { onlyWrong = true; renderResult(); };
   $("#al").onclick = () => { onlyWrong = false; renderResult(); };
 }
+
+/* mobile tab bar: compact while scrolling down, full size when scrolling up or near the top */
+let lastY = 0, tbTick = false;
+addEventListener("scroll", () => {
+  if (tbTick) return; tbTick = true;
+  requestAnimationFrame(() => {
+    const t = $("#tabbar"), y = scrollY;
+    if (t) { if (y > lastY + 6 && y > 80) t.classList.add("mini"); else if (y < lastY - 6 || y < 40) t.classList.remove("mini"); }
+    lastY = y; tbTick = false;
+  });
+}, { passive: true });
 
 /* ---------- boot ---------- */
 window.addEventListener("beforeunload", () => save());

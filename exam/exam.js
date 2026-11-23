@@ -700,7 +700,7 @@ function secPermits() {
 /* ---------- the permit forms: Arabic half (right) for Arabic, English half (left) for English ---------- */
 const PT_W = 595.32, PT_H = 841.92;
 const PAIRS = { issSEC: "issCON", issCON: "issSEC", recSEC: "recCON", recCON: "recSEC", closed: "cancel", cancel: "closed" };
-let zoom = 1;
+let zoom = (window.innerWidth || 1000) < 700 ? 2 : 1;   // phones open the form at 2x on the half they fill
 const curF = () => S.c.forms[S.tab || 0];
 const FV = f => (S.F[f] = S.F[f] || {});
 const FMAP = f => (L === "ar" && FORM_MAP[f].fa) ? FORM_MAP[f].fa : FORM_MAP[f].f;
@@ -712,7 +712,10 @@ function fieldHTML(f, [k, t, x, y, w, h]) {
   if (t === "c") {
     const tr = TRI.test(k), val = F[k];
     const state = val === true ? "on" : val === "na" ? "na" : "";
-    return `<button type="button" class="fx fc ${state}" data-k="${k}" style="${st}" role="checkbox" aria-checked="${val === true ? "true" : val === "na" ? "mixed" : "false"}" aria-label="${lab}${tr ? " (✓ / N/A)" : ""}">${val === true ? "✓" : val === "na" ? "<b>N/A</b>" : ""}</button>`;
+    /* large tap area: the whole label line next to the box (precomputed per form half) */
+    const hr = (FORM_MAP[f][L === "ar" && FORM_MAP[f].fa ? "ha" : "he"] || {})[k];
+    const hit = hr ? `<i class="hit" aria-hidden="true" style="left:${((hr[0] - x) / w * 100).toFixed(1)}%;top:${((hr[1] - y) / h * 100).toFixed(1)}%;width:${(hr[2] / w * 100).toFixed(1)}%;height:${(hr[3] / h * 100).toFixed(1)}%"></i>` : "";
+    return `<button type="button" class="fx fc ${state}" data-k="${k}" style="${st}" role="checkbox" aria-checked="${val === true ? "true" : val === "na" ? "mixed" : "false"}" aria-label="${lab}${tr ? " (✓ / N/A)" : ""}">${hit}${val === true ? "✓" : val === "na" ? "<b>N/A</b>" : ""}</button>`;
   }
   if (t === "s") return `<button type="button" class="fx fs ${F[k] ? "on" : ""}" data-k="${k}" style="${st}" aria-label="${lab}">${F[k] ? `<span lang="${L}">${esc(sigName(f, k))}</span>` : ""}</button>`;
   const v = F[k] || "";

@@ -254,7 +254,11 @@ bdi{unicode-bidi:isolate}
 .ft span{font-size:clamp(6px,1.5vw,15px);overflow:hidden;text-overflow:ellipsis;width:100%}
 .pf[data-z="2"] .ft span,.pf[data-z="2.5"] .ft span,.pf[data-z="3"] .ft span{font-size:clamp(9px,2.4vw,22px)}
 .pf.ar .ft span{text-align:right;direction:rtl}
-.fc{justify-content:center;outline-style:solid}
+.fc{justify-content:center;outline-style:solid;z-index:1;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.ft,.fs{z-index:2}
+.fc .hit{position:absolute;border-radius:5px;transition:background .15s}
+.fc:hover .hit{background:rgba(10,64,201,.06)}
+.fc:active .hit{background:rgba(10,64,201,.16)}
 .fc.on{color:#0A2FA0;font-size:clamp(8px,1.9vw,18px);font-weight:900}
 .fc.na{background:transparent;outline-color:transparent}
 .fc.na b{position:absolute;inset-inline-start:110%;font-size:clamp(5px,1.1vw,11px);color:#D10E1A;font-weight:900;letter-spacing:.02em}
@@ -395,9 +399,9 @@ bdi{unicode-bidi:isolate}
 <div class="amb" aria-hidden="true"><img src="hero-ltr.webp" alt="" width="1920" height="1008"></div>
 <div id="app"></div>
 <noscript><p style="padding:24px">تحتاج هذه الصفحة إلى تفعيل JavaScript. / This page needs JavaScript.</p></noscript>
-<script src="exam-data.js?v=202611241200"></script>
-<script src="exam-forms.js?v=202611241200"></script>
-<script src="exam-learn.js?v=202611241200"></script>
-<script src="exam.js?v=202611241200"></script>
+<script src="exam-data.js?v=202611241300"></script>
+<script src="exam-forms.js?v=202611241300"></script>
+<script src="exam-learn.js?v=202611241300"></script>
+<script src="exam.js?v=202611241300"></script>
 </body>
 </html>

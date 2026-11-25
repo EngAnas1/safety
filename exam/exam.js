@@ -465,11 +465,12 @@ function shell(inner, opts = {}) {
       <div class="who"><span class="av" aria-hidden="true">👷</span><span><b>${esc(S && S.name || (L === "ar" ? "متقدم" : "Candidate"))}</b><small>${esc(S ? x.roles[S.role] : x.brandS)}</small></span>${exam ? "" : `<button type="button" class="lsw" id="lsw" lang="${L === "ar" ? "en" : "ar"}">${esc(x.other)}</button>`}</div>
       ${credit(x, "sm")}
     </aside>
-    <main class="main" id="main">${inner}</main>
+    <main class="main" id="main">${exam ? "" : `<nav class="xsub" aria-label="${esc(x.brand)}">${VIEWS.map(k => `<a class="${cur === k ? "on" : ""}" href="#${k}" ${cur === k ? 'aria-current="page"' : ""}>${esc(TAB_NAME[L][k])}</a>`).join("")}</nav>`}${inner}</main>
     ${exam ? "" : `<nav class="tabbar" id="tabbar" aria-label="${esc(x.brand)}">${VIEWS.map(k => `<button type="button" class="${cur === k ? "on" : ""}" data-go="${k}" ${cur === k ? 'aria-current="page"' : ""}>${TAB_IC[k][cur === k ? 1 : 0]}<span class="tl">${esc(TAB_NAME[L][k])}</span></button>`).join("")}</nav>`}
   </div>`;
 }
 function bindShell() {
+  document.documentElement.classList.toggle("xs-off", !!(S && !S.done));
   const l = $("#lsw"); if (l) l.onclick = () => { setLang(L === "ar" ? "en" : "ar"); SRC_REG = []; render(); };
   $$("[data-go]").forEach(b => b.onclick = () => go(b.dataset.go));
   $$(".side [data-sec]").forEach(b => b.onclick = () => { S.sec = +b.dataset.sec; save(); render(); scrollTo(0, 0); });

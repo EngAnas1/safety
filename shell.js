@@ -58,7 +58,7 @@
       <div class="xs-h">${esc(t.h2)}</div>${["exam", "lab"].map(k => link(k, "xs-nav")).join("")}
       <div class="xs-grow"></div>`;
     tab.innerHTML = ITEMS.map(k => link(k, "")).join("");
-    document.documentElement.classList.add("xs"); if (here === "lab") document.documentElement.classList.add("xs-lab");
+    document.documentElement.classList.add("xs"); if (here === "lab") document.documentElement.classList.add("xs-lab"); if (here === "exam") document.documentElement.classList.add("xs-exam");
   }
   new MutationObserver(build).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", build); else build();

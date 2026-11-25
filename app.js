@@ -134,7 +134,7 @@ const examHTML = u => u.examH ? `
       <div><span class="kick">${esc(u.examKick)}</span><h2>${esc(u.examH)}</h2><p>${esc(u.examP)}</p></div>
       <span class="btn">${esc(u.examBtn)} ${lang === "en" ? "→" : "←"}</span>
     </a></section>` : "";
-const creatorHTML = u => examHTML(u) + `
+const creatorHTML = u => `
     <section class="sec">
       <div class="creator">
         <div class="cart"><img src="img/me.webp" alt="${esc(CONFIG.ownerName[lang])}" loading="lazy"></div>

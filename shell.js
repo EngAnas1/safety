@@ -20,9 +20,9 @@
           SVG(`<path fill="currentColor" d="M10.2 3v6.3L4.8 18.4A1.8 1.8 0 0 0 6.4 21h11.2a1.8 1.8 0 0 0 1.6-2.6l-5.4-9.1V3z"/><path d="M9.5 3h5"/><path stroke="${K}" stroke-width="1.8" d="M7.6 14.6h8.8"/>`)]
   };
   const T = {
-    ar: { lsr: "قواعد الحفاظ على الحياة", ws: "الورش", exam: "الاختبار", lab: "المختبر", h1: "التوعية", h2: "التطبيق", site: "منصة التوعية بالسلامة", sub: "م. أنس الزهراني", by: "إعداد وتصميم", wa: "واتساب", call: "اتصال" },
-    en: { lsr: "Life Saving Rules", ws: "Workshops", exam: "Exam", lab: "Lab", h1: "Awareness", h2: "Practice", site: "Safety awareness", sub: "Eng. Anas Alzahrani", by: "Prepared and designed by", wa: "WhatsApp", call: "Call" },
-    ur: { lsr: "زندگی بچانے والے قوانین", ws: "ورکشاپس", exam: "امتحان", lab: "لیب", h1: "آگاہی", h2: "مشق", site: "حفاظتی آگاہی", sub: "انجینئر انس الزہرانی", by: "تیاری اور ڈیزائن", wa: "واٹس ایپ", call: "کال" }
+    ar: { lsr: "قواعد الحفاظ على الحياة", ws: "الورش", exam: "اختبار التأهيل", lab: "مختبر مكافحة الحريق", h1: "التوعية", h2: "التطبيق", site: "منصة التوعية بالسلامة", sub: "م. أنس الزهراني", by: "إعداد وتصميم", wa: "واتساب", call: "اتصال" },
+    en: { lsr: "Life Saving Rules", ws: "Workshops", exam: "Authorization Exam", lab: "Fire-fighting Lab", h1: "Awareness", h2: "Practice", site: "Safety awareness", sub: "Eng. Anas Alzahrani", by: "Prepared and designed by", wa: "WhatsApp", call: "Call" },
+    ur: { lsr: "زندگی بچانے والے قوانین", ws: "ورکشاپس", exam: "اہلیت کا امتحان", lab: "آگ بجھانے کی لیب", h1: "آگاہی", h2: "مشق", site: "حفاظتی آگاہی", sub: "انجینئر انس الزہرانی", by: "تیاری اور ڈیزائن", wa: "واٹس ایپ", call: "کال" }
   };
   const ITEMS = ["lsr", "ws", "exam", "lab"];
   const PIC = { lsr: "img/t-lsr.webp", ws: "img/t-ws.webp", exam: "img/t-exam.webp", lab: "img/ic/fire.webp" };

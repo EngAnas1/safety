@@ -20,22 +20,24 @@
           SVG(`<path fill="currentColor" d="M10.2 3v6.3L4.8 18.4A1.8 1.8 0 0 0 6.4 21h11.2a1.8 1.8 0 0 0 1.6-2.6l-5.4-9.1V3z"/><path d="M9.5 3h5"/><path stroke="${K}" stroke-width="1.8" d="M7.6 14.6h8.8"/>`)]
   };
   const T = {
-    ar: { lsr: "قواعد الحياة", risk: "المخاطر", ws: "الورش", exam: "الاختبار", lab: "المختبر", h1: "التوعية", h2: "التطبيق", site: "منصة التوعية بالسلامة", sub: "م. أنس الزهراني", by: "إعداد وتصميم", wa: "واتساب", call: "اتصال" },
-    en: { lsr: "Life rules", risk: "Risk", ws: "Workshops", exam: "Exam", lab: "Lab", h1: "Awareness", h2: "Practice", site: "Safety awareness", sub: "Eng. Anas Alzahrani", by: "Prepared and designed by", wa: "WhatsApp", call: "Call" },
-    ur: { lsr: "زندگی کے اصول", risk: "خطرات", ws: "ورکشاپس", exam: "امتحان", lab: "لیب", h1: "آگاہی", h2: "مشق", site: "حفاظتی آگاہی", sub: "انجینئر انس الزہرانی", by: "تیاری اور ڈیزائن", wa: "واٹس ایپ", call: "کال" }
+    ar: { lsr: "قواعد الحفاظ على الحياة", ws: "الورش", exam: "الاختبار", lab: "المختبر", h1: "التوعية", h2: "التطبيق", site: "منصة التوعية بالسلامة", sub: "م. أنس الزهراني", by: "إعداد وتصميم", wa: "واتساب", call: "اتصال" },
+    en: { lsr: "Life Saving Rules", ws: "Workshops", exam: "Exam", lab: "Lab", h1: "Awareness", h2: "Practice", site: "Safety awareness", sub: "Eng. Anas Alzahrani", by: "Prepared and designed by", wa: "WhatsApp", call: "Call" },
+    ur: { lsr: "زندگی بچانے والے قوانین", ws: "ورکشاپس", exam: "امتحان", lab: "لیب", h1: "آگاہی", h2: "مشق", site: "حفاظتی آگاہی", sub: "انجینئر انس الزہرانی", by: "تیاری اور ڈیزائن", wa: "واٹس ایپ", call: "کال" }
   };
-  const ITEMS = ["lsr", "risk", "ws", "exam", "lab"];
+  const ITEMS = ["lsr", "ws", "exam", "lab"];
+  const PIC = { lsr: "img/t-lsr.webp", ws: "img/t-ws.webp", exam: "img/t-exam.webp", lab: "img/ic/fire.webp" };
+  const topicTitle = (id, l) => { try { const t = TOPICS.find(x => x.id === id); return t && t[l] && t[l].title; } catch (e) { return null; } };
   const href = (k, l) => {
     const q = "lang=" + encodeURIComponent(l);
     if (k === "lsr") return base + "./?" + q;
-    if (k === "risk" || k === "ws") return base + "./?t=" + k + "&" + q;
+    if (k === "ws") return base + "./?t=ws&" + q;
     if (k === "exam") return base + "exam/";
     return base + "lab/fire.html?" + q;
   };
   const current = () => {
     if (here) return here;
     const t = new URLSearchParams(location.search).get("t");
-    return t === "risk" || t === "ws" ? t : "lsr";
+    return t === "risk" || t === "ws" ? "ws" : "lsr";
   };
   const tel = (typeof CONFIG !== "undefined" && CONFIG.ownerIntl ? String(CONFIG.ownerIntl) : "966543194250").replace(/\D/g, "");
   const show = typeof CONFIG !== "undefined" && CONFIG.ownerPhone ? String(CONFIG.ownerPhone) : "054 319 4250";
@@ -46,12 +48,13 @@
     const l = ["ar", "en", "ur"].includes(document.documentElement.lang) ? document.documentElement.lang : "ar";
     if (l === lastLang && side) return; lastLang = l;
     const t = T[l], cur = current();
-    const link = (k, cls) => `<a class="${cls}${k === cur ? " on" : ""}" href="${esc(href(k, l))}"${k === cur ? ' aria-current="page"' : ""}>${IC[k][k === cur ? 1 : 0]}<span class="tl">${esc(t[k])}</span></a>`;
+    const name = k => (k === "lsr" || k === "ws") && topicTitle(k, l) || t[k];
+    const link = (k, cls) => `<a class="${cls}${k === cur ? " on" : ""}" href="${esc(href(k, l))}"${k === cur ? ' aria-current="page"' : ""}><img class="xs-pic" src="${esc(base + PIC[k])}" alt="" width="40" height="40"><span class="tl">${esc(name(k))}</span></a>`;
     if (!side) { side = document.createElement("aside"); side.className = "xs-side"; document.body.appendChild(side); }
     if (!tab) { tab = document.createElement("nav"); tab.className = "xs-tab"; document.body.appendChild(tab); }
     side.setAttribute("aria-label", t.site); tab.setAttribute("aria-label", t.site);
     side.innerHTML = `<a class="xs-brand" href="${esc(href("lsr", l))}"><span class="m" aria-hidden="true">⛑️</span><span>${esc(t.site)}<small>${esc(t.sub)}</small></span></a>
-      <div class="xs-h">${esc(t.h1)}</div>${["lsr", "risk", "ws"].map(k => link(k, "xs-nav")).join("")}
+      <div class="xs-h">${esc(t.h1)}</div>${["lsr", "ws"].map(k => link(k, "xs-nav")).join("")}
       <div class="xs-h">${esc(t.h2)}</div>${["exam", "lab"].map(k => link(k, "xs-nav")).join("")}
       <div class="xs-grow"></div>`;
     tab.innerHTML = ITEMS.map(k => link(k, "")).join("");

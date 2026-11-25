@@ -151,7 +151,6 @@ const heroHTML = (u, title, sub, extra) => `
     <div class="in">
       <img class="mimg logo" src="img/logo.webp" alt="Eng. Anas Alzahrani">
       <div class="copy" dir="${u.dir}">
-        ${tabsHTML()}
         ${CONFIG.siteTag?.[lang] ? `<span class="tag">${esc(CONFIG.siteTag[lang])}</span>` : ""}
         <h1 class="display">${titleWords(title)}</h1>
         <p>${esc(sub)}</p>
@@ -202,7 +201,18 @@ function renderWorkshopList(u){
   document.title = c.title;
   return heroHTML(u, c.title, c.intro) + `
   <div class="wrap">
-    <div class="wgrid">${WORKSHOPS.map(w => { const own = !w.only || w.only === lang, t = own ? w[lang] : w[w.only], n = Math.min(QUIZ_SIZE, (QUIZ[w.id] || []).length), b = bestScore({id: w.id});
+    <div class="wgrid">${(() => { const rk = TOPICS.find(t => t.id === "risk"); if(!rk) return "";
+      const t = rk[lang], poster = CONFIG.posters?.risk?.[lang], n = QN(rk), b = bestScore(rk);
+      return `<a class="wcard" href="${link("risk")}">
+        <div class="wimg">${poster ? `<img src="${esc(poster)}" alt="" loading="lazy"><span class="wplay">▶</span>` : `<span class="wph"><img src="${esc(art(rk))}" alt=""></span>`}</div>
+        <div class="wbody">
+          <span class="kick">${u.wsKick}</span>
+          <h3>${esc(t.title)}</h3>
+          <p>${esc(t.intro)}</p>
+          <div class="wmeta"><span>🎬 ${u.wsVideo}</span><span>🎯 ${fmt(u.wsQs, {n: (QUIZ.risk || []).length})}</span>${n ? `<span>${u.best}: ${b}/${n}</span>` : ""}</div>
+          <span class="btn">${u.wsOpen}</span>
+        </div>
+      </a>`; })()}${WORKSHOPS.map(w => { const own = !w.only || w.only === lang, t = own ? w[lang] : w[w.only], n = Math.min(QUIZ_SIZE, (QUIZ[w.id] || []).length), b = bestScore({id: w.id});
       return `<a class="wcard" href="${own ? link("ws", w.id) : `?t=ws&w=${encodeURIComponent(w.id)}&lang=${w.only}`}">
         <div class="wimg">${w.poster[lang] && own ? `<img src="${esc(w.poster[lang])}" alt="" loading="lazy"><span class="wplay">▶</span>` : `<span class="wph"><img src="${esc(w.icon)}" alt=""></span>`}</div>
         <div class="wbody">
@@ -287,7 +297,6 @@ function renderTopic(u){
     <div class="in">
       <img class="mimg logo" src="img/logo.webp" alt="Eng. Anas Alzahrani">
       <div class="copy" dir="${u.dir}">
-        ${tabsHTML()}
         ${CONFIG.siteTag?.[lang] ? `<span class="tag">${esc(CONFIG.siteTag[lang])}</span>` : ""}
         <h1 class="display">${words}</h1>
         <p>${esc(c.intro)}</p>
@@ -301,6 +310,7 @@ function renderTopic(u){
   </section>
   <div class="stripe thin"></div>
   <div class="wrap">
+    ${topic.id === "risk" ? `<a class="back" href="${link("ws")}">${u.dir === "rtl" ? "→" : "←"} ${u.wsAll}</a>` : ""}
     <div class="stage">
     <div class="watchcol">
     ${frameHTML(CONFIG.videos[topic.id]?.[lang], CONFIG.posters?.[topic.id]?.[lang], u)}

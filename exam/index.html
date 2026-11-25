@@ -182,7 +182,7 @@ bdi{unicode-bidi:isolate}
 .fact{display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;padding:13px 14px;border-radius:var(--r2);background:rgba(255,255,255,.035);border:1px solid var(--line)}
 .fact::before{counter-increment:f;content:counter(f);width:28px;height:28px;border-radius:9px;display:grid;place-items:center;background:rgba(255,59,59,.16);color:#FF8D84;font-weight:900;font-size:.82rem}
 .fact p{font-size:1.02rem}
-.chip{max-width:100%;display:inline-flex;flex-wrap:wrap;text-align:start;align-items:center;gap:6px;margin-top:6px;padding:3px 10px;border-radius:99px;font-size:.76rem;font-weight:800;color:#FFB0A8;background:rgba(255,59,59,.1);border:1px solid rgba(255,90,78,.28);transition:background .2s}
+.chip{max-width:100%;border-radius:12px!important;line-height:1.5;display:inline-flex;flex-wrap:wrap;text-align:start;align-items:center;gap:6px;margin-top:6px;padding:3px 10px;border-radius:99px;font-size:.76rem;font-weight:800;color:#FFB0A8;background:rgba(255,59,59,.1);border:1px solid rgba(255,90,78,.28);transition:background .2s}
 .chip:hover{background:rgba(255,59,59,.22);color:#fff}
 .chip .pg{color:var(--muted);font-weight:700}
 
@@ -318,6 +318,17 @@ bdi{unicode-bidi:isolate}
 .filters .inp{flex:1;min-width:200px}
 .slist{list-style:none;display:grid;gap:10px}
 .sitem{padding:14px}
+.bopts{list-style:none;display:grid;gap:7px;margin:10px 0 4px}
+.bopt{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.02);color:#9EA3AC;font-size:.95rem}
+.bopt .bk{flex:0 0 24px;height:24px;border-radius:8px;display:grid;place-items:center;border:1.5px solid rgba(255,255,255,.18);font-weight:900;font-size:.85rem}
+.bopt .bl{font-weight:800;color:#6F747D;min-width:14px}
+.bopt.ok{border-color:rgba(52,211,153,.6);background:rgba(52,211,153,.12);color:#E8FFF5;font-weight:800}
+.bopt.ok .bk{background:#22B07D;border-color:transparent;color:#fff}
+.bopt.ok .bl{color:#8FEFC7}
+.bchips{display:flex;flex-wrap:wrap;gap:7px}
+.bchips .bopt{padding:6px 12px 6px 8px;border-radius:99px}
+.bchips .bopt .bk{flex-basis:20px;height:20px;border-radius:50%;font-size:.75rem}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .dlist{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
 .drow{min-width:0;display:flex;gap:12px;align-items:center;width:100%;text-align:start;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.03);transition:border-color .2s}
 .drow:hover{border-color:rgba(255,90,78,.5)}
@@ -399,9 +410,9 @@ bdi{unicode-bidi:isolate}
 <div class="amb" aria-hidden="true"><img src="hero-ltr.webp" alt="" width="1920" height="1008"></div>
 <div id="app"></div>
 <noscript><p style="padding:24px">تحتاج هذه الصفحة إلى تفعيل JavaScript. / This page needs JavaScript.</p></noscript>
-<script src="exam-data.js?v=202611241300"></script>
-<script src="exam-forms.js?v=202611241300"></script>
-<script src="exam-learn.js?v=202611241300"></script>
-<script src="exam.js?v=202611241300"></script>
+<script src="exam-data.js?v=202611251100"></script>
+<script src="exam-forms.js?v=202611251100"></script>
+<script src="exam-learn.js?v=202611251100"></script>
+<script src="exam.js?v=202611251100"></script>
 </body>
 </html>

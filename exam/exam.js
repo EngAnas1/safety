@@ -137,7 +137,7 @@ const docName = d => (EXAM_DOCS[d] || {})[L] || d;
 const locTxt = s => s.d === "DH" && /^\d/.test(s.loc) ? (L === "ar" ? "البند " : "Clause ") + s.loc : s.loc;
 let SRC_REG = [], ignoreHash = false;
 const regSrc = s => { SRC_REG.push(s); return SRC_REG.length - 1; };
-const chip = s => s && s.p ? `<button type="button" class="chip" data-src="${regSrc(s)}">📄 <bdi>${esc(s.d === "FG" ? (L === "ar" ? "دليل التعبئة" : "Filling guide") : s.d === "DH" ? "DHSEM 01-002" : "CSCC04")}</bdi> · <bdi>${esc(locTxt(s))}</bdi> <span class="pg">· ${esc(u().page)} ${s.p}</span></button>` : "";
+const chip = s => s && s.p ? `<button type="button" class="chip" data-src="${regSrc(s)}">📄 <bdi>${esc(s.d === "FG" ? (L === "ar" ? "دليل التعبئة" : "Filling guide") : s.d === "DH" ? "DHSEM 01-002" : "CSCC04")}</bdi> · <bdi>${esc(s.d === "CS" ? s.loc.split(" · ").slice(0, 2).join(" · ") : locTxt(s))}</bdi> <span class="pg">· ${esc(u().page)} ${s.p}</span></button>` : "";
 function srcHTML(list) {
   if (!list || !list.length) return "";
   return `<div class="srcs">${list.map(s => {
@@ -577,9 +577,13 @@ function fillBank() {
   });
   $("#scount").textContent = fmt(x.count, { n: list.length });
   $("#slist").innerHTML = list.slice(0, slimit).map(({ q, k }) => {
-    const ans = k === "t" ? esc(qOpts(q)[q.a]) : `<span dir="ltr">${esc(q.a.join(" + "))}</span>`;
+    /* every choice is shown; the correct one(s) are marked green with ✓, the others stay visible but faded */
+    const mark = ok => `<span class="bk" aria-hidden="true">${ok ? "✓" : ""}</span>`;
+    const opts = k === "t"
+      ? `<ul class="bopts">${qOpts(q).map((o, i) => { const ok = i === q.a; return `<li class="bopt ${ok ? "ok" : ""}">${mark(ok)}<span class="bl">${q.t === "tf" ? "" : esc(letters[L][i]) + "."}</span><span>${esc(o)}</span>${ok ? `<span class="sr">${esc(x.correct)}</span>` : ""}</li>`; }).join("")}</ul>`
+      : `<ul class="bopts bchips" dir="ltr">${PERMITS.map(pm => { const ok = q.a.includes(pm); return `<li class="bopt ${ok ? "ok" : ""}">${mark(ok)}<span>${esc(pm)}</span>${ok ? `<span class="sr">${esc(x.correct)}</span>` : ""}</li>`; }).join("")}</ul>`;
     return `<li class="card sitem"><p class="rq">${esc(k === "t" ? q[L].q : q[L])}</p>${realB(q)}${q.t === "lock" ? `<div class="lockbox">${lockSVG(q.color, 1)}</div>` : ""}
-      <p class="rc"><b>${esc(x.correct)}:</b> ${ans}</p>${srcHTML(q.src)}</li>`;
+      ${opts}${srcHTML(q.src)}</li>`;
   }).join("");
   $("#smore").hidden = list.length <= slimit;
 }
